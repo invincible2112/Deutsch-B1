@@ -1,0 +1,876 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<meta name="theme-color" content="#534AB7">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Deutsch B1">
+<title>Flashcard Tiếng Đức B1</title>
+<link rel="manifest" id="pwaManifest">
+<style>
+:root{
+  --bg:#c8c8c8;--surface:#ffffff;--surface2:#f5f5f5;--border:#e4e4e4;
+  --text:#111;--text2:#555;--text3:#999;
+  --accent:#534AB7;--accent-light:#EEEDFE;--accent-mid:#CECBF6;--accent-dark:#3C3489;
+  --green-bg:#eaf3de;--green-text:#3B6D11;--green-border:#97C459;
+  --red-bg:#fcebeb;--red-text:#A32D2D;--red-border:#F09595;
+  --amber-bg:#faeeda;--amber-text:#854F0B;--amber-border:#EF9F27;
+  --xp:#F59E0B;
+  --shadow:0 2px 16px rgba(0,0,0,.13);
+}
+[data-theme="dark"]{
+  --bg:#111111;--surface:#242424;--surface2:#2e2e2e;--border:#383838;
+  --text:#f0f0f0;--text2:#999;--text3:#555;
+  --accent:#7F77DD;--accent-light:#26213a;--accent-mid:#3a345a;--accent-dark:#AFA9EC;
+  --green-bg:#1a2e10;--green-text:#97C459;--green-border:#3B6D11;
+  --red-bg:#2e1010;--red-text:#F09595;--red-border:#A32D2D;
+  --amber-bg:#2e2010;--amber-text:#EF9F27;--amber-border:#854F0B;
+  --shadow:0 2px 16px rgba(0,0,0,.4);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:system-ui,sans-serif;background:var(--bg);color:var(--text);min-height:100vh;padding:1.25rem 1rem 3rem;transition:background .2s,color .2s;overflow-x:hidden;}
+.wrap{width:100%;max-width:520px;margin:0 auto;}
+
+.tab-bar{display:flex;gap:4px;margin-bottom:1.1rem;background:var(--surface);border-radius:12px;padding:4px;box-shadow:var(--shadow);}
+.tab{flex:1;padding:7px;border:none;border-radius:9px;background:transparent;color:var(--text2);font-size:13px;cursor:pointer;font-family:inherit;transition:all .15s;}
+.tab.active{background:var(--surface2);color:var(--text);font-weight:500;}
+.tab-panel{display:none;}.tab-panel.active{display:block;}
+
+.header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem;}
+.title{font-size:16px;font-weight:500;color:var(--accent);letter-spacing:.03em;}
+.header-actions{display:flex;gap:6px;}
+.icon-btn{background:var(--surface);border:0.5px solid var(--border);border-radius:8px;cursor:pointer;padding:5px 8px;font-size:13px;color:var(--text2);transition:background .15s;font-family:inherit;box-shadow:var(--shadow);}
+.icon-btn:hover{background:var(--surface2);}
+.icon-btn.on{background:var(--accent-light);border-color:var(--accent-mid);}
+
+.xp-section{margin-bottom:.9rem;}
+.xp-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;}
+.level-badge{display:inline-flex;align-items:center;gap:4px;background:var(--xp);color:#fff;border-radius:20px;padding:2px 9px;font-size:12px;font-weight:500;}
+.xp-label{font-size:11px;color:var(--text3);}
+.xp-bar-wrap{background:var(--surface2);border-radius:4px;height:6px;overflow:hidden;}
+.xp-bar-fill{height:6px;border-radius:4px;background:linear-gradient(90deg,#F59E0B,#EF4444);transition:width .5s cubic-bezier(.4,0,.2,1);}
+
+.streak-row{display:flex;gap:7px;margin-bottom:.9rem;justify-content:center;}
+.streak-pill{display:inline-flex;align-items:center;gap:4px;padding:4px 13px;border-radius:20px;font-size:12px;font-weight:500;border:0.5px solid var(--border);background:var(--surface);}
+.streak-pill.hot{background:var(--amber-bg);border-color:var(--amber-border);color:var(--amber-text);animation:sPulse 1s ease infinite;}
+.combo-pill{display:inline-flex;align-items:center;gap:4px;padding:4px 13px;border-radius:20px;font-size:12px;font-weight:500;border:0.5px solid var(--border);background:var(--surface);}
+.combo-pill.active{background:var(--accent-light);border-color:var(--accent-mid);color:var(--accent-dark);}
+@keyframes sPulse{0%,100%{transform:scale(1)}50%{transform:scale(1.04)}}
+
+.stats-row{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin-bottom:.9rem;}
+.stat-card{background:var(--surface);border:0.5px solid var(--border);border-radius:10px;padding:8px;text-align:center;box-shadow:var(--shadow);}
+.stat-num{font-size:19px;font-weight:500;color:var(--text);}
+.stat-label{font-size:10px;color:var(--text3);margin-top:1px;}
+.stat-card.s-correct .stat-num{color:var(--green-text);}
+.stat-card.s-wrong .stat-num{color:var(--red-text);}
+
+.filter-bar{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:.8rem;}
+.filter-btn{padding:3px 10px;border-radius:20px;border:0.5px solid var(--border);background:transparent;color:var(--text2);font-size:11px;cursor:pointer;font-family:inherit;transition:all .15s;}
+.filter-btn.active{background:var(--accent-light);color:var(--accent-dark);border-color:var(--accent-mid);font-weight:500;}
+
+.progress-bar{background:var(--surface2);border-radius:4px;height:4px;margin-bottom:.35rem;}
+.progress-fill{background:var(--accent);height:4px;border-radius:4px;transition:width .4s;}
+.counter{font-size:11px;color:var(--text3);margin-bottom:.45rem;text-align:center;}
+.srs-dots{display:flex;gap:3px;justify-content:center;margin-bottom:.65rem;flex-wrap:wrap;}
+.srs-dot{width:7px;height:7px;border-radius:50%;}
+.dot-new{background:var(--accent);}.dot-review{background:var(--amber-border);}.dot-known{background:var(--green-border);}
+
+.timer-wrap{display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:.8rem;}
+.timer-ring-wrap{position:relative;width:52px;height:52px;}
+.timer-ring-wrap svg{transform:rotate(-90deg);}
+.timer-bg{fill:none;stroke:var(--surface2);stroke-width:4;}
+.timer-arc{fill:none;stroke-width:4;stroke-linecap:round;transition:stroke-dashoffset .9s linear,stroke .3s;}
+.timer-num{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:500;color:var(--text);}
+.timer-label{font-size:12px;color:var(--text3);}
+.timer-urgency{color:var(--red-text)!important;animation:sPulse .5s infinite;}
+
+/* CARD — auto height, slide transition instead of flip */
+.card-scene{width:100%;margin:0 auto 1rem;cursor:pointer;position:relative;}
+.card-inner{width:100%;transition:transform .5s cubic-bezier(.4,0,.2,1);}
+.card-scene.shake .card-inner{animation:shake .4s ease;}
+@keyframes shake{0%,100%{transform:translateX(0)}20%{transform:translateX(-8px)}40%{transform:translateX(8px)}60%{transform:translateX(-5px)}80%{transform:translateX(5px)}}
+.card-scene.pop .card-inner{animation:cPop .3s ease;}
+@keyframes cPop{0%{transform:scale(1)}50%{transform:scale(1.02)}100%{transform:scale(1)}}
+.card-face{width:100%;border-radius:18px;border:0.5px solid var(--border);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:1.4rem 1.25rem 1.25rem;background:var(--surface);box-shadow:var(--shadow);}
+.card-back{display:none;justify-content:flex-start;padding-top:1.1rem;align-items:flex-start;}
+.card-scene.flipped .card-face:not(.card-back){display:none;}
+.card-scene.flipped .card-back{display:flex;}
+.srs-badge{display:inline-block;font-size:11px;padding:2px 8px;border-radius:10px;margin-bottom:8px;}
+.srs-new{background:var(--accent-light);color:var(--accent-dark);}
+.srs-review{background:var(--amber-bg);color:var(--amber-text);}
+.srs-known{background:var(--green-bg);color:var(--green-text);}
+.card-tag{font-size:11px;letter-spacing:.06em;color:var(--text3);text-transform:uppercase;margin-bottom:.5rem;}
+.card-article{font-size:15px;color:var(--accent);margin-bottom:2px;font-weight:500;}
+.card-word{font-size:30px;font-weight:500;color:var(--text);text-align:center;line-height:1.2;}
+.card-hint{font-size:12px;color:var(--text3);margin-top:14px;display:flex;align-items:center;gap:4px;}
+
+/* BACK CONTENT */
+.back-section{width:100%;}
+.back-meaning{font-size:22px;font-weight:500;color:var(--text);text-align:center;margin-bottom:.6rem;}
+.divider{width:36px;height:1.5px;background:var(--accent-mid);border-radius:2px;margin:.55rem auto;}
+
+/* SENTENCES */
+.sentence-block{margin-bottom:.75rem;padding:.65rem .8rem;background:var(--surface2);border-radius:10px;border:0.5px solid var(--border);}
+.sentence-label{font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:.07em;margin-bottom:5px;font-weight:500;}
+.sentence-text{font-size:13.5px;color:var(--text);line-height:1.7;text-align:left;font-style:italic;}
+.sentence-text .hl{background:var(--accent-light);color:var(--accent-dark);border-radius:3px;padding:0 3px;font-style:normal;font-weight:600;}
+.sentence-trans{font-size:12px;color:var(--text2);line-height:1.5;margin-top:5px;padding-top:5px;border-top:0.5px solid var(--border);}
+
+/* GRAMMAR BOX */
+.grammar-toggle{display:flex;align-items:center;justify-content:center;gap:5px;margin:.75rem auto 0;padding:9px 16px;border-radius:10px;border:0.5px solid var(--border);background:var(--surface2);color:var(--text2);font-size:12px;font-weight:500;cursor:pointer;font-family:inherit;width:100%;transition:background .15s;}
+.grammar-toggle:hover{background:var(--border);}
+.grammar-box{margin-top:.6rem;background:var(--surface2);border-radius:12px;padding:.85rem 1rem;border:0.5px solid var(--border);}
+.grammar-box-title{font-size:10px;font-weight:500;color:var(--text3);margin-bottom:.6rem;text-transform:uppercase;letter-spacing:.08em;}
+.grammar-point{margin-bottom:.75rem;padding-bottom:.75rem;border-bottom:0.5px solid var(--border);}
+.grammar-point:last-child{margin-bottom:0;padding-bottom:0;border-bottom:none;}
+.grammar-structure{font-size:12.5px;font-weight:500;color:var(--accent);font-family:monospace;background:var(--surface);padding:3px 8px;border-radius:6px;display:inline-block;margin-bottom:5px;border:0.5px solid var(--border);}
+.grammar-explain{font-size:13px;color:var(--text2);line-height:1.65;}
+.grammar-example{font-size:12px;color:var(--text2);font-style:italic;margin-top:4px;padding:3px 8px;background:var(--surface);border-radius:6px;display:inline-block;border:0.5px solid var(--border);}
+
+.speak-row{display:flex;gap:5px;justify-content:center;flex-wrap:wrap;margin-top:7px;}
+.speak-btn{background:none;border:0.5px solid var(--accent-mid);cursor:pointer;padding:3px 8px;border-radius:20px;font-size:11px;line-height:1;transition:background .15s;display:inline-flex;align-items:center;gap:3px;color:var(--accent);font-family:inherit;}
+.speak-btn svg{width:12px;height:12px;fill:currentColor;}
+.speak-btn:hover{background:var(--accent-light);}
+.speak-btn.speaking{animation:pulse .7s infinite;background:var(--accent-mid);}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+
+.btn-row{display:flex;gap:7px;justify-content:center;flex-wrap:wrap;margin-bottom:.55rem;}
+.btn{padding:8px 15px;border-radius:9px;border:0.5px solid var(--border);background:transparent;color:var(--text);font-size:13px;cursor:pointer;font-family:inherit;transition:all .15s;}
+.btn:hover{background:var(--surface2);}
+.btn:active{transform:scale(.97);}
+.btn-flip{background:var(--accent-light);color:var(--accent-dark);border-color:var(--accent-mid);}
+.btn-flip:hover{background:var(--accent-mid);}
+.btn-correct{background:var(--green-bg);color:var(--green-text);border-color:var(--green-border);}
+.btn-wrong{background:var(--red-bg);color:var(--red-text);border-color:var(--red-border);}
+
+.type-wrap{margin-bottom:.85rem;}
+.type-input{width:100%;padding:9px 12px;border-radius:9px;border:0.5px solid var(--border);background:var(--bg);color:var(--text);font-size:15px;font-family:inherit;outline:none;text-align:center;transition:border-color .2s,background .2s;}
+.type-input:focus{border-color:var(--accent);}
+.type-input.correct{border-color:var(--green-border);background:var(--green-bg);color:var(--green-text);}
+.type-input.wrong{border-color:var(--red-border);background:var(--red-bg);color:var(--red-text);}
+.type-hint{font-size:12px;color:var(--text3);text-align:center;margin-top:5px;min-height:17px;}
+
+.float-fb{position:fixed;top:38%;left:50%;transform:translate(-50%,-50%);font-size:21px;font-weight:500;pointer-events:none;z-index:999;opacity:0;white-space:nowrap;}
+.float-fb.show{animation:floatUp .95s ease forwards;}
+@keyframes floatUp{0%{opacity:0;transform:translate(-50%,-50%) scale(.7)}15%{opacity:1;transform:translate(-50%,-62%) scale(1.1)}70%{opacity:1;transform:translate(-50%,-82%) scale(1)}100%{opacity:0;transform:translate(-50%,-115%) scale(.95)}}
+
+.lvlup-overlay{position:fixed;inset:0;background:rgba(0,0,0,.45);display:flex;align-items:center;justify-content:center;z-index:1000;opacity:0;pointer-events:none;transition:opacity .3s;}
+.lvlup-overlay.show{opacity:1;pointer-events:all;}
+.lvlup-box{background:var(--surface);border-radius:20px;padding:2.5rem 2rem;text-align:center;border:0.5px solid var(--border);animation:popIn .4s cubic-bezier(.4,0,.2,1);}
+@keyframes popIn{from{transform:scale(.7);opacity:0}to{transform:scale(1);opacity:1}}
+.cp{position:fixed;pointer-events:none;z-index:998;animation:cfall linear forwards;}
+@keyframes cfall{0%{transform:translateY(-10px) rotate(0deg);opacity:1}100%{transform:translateY(100vh) rotate(720deg);opacity:0}}
+
+.result-box{text-align:center;padding:1.75rem 1rem;background:var(--surface);border-radius:18px;border:0.5px solid var(--border);}
+.result-score{font-size:44px;font-weight:500;}
+.result-label{font-size:13px;color:var(--text2);margin-top:3px;}
+.bar-chart{display:flex;align-items:flex-end;gap:8px;height:58px;justify-content:center;margin-top:1rem;}
+.bar{border-radius:4px 4px 0 0;min-width:40px;}
+.chart-labels{display:flex;gap:8px;justify-content:center;margin-top:4px;}
+.chart-label{font-size:11px;min-width:40px;text-align:center;}
+
+.schedule-day{background:var(--surface);border:0.5px solid var(--border);border-radius:12px;padding:10px 14px;margin-bottom:8px;}
+.schedule-day-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;}
+.day-label{font-size:12px;font-weight:500;color:var(--text);}
+.day-count{font-size:11px;color:var(--text3);}
+.day-words{display:flex;flex-wrap:wrap;gap:5px;}
+.day-word-chip{font-size:11px;padding:2px 8px;border-radius:10px;background:var(--surface2);color:var(--text2);border:0.5px solid var(--border);}
+.day-word-chip.due-today{background:var(--amber-bg);color:var(--amber-text);border-color:var(--amber-border);}
+.day-word-chip.new-card{background:var(--accent-light);color:var(--accent-dark);border-color:var(--accent-mid);}
+
+.add-form{background:var(--surface);border:0.5px solid var(--border);border-radius:14px;padding:1.1rem;}
+.form-row{margin-bottom:.9rem;}
+.form-label{font-size:12px;color:var(--text2);margin-bottom:4px;display:block;}
+.form-input{width:100%;padding:8px 11px;border-radius:8px;border:0.5px solid var(--border);background:var(--bg);color:var(--text);font-size:14px;font-family:inherit;outline:none;transition:border-color .2s;}
+.form-input:focus{border-color:var(--accent);}
+.form-row-inline{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:.9rem;}
+.add-btn{width:100%;padding:10px;border-radius:9px;border:none;background:var(--accent);color:#fff;font-size:14px;font-weight:500;cursor:pointer;font-family:inherit;transition:opacity .15s;}
+.add-btn:hover{opacity:.88;}
+.add-success{font-size:13px;color:var(--green-text);text-align:center;margin-top:.6rem;min-height:18px;}
+.card-chip{display:inline-flex;align-items:center;gap:6px;background:var(--surface2);border:0.5px solid var(--border);border-radius:8px;padding:4px 10px;margin:3px;font-size:12px;color:var(--text);}
+.card-chip-del{background:none;border:none;color:var(--red-text);cursor:pointer;font-size:14px;line-height:1;padding:0;}
+.batch-area{width:100%;padding:8px 11px;border-radius:8px;border:0.5px solid var(--border);background:var(--bg);color:var(--text);font-size:13px;font-family:inherit;outline:none;resize:vertical;min-height:80px;transition:border-color .2s;}
+.batch-area:focus{border-color:var(--accent);}
+.tab-section-title{font-size:13px;font-weight:500;color:var(--text);margin:1rem 0 .6rem;}
+.schedule-empty{font-size:13px;color:var(--text3);text-align:center;padding:1.5rem;}
+.card-list-title{font-size:12px;color:var(--text2);margin-bottom:.5rem;font-weight:500;}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="header">
+    <div class="title">🇩🇪 Từ vựng B1</div>
+    <div class="header-actions">
+      <button class="icon-btn" id="timerBtn" onclick="toggleTimer()">⏱️</button>
+      <button class="icon-btn" id="modeBtn" onclick="toggleMode()">✍️</button>
+      <button class="icon-btn" id="darkBtn" onclick="toggleDark()">🌙</button>
+    </div>
+  </div>
+
+  <div class="tab-bar">
+    <button class="tab active" onclick="switchTab('learn')">📚 Học</button>
+    <button class="tab" onclick="switchTab('schedule')">📅 Lịch ôn</button>
+    <button class="tab" onclick="switchTab('add')">➕ Thêm từ</button>
+  </div>
+
+  <div class="tab-panel active" id="tab-learn">
+    <div class="xp-section">
+      <div class="xp-top">
+        <div class="level-badge" id="levelBadge">⭐ Cấp 1</div>
+        <div class="xp-label" id="xpLabel">0 / 100 XP</div>
+      </div>
+      <div class="xp-bar-wrap"><div class="xp-bar-fill" id="xpBar" style="width:0%"></div></div>
+    </div>
+    <div class="streak-row">
+      <div class="streak-pill" id="streakPill">🔥 0</div>
+      <div class="combo-pill" id="comboPill">⚡ x1</div>
+    </div>
+    <div class="stats-row">
+      <div class="stat-card"><div class="stat-num" id="statTotal">—</div><div class="stat-label">Tổng thẻ</div></div>
+      <div class="stat-card s-correct"><div class="stat-num" id="statCorrect">0</div><div class="stat-label">Đã nhớ</div></div>
+      <div class="stat-card s-wrong"><div class="stat-num" id="statWrong">0</div><div class="stat-label">Chưa nhớ</div></div>
+    </div>
+    <div class="filter-bar" id="filterBar"></div>
+    <div class="timer-wrap" id="timerWrap" style="display:none;">
+      <div class="timer-ring-wrap">
+        <svg width="52" height="52" viewBox="0 0 52 52">
+          <circle class="timer-bg" cx="26" cy="26" r="22"/>
+          <circle class="timer-arc" id="timerArc" cx="26" cy="26" r="22" stroke="#534AB7" stroke-dasharray="138.2" stroke-dashoffset="0"/>
+        </svg>
+        <div class="timer-num" id="timerNum">10</div>
+      </div>
+      <div class="timer-label" id="timerLabel">Còn lại để trả lời</div>
+    </div>
+    <div class="progress-bar"><div class="progress-fill" id="prog" style="width:0%"></div></div>
+    <div class="counter" id="counter"></div>
+    <div class="srs-dots" id="srsDots"></div>
+    <div class="card-scene" id="scene" onclick="handleCardClick()">
+      <div class="card-inner">
+        <div class="card-face" id="front"></div>
+        <div class="card-face card-back" id="back"></div>
+      </div>
+    </div>
+    <div class="type-wrap" id="typeArea" style="display:none;">
+      <input class="type-input" id="typeInput" placeholder="Gõ nghĩa tiếng Việt..." autocomplete="off" onkeydown="handleTypeKey(event)">
+      <div class="type-hint" id="typeHint">Nhấn Enter để kiểm tra</div>
+    </div>
+    <div class="btn-row" id="btns"></div>
+    <div id="resultArea"></div>
+  </div>
+
+  <div class="tab-panel" id="tab-schedule"><div id="scheduleContent"></div></div>
+
+  <div class="tab-panel" id="tab-add">
+    <div class="add-form">
+      <div class="tab-section-title">Thêm từ một cái</div>
+      <div class="form-row-inline">
+        <div><label class="form-label">Mạo từ</label><input class="form-input" id="inArticle" placeholder="der/die/das"></div>
+        <div><label class="form-label">Loại từ</label><input class="form-input" id="inType" placeholder="Nomen/Verb..."></div>
+      </div>
+      <div class="form-row"><label class="form-label">Từ tiếng Đức *</label><input class="form-input" id="inWord" placeholder="z.B. die Arbeit"></div>
+      <div class="form-row"><label class="form-label">Nghĩa tiếng Việt *</label><input class="form-input" id="inMeaning" placeholder="z.B. công việc"></div>
+      <div class="form-row"><label class="form-label">Câu ví dụ 1 (không bắt buộc)</label><input class="form-input" id="inSentence" placeholder="Câu đơn giản"></div>
+      <div class="form-row"><label class="form-label">Dịch câu 1</label><input class="form-input" id="inTrans"></div>
+      <div class="form-row"><label class="form-label">Câu ví dụ 2 — câu ghép (không bắt buộc)</label><input class="form-input" id="inSentence2" placeholder="Câu có từ nối"></div>
+      <div class="form-row"><label class="form-label">Dịch câu 2</label><input class="form-input" id="inTrans2"></div>
+      <button class="add-btn" onclick="addCard()">+ Thêm từ này</button>
+      <div class="add-success" id="addMsg"></div>
+    </div>
+    <div style="margin-top:1.25rem;">
+      <div class="add-form">
+        <div class="tab-section-title">Thêm nhiều từ một lúc</div>
+        <div class="form-row">
+          <label class="form-label">Mỗi dòng một từ:</label>
+          <div style="font-size:12px;background:var(--surface2);padding:6px 8px;border-radius:6px;margin-bottom:6px;color:var(--text2);">die Arbeit = công việc<br>gehen = đi bộ</div>
+          <textarea class="batch-area" id="batchInput" placeholder="Dán danh sách từ vào đây..."></textarea>
+        </div>
+        <button class="add-btn" onclick="batchAdd()">+ Thêm tất cả</button>
+        <div class="add-success" id="batchMsg"></div>
+      </div>
+    </div>
+    <div class="card-list" id="customCardList"></div>
+  </div>
+</div>
+
+<div class="float-fb" id="floatFb"></div>
+<div class="lvlup-overlay" id="lvlupOverlay" onclick="closeLvlUp()">
+  <div class="lvlup-box">
+    <div style="font-size:48px;margin-bottom:.5rem" id="lvlEmoji">🎉</div>
+    <div style="font-size:21px;font-weight:500;color:var(--text);margin-bottom:.25rem" id="lvlTitle">Lên cấp!</div>
+    <div style="font-size:13px;color:var(--text2)" id="lvlSub">Nhấn để tiếp tục</div>
+  </div>
+</div>
+
+<script>
+const BUILTIN = [
+  {
+    article:"die", word:"Verantwortung", type:"Nomen", meaning:"trách nhiệm",
+    s1:"Sie übernimmt gern Verantwortung für ihr Team.",
+    t1:"Cô ấy sẵn lòng nhận trách nhiệm cho đội của mình.",
+    s2:"Obwohl die Aufgabe schwierig ist, übernimmt sie die Verantwortung, weil sie dem Team vertraut.",
+    t2:"Mặc dù nhiệm vụ khó, cô ấy vẫn nhận trách nhiệm vì cô ấy tin tưởng đội.",
+    grammar:[
+      {structure:"Verantwortung übernehmen", explain:"Cụm động từ cố định = nhận/gánh trách nhiệm. 'übernehmen' là động từ tách (trennbar): übernimmt... an.", example:"Er übernimmt die Verantwortung."},
+      {structure:"obwohl + Nebensatz (verb cuối)", explain:"'obwohl' (mặc dù) là liên từ phụ → động từ chính ra cuối mệnh đề phụ.", example:"Obwohl es regnet, gehe ich spazieren."}
+    ]
+  },
+  {
+    article:"", word:"gelegentlich", type:"Adverb", meaning:"thỉnh thoảng",
+    s1:"Ich gehe gelegentlich ins Kino.",
+    t1:"Thỉnh thoảng tôi đi xem phim.",
+    s2:"Gelegentlich treffe ich alte Freunde, damit wir uns über unsere Erlebnisse austauschen können.",
+    t2:"Thỉnh thoảng tôi gặp bạn cũ để chúng tôi có thể chia sẻ về những trải nghiệm.",
+    grammar:[
+      {structure:"Adverb vị trí trong câu", explain:"'gelegentlich' đứng ở Mittelfeld, thường sau động từ chia hoặc đầu câu (rồi đảo ngữ).", example:"Gelegentlich kommt er zu spät."},
+      {structure:"damit + Nebensatz (mục đích)", explain:"'damit' (để, để mà) diễn tả mục đích → động từ ra cuối mệnh đề.", example:"Ich lerne, damit ich die Prüfung bestehe."}
+    ]
+  },
+  {
+    article:"die", word:"Möglichkeit", type:"Nomen", meaning:"khả năng / cơ hội",
+    s1:"Es gibt viele Möglichkeiten, Deutsch zu lernen.",
+    t1:"Có nhiều cơ hội để học tiếng Đức.",
+    s2:"Es gibt viele Möglichkeiten, Deutsch zu lernen, deshalb sollte man die beste Methode wählen.",
+    t2:"Có nhiều cách để học tiếng Đức, vì vậy người ta nên chọn phương pháp tốt nhất.",
+    grammar:[
+      {structure:"Möglichkeit + zu + Infinitiv", explain:"Cấu trúc 'Infinitivsatz': Nomen + Infinitiv với 'zu' → diễn tả nội dung/mục tiêu của danh từ.", example:"die Chance, Deutsch zu sprechen"},
+      {structure:"deshalb (vì vậy) — Hauptsatz", explain:"'deshalb' là liên từ kết quả, nối hai câu chính. Sau 'deshalb' đảo ngữ (động từ trước chủ ngữ).", example:"Es regnet, deshalb bleibe ich zuhause."}
+    ]
+  },
+  {
+    article:"", word:"sich beschweren", type:"Verb", meaning:"phàn nàn",
+    s1:"Der Kunde hat sich über den schlechten Service beschwert.",
+    t1:"Khách hàng đã phàn nàn về dịch vụ tồi.",
+    s2:"Obwohl er sich mehrmals beschwert hat, wurde das Problem nicht gelöst, sodass er das Restaurant verließ.",
+    t2:"Mặc dù đã phàn nàn nhiều lần, vấn đề vẫn không được giải quyết, vì thế anh ấy rời nhà hàng.",
+    grammar:[
+      {structure:"sich beschweren über + Akkusativ", explain:"Động từ phản thân + giới từ cố định 'über' + Akkusativ. 'sich' thay đổi theo chủ ngữ: ich beschwere mich, er beschwert sich.", example:"Ich beschwere mich über den Lärm."},
+      {structure:"sodass (kết quả tự nhiên)", explain:"'sodass' nối nguyên nhân-kết quả, động từ ra cuối mệnh đề sau.", example:"Er war müde, sodass er einschlief."}
+    ]
+  },
+  {
+    article:"der", word:"Unterschied", type:"Nomen", meaning:"sự khác biệt",
+    s1:"Was ist der Unterschied zwischen diesen zwei Wörtern?",
+    t1:"Sự khác biệt giữa hai từ này là gì?",
+    s2:"Der Unterschied zwischen den beiden Methoden ist groß, weshalb man sie nicht verwechseln sollte.",
+    t2:"Sự khác biệt giữa hai phương pháp này rất lớn, do đó không nên nhầm lẫn chúng.",
+    grammar:[
+      {structure:"Unterschied zwischen + Dativ", explain:"'zwischen' với nghĩa so sánh dùng Dativ: zwischen diesen zwei Wörtern (D), không phải Akkusativ.", example:"der Unterschied zwischen Tee und Kaffee"},
+      {structure:"weshalb (do đó, vì thế) — Nebensatz", explain:"'weshalb' là liên từ phụ hỏi lý do → động từ ra cuối. Hay dùng thay cho 'deshalb' trong văn viết.", example:"Er war krank, weshalb er nicht kam."}
+    ]
+  },
+  {
+    article:"", word:"anbieten", type:"Verb", meaning:"đề xuất / cung cấp",
+    s1:"Das Hotel bietet einen kostenlosen Shuttle-Service an.",
+    t1:"Khách sạn cung cấp dịch vụ đưa đón miễn phí.",
+    s2:"Das Hotel bietet nicht nur Frühstück an, sondern es organisiert auch Ausflüge, damit die Gäste die Stadt kennenlernen.",
+    t2:"Khách sạn không chỉ cung cấp bữa sáng mà còn tổ chức các chuyến tham quan để khách biết thành phố.",
+    grammar:[
+      {structure:"anbieten — trennbares Verb", explain:"Động từ tách: 'an' tách ra cuối câu trong Hauptsatz. Partizip II: angeboten. Perfekt: hat angeboten.", example:"Er bietet mir Hilfe an."},
+      {structure:"nicht nur... sondern auch (không chỉ... mà còn)", explain:"Cặp liên từ đẳng lập nối hai vế bình đẳng. Cả hai vế đều là Hauptsatz.", example:"Sie spricht nicht nur Deutsch, sondern auch Englisch."}
+    ]
+  },
+  {
+    article:"die", word:"Genehmigung", type:"Nomen", meaning:"giấy phép / sự cho phép",
+    s1:"Für den Bau brauchst du eine offizielle Genehmigung.",
+    t1:"Để xây dựng, bạn cần một giấy phép chính thức.",
+    s2:"Bevor man mit dem Bau beginnt, muss man eine Genehmigung beantragen, weil das gesetzlich vorgeschrieben ist.",
+    t2:"Trước khi bắt đầu xây dựng, phải xin giấy phép vì điều đó được quy định theo pháp luật.",
+    grammar:[
+      {structure:"bevor + Nebensatz (trước khi)", explain:"'bevor' là liên từ thời gian → động từ ra cuối mệnh đề phụ. Thường đi cùng Präsens hoặc Futur.", example:"Bevor ich esse, wasche ich die Hände."},
+      {structure:"weil + Nebensatz (lý do)", explain:"'weil' là liên từ phụ → động từ ra cuối. Khác với 'denn' (liên từ đẳng lập, giữ nguyên trật tự).", example:"Ich bleibe zuhause, weil es regnet."}
+    ]
+  },
+  {
+    article:"", word:"vergleichen", type:"Verb", meaning:"so sánh",
+    s1:"Ich vergleiche die Preise verschiedener Supermärkte.",
+    t1:"Tôi so sánh giá cả của các siêu thị khác nhau.",
+    s2:"Wenn man Produkte vergleicht, sollte man nicht nur den Preis, sondern auch die Qualität berücksichtigen.",
+    t2:"Khi so sánh sản phẩm, không chỉ nên xem giá mà còn phải cân nhắc đến chất lượng.",
+    grammar:[
+      {structure:"wenn + Nebensatz (điều kiện/khi)", explain:"'wenn' dùng cho điều kiện hiện tại/tương lai và thói quen lặp đi lặp lại → động từ ra cuối.", example:"Wenn ich Zeit habe, lese ich."},
+      {structure:"sollte (nên — Konjunktiv II)", explain:"'sollte' là dạng Konjunktiv II của 'sollen', dùng để đưa ra lời khuyên lịch sự.", example:"Du solltest mehr schlafen."}
+    ]
+  },
+  {
+    article:"das", word:"Ergebnis", type:"Nomen", meaning:"kết quả",
+    s1:"Das Ergebnis des Tests war besser als erwartet.",
+    t1:"Kết quả bài kiểm tra tốt hơn dự kiến.",
+    s2:"Nachdem die Ergebnisse bekannt wurden, freuten sich alle Studenten, weil sie die Prüfung bestanden hatten.",
+    t2:"Sau khi kết quả được công bố, tất cả sinh viên vui mừng vì họ đã qua kỳ thi.",
+    grammar:[
+      {structure:"nachdem + Plusquamperfekt", explain:"'nachdem' (sau khi) thường đi với Plusquamperfekt trong mệnh đề phụ khi mệnh đề chính ở Präteritum.", example:"Nachdem er gegessen hatte, schlief er ein."},
+      {structure:"besser als (so sánh hơn)", explain:"So sánh hơn trong tiếng Đức: Adjektiv + -er + als. Một số bất quy tắc: gut→besser, viel→mehr.", example:"Sie ist größer als ihr Bruder."}
+    ]
+  },
+  {
+    article:"", word:"vorschlagen", type:"Verb", meaning:"đề nghị / gợi ý",
+    s1:"Er hat vorgeschlagen, gemeinsam zu kochen.",
+    t1:"Anh ấy đề nghị cùng nhau nấu ăn.",
+    s2:"Sie schlug vor, dass wir früher anfangen, damit wir genug Zeit für alles haben.",
+    t2:"Cô ấy gợi ý chúng ta bắt đầu sớm hơn để có đủ thời gian cho mọi thứ.",
+    grammar:[
+      {structure:"vorschlagen + zu-Infinitiv", explain:"Sau 'vorschlagen' dùng 'Infinitivsatz': vorschlagen + Komma + zu + Infinitiv (khi chủ ngữ hai vế giống nhau).", example:"Ich schlage vor, morgen zu treffen."},
+      {structure:"vorschlagen + dass-Satz", explain:"Khi chủ ngữ hai vế khác nhau, dùng 'dass' + Nebensatz: dass wir früher anfangen.", example:"Er schlägt vor, dass du kommst."}
+    ]
+  },
+  {
+    article:"die", word:"Unterkunft", type:"Nomen", meaning:"chỗ ở",
+    s1:"Wir haben eine günstige Unterkunft in der Nähe vom Bahnhof gefunden.",
+    t1:"Chúng tôi đã tìm được chỗ ở giá rẻ gần nhà ga.",
+    s2:"Da die Unterkunft sehr günstig war, konnten wir mehr Geld für Ausflüge ausgeben, als wir geplant hatten.",
+    t2:"Vì chỗ ở rất rẻ, chúng tôi có thể tiêu nhiều tiền hơn cho các chuyến tham quan so với kế hoạch.",
+    grammar:[
+      {structure:"da (vì, bởi vì) — Nebensatz", explain:"'da' giống 'weil' nhưng thường đứng đầu câu và mang tính văn viết hơn. Động từ ra cuối mệnh đề.", example:"Da es regnet, bleibe ich zuhause."},
+      {structure:"als wir geplant hatten (Plusquamperfekt)", explain:"So sánh với quá khứ xa hơn: 'als + Plusquamperfekt' → hành động xảy ra trước một mốc trong quá khứ.", example:"Ich hatte mehr gegessen, als ich geplant hatte."}
+    ]
+  },
+  {
+    article:"", word:"ausreichend", type:"Adjektiv", meaning:"đủ / đầy đủ",
+    s1:"Für die Reise haben wir ausreichend Zeit eingeplant.",
+    t1:"Chúng tôi đã dự tính đủ thời gian cho chuyến đi.",
+    s2:"Obwohl die Vorbereitung ausreichend war, fühlten wir uns nervös, als die Prüfung begann.",
+    t2:"Mặc dù việc chuẩn bị đã đầy đủ, chúng tôi vẫn cảm thấy hồi hộp khi kỳ thi bắt đầu.",
+    grammar:[
+      {structure:"ausreichend als Adjektiv/Adverb", explain:"'ausreichend' dùng được cả làm tính từ (trước danh từ, cần chia đuôi) và trạng từ (không chia). Đây là dạng trạng từ.", example:"eine ausreichende Menge (tính từ)"},
+      {structure:"als (khi — thời điểm quá khứ)", explain:"'als' chỉ một thời điểm cụ thể trong quá khứ → Nebensatz, động từ ra cuối. Khác 'wenn' (hiện tại/lặp lại).", example:"Als ich jung war, spielte ich Fußball."}
+    ]
+  },
+  {
+    article:"die", word:"Entscheidung", type:"Nomen", meaning:"quyết định",
+    s1:"Die Entscheidung liegt bei dir.",
+    t1:"Quyết định nằm ở bạn.",
+    s2:"Nachdem er lange nachgedacht hatte, traf er eine Entscheidung, die sein Leben veränderte.",
+    t2:"Sau khi suy nghĩ lâu, anh ấy đưa ra một quyết định thay đổi cuộc đời anh.",
+    grammar:[
+      {structure:"eine Entscheidung treffen", explain:"Cụm động từ danh nghĩa (Funktionsverbgefüge) = quyết định. 'treffen' ở đây không có nghĩa 'gặp' mà là 'đưa ra'. Hay gặp trong văn viết/thi cử.", example:"Sie trifft immer schnelle Entscheidungen."},
+      {structure:"Relativsatz: die... veränderte", explain:"Mệnh đề quan hệ với đại từ quan hệ 'die' (thay cho 'Entscheidung', feminine Akkusativ → die). Động từ ra cuối.", example:"Das Buch, das ich lese, ist interessant."}
+    ]
+  },
+  {
+    article:"", word:"sich anmelden", type:"Verb", meaning:"đăng ký",
+    s1:"Du musst dich vorher online anmelden.",
+    t1:"Bạn phải đăng ký trực tuyến trước.",
+    s2:"Um an dem Kurs teilnehmen zu können, muss man sich bis Freitag anmelden, weil die Plätze begrenzt sind.",
+    t2:"Để có thể tham gia khóa học, phải đăng ký trước thứ Sáu vì chỗ có hạn.",
+    grammar:[
+      {structure:"um... zu + Infinitiv (mục đích)", explain:"Cấu trúc mục đích khi chủ ngữ hai vế giống nhau. 'um' ở đầu, 'zu + Infinitiv' ở cuối mệnh đề.", example:"Ich lerne, um die Prüfung zu bestehen."},
+      {structure:"sich anmelden — Reflexivverb trennbar", explain:"Kết hợp hai tính chất: phản thân (sich) + tách (an...melden). 'sich' theo chủ ngữ, 'an' ra cuối câu.", example:"Ich melde mich für den Kurs an."}
+    ]
+  },
+  {
+    article:"die", word:"Besonderheit", type:"Nomen", meaning:"điểm đặc biệt",
+    s1:"Eine Besonderheit dieser Stadt ist das alte Rathaus.",
+    t1:"Một điểm đặc biệt của thành phố này là tòa thị chính cổ.",
+    s2:"Die Besonderheit dieser Region liegt darin, dass sie sowohl kulturell als auch landschaftlich sehr vielfältig ist.",
+    t2:"Điểm đặc biệt của vùng này là nó vừa đa dạng về văn hóa vừa đa dạng về cảnh quan.",
+    grammar:[
+      {structure:"darin, dass... (ở chỗ là...)", explain:"'darin' là đại từ chỉ định, 'dass' mở mệnh đề bổ nghĩa. Cấu trúc này hay gặp trong văn viết B1/B2.", example:"Das Problem liegt darin, dass wir zu wenig Zeit haben."},
+      {structure:"sowohl... als auch (vừa... vừa)", explain:"Cặp liên từ đẳng lập nối hai yếu tố tương đương, nhấn mạnh cả hai đều đúng.", example:"Er spricht sowohl Englisch als auch Französisch."}
+    ]
+  }
+];
+
+const SRS_INTERVALS=[0,1,3,7,14,30];
+const LEVELS=[
+  {name:"Mới bắt đầu",xp:100,emoji:"🌱"},{name:"Học viên",xp:200,emoji:"📖"},
+  {name:"Chăm chỉ",xp:350,emoji:"💪"},{name:"Tiến bộ",xp:500,emoji:"🚀"},
+  {name:"Thành thạo",xp:750,emoji:"🎯"},{name:"Chuyên gia",xp:1000,emoji:"🏆"},
+  {name:"Meister",xp:1500,emoji:"⭐"},{name:"Legende",xp:99999,emoji:"👑"}
+];
+const OK_MSGS=["Tuyệt vời! 🔥","Chính xác! ✨","Đỉnh lắm! 💪","Bravo! 🌟","Ausgezeichnet! 🇩🇪","Super! ⚡","Perfekt! 🎉"];
+const NO_MSGS=["Sai rồi... 😅","Cố lên! 💪","Học lại thôi 📖","Không sao! ↻"];
+const STREAK_MSGS={3:"🔥 3 liên tiếp!",5:"⚡ 5 streak!",10:"💥 10 liên tiếp!!",20:"👑 HUYỀN THOẠI!"};
+const TIMER_DEFAULT=10;
+const CIRC=2*Math.PI*22;
+
+function ls(k){try{return JSON.parse(localStorage.getItem(k)||'null');}catch(e){return null;}}
+function ss(k,v){try{localStorage.setItem(k,JSON.stringify(v));}catch(e){}}
+
+let srsScore=ls('fc_srs')||{};
+let srsDue=ls('fc_due')||{};
+let customCards=ls('fc_custom')||[];
+let xp=ls('fc_xp')||0, level=ls('fc_lv')||0;
+let streak=ls('fc_str')||0, bestStreak=ls('fc_best')||0;
+
+function allCards(){return[...BUILTIN,...customCards];}
+function cardId(i){return allCards()[i].word;}
+function ensureAll(){allCards().forEach((_,i)=>{const id=cardId(i);if(srsScore[id]===undefined)srsScore[id]=0;if(!srsDue[id])srsDue[id]=Date.now();});}
+ensureAll();
+
+let activeFilter='Tất cả',typeMode=false,darkMode=false,timerOn=false;
+let queue=[],qIdx=0,sessionCorrect=0,sessionWrong=0;
+let flipped=false,typeChecked=false,combo=1;
+let timerInterval=null,timerSec=0;
+
+const spkI=`<svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>`;
+
+function speak(text,btn){
+  if(!window.speechSynthesis)return;
+  window.speechSynthesis.cancel();
+  if(btn&&btn.classList.contains('speaking')){btn.classList.remove('speaking');return;}
+  document.querySelectorAll('.speak-btn').forEach(b=>b.classList.remove('speaking'));
+  const u=new SpeechSynthesisUtterance(text);u.lang='de-DE';u.rate=0.88;
+  const v=window.speechSynthesis.getVoices().find(v=>v.lang.startsWith('de'));if(v)u.voice=v;
+  if(btn){btn.classList.add('speaking');u.onend=u.onerror=()=>btn.classList.remove('speaking');}
+  window.speechSynthesis.speak(u);
+}
+
+function confetti(){
+  const cols=['#534AB7','#97C459','#F59E0B','#EF4444','#06B6D4','#EC4899'];
+  for(let i=0;i<40;i++){
+    const el=document.createElement('div');el.className='cp';
+    el.style.cssText=`left:${Math.random()*100}vw;top:-10px;background:${cols[i%cols.length]};width:${5+Math.random()*7}px;height:${5+Math.random()*7}px;border-radius:${Math.random()>.5?'50%':'2px'};animation-duration:${.8+Math.random()*1.3}s;animation-delay:${Math.random()*.45}s;`;
+    document.body.appendChild(el);setTimeout(()=>el.remove(),2400);
+  }
+}
+function showFloat(msg){const el=document.getElementById('floatFb');el.textContent=msg;el.className='float-fb';void el.offsetWidth;el.classList.add('show');}
+
+function addXP(amt){
+  const g=amt*combo;xp+=g;let up=false;
+  while(level<LEVELS.length-1&&xp>=LEVELS[level].xp){xp-=LEVELS[level].xp;level++;up=true;}
+  saveAll();updateXPBar();if(up)setTimeout(showLvlUp,600);return g;
+}
+function updateXPBar(){
+  const lv=LEVELS[level];const pct=Math.min(100,Math.round(xp/lv.xp*100));
+  document.getElementById('xpBar').style.width=pct+'%';
+  document.getElementById('xpLabel').textContent=`${xp} / ${lv.xp} XP`;
+  document.getElementById('levelBadge').textContent=`${lv.emoji} Cấp ${level+1}`;
+}
+function showLvlUp(){
+  const lv=LEVELS[level];
+  document.getElementById('lvlEmoji').textContent=lv.emoji;
+  document.getElementById('lvlTitle').textContent=`Lên cấp ${level+1}! ${lv.emoji}`;
+  document.getElementById('lvlSub').textContent=`${lv.name} · Nhấn để tiếp`;
+  document.getElementById('lvlupOverlay').classList.add('show');confetti();
+}
+function closeLvlUp(){document.getElementById('lvlupOverlay').classList.remove('show');}
+
+function updateStreakUI(){
+  const sp=document.getElementById('streakPill');
+  sp.textContent=`🔥 ${streak}`;sp.classList.toggle('hot',streak>=3);
+  const cp=document.getElementById('comboPill');
+  cp.textContent=`⚡ x${combo}`;cp.classList.toggle('active',combo>1);
+}
+
+function toggleTimer(){timerOn=!timerOn;document.getElementById('timerBtn').classList.toggle('on',timerOn);document.getElementById('timerWrap').style.display=timerOn?'flex':'none';if(!timerOn)stopTimer();}
+function startTimer(){stopTimer();if(!timerOn)return;timerSec=TIMER_DEFAULT;updateTimerUI(timerSec);timerInterval=setInterval(()=>{timerSec--;updateTimerUI(timerSec);if(timerSec<=0){stopTimer();timeUp();}},1000);}
+function stopTimer(){clearInterval(timerInterval);timerInterval=null;}
+function updateTimerUI(s){
+  const arc=document.getElementById('timerArc');const num=document.getElementById('timerNum');const lbl=document.getElementById('timerLabel');
+  arc.style.strokeDashoffset=CIRC*(1-s/TIMER_DEFAULT);
+  arc.style.stroke=s<=3?'#EF4444':s<=6?'#F59E0B':'#534AB7';
+  num.textContent=s;num.className='timer-num'+(s<=3?' timer-urgency':'');
+  lbl.textContent=s<=3?'Nhanh lên! ⚡':'Còn lại để trả lời';
+}
+function timeUp(){if(!flipped){flipCard();showFloat("⏰ Hết giờ! "+NO_MSGS[Math.floor(Math.random()*NO_MSGS.length)]);}}
+
+function saveAll(){ss('fc_srs',srsScore);ss('fc_due',srsDue);ss('fc_xp',xp);ss('fc_lv',level);ss('fc_str',streak);ss('fc_best',bestStreak);ss('fc_custom',customCards);}
+
+function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+function getFiltered(){const ac=allCards();return ac.map((_,i)=>i).filter(i=>activeFilter==='Tất cả'||ac[i].type===activeFilter);}
+function buildQueue(){
+  const ac=allCards();ensureAll();const fi=getFiltered();const now=Date.now();
+  const due=fi.filter(i=>srsDue[cardId(i)]<=now);
+  const notDue=fi.filter(i=>srsDue[cardId(i)]>now);
+  const q=[];due.forEach(i=>{const s=srsScore[cardId(i)];const n=s<=1?3:2;for(let t=0;t<n;t++)q.push(i);});
+  shuffle(q);const extra=shuffle([...notDue]);
+  while(q.length<Math.min(20,fi.length)&&extra.length)q.push(extra.shift());
+  return q.slice(0,30);
+}
+
+function buildFilters(){
+  const ac=allCards();const types=['Tất cả',...new Set(ac.map(c=>c.type).filter(Boolean))];
+  document.getElementById('filterBar').innerHTML=types.map(t=>`<button class="filter-btn${t===activeFilter?' active':''}" onclick="setFilter('${t}')">${t}</button>`).join('');
+}
+function setFilter(f){activeFilter=f;buildFilters();startSession();}
+function toggleMode(){typeMode=!typeMode;document.getElementById('modeBtn').classList.toggle('on',typeMode);startSession();}
+function toggleDark(){darkMode=!darkMode;document.documentElement.setAttribute('data-theme',darkMode?'dark':'');document.getElementById('darkBtn').textContent=darkMode?'☀️':'🌙';}
+
+function startSession(){
+  stopTimer();queue=buildQueue();qIdx=0;sessionCorrect=0;sessionWrong=0;flipped=false;typeChecked=false;combo=1;
+  document.getElementById('scene').style.display='';document.getElementById('resultArea').innerHTML='';
+  updateStats();renderDots();updateXPBar();updateStreakUI();render();
+}
+function updateStats(){
+  document.getElementById('statTotal').textContent=getFiltered().length;
+  document.getElementById('statCorrect').textContent=sessionCorrect;
+  document.getElementById('statWrong').textContent=sessionWrong;
+}
+function renderDots(){
+  document.getElementById('srsDots').innerHTML=getFiltered().map(i=>{
+    const id=cardId(i);const s=srsScore[id]||0;const cls=s>=3?'dot-known':s>0?'dot-review':'dot-new';
+    return `<div class="srs-dot ${cls}" title="${allCards()[i].word}"></div>`;
+  }).join('');
+}
+
+// Highlight từ trong câu
+function hlWord(sentence, word){
+  if(!sentence||!word)return sentence||'';
+  const bare=word.replace(/^(der|die|das|sich)\s+/i,'');
+  const re=new RegExp('('+bare.replace(/[-\/\\^$*+?.()|[\]{}]/g,'\\$&')+'\\w*)', 'gi');
+  return sentence.replace(re,'<span class="hl">$1</span>');
+}
+
+function renderBack(c){
+  const wf=(c.article+' '+c.word).trim();
+  const s1hl=hlWord(c.s1||'',c.word);
+  const s2hl=hlWord(c.s2||'',c.word);
+  const s1esc=(c.s1||'').replace(/'/g,"\\'");
+  const s2esc=(c.s2||'').replace(/'/g,"\\'");
+  const grammarHTML=(c.grammar||[]).map(g=>`
+    <div class="grammar-point">
+      <div class="grammar-structure">${g.structure}</div>
+      <div class="grammar-explain">${g.explain}</div>
+      ${g.example?`<div class="grammar-example">→ ${g.example}</div>`:''}
+    </div>`).join('');
+
+  return `<div class="back-section">
+    <div style="text-align:center;margin-bottom:.15rem"><span style="font-size:17px;font-weight:500">${c.article||''} ${c.word}</span></div>
+    <div class="speak-row">
+      <button class="speak-btn" onclick="event.stopPropagation();speak('${wf}',this)">${spkI} Từ</button>
+      ${c.s1?`<button class="speak-btn" onclick="event.stopPropagation();speak('${s1esc}',this)">${spkI} Câu 1</button>`:''}
+      ${c.s2?`<button class="speak-btn" onclick="event.stopPropagation();speak('${s2esc}',this)">${spkI} Câu 2</button>`:''}
+    </div>
+    <div class="divider"></div>
+    <div class="back-meaning">${c.meaning}</div>
+    ${c.s1?`<div class="sentence-block">
+      <div class="sentence-label">Câu đơn</div>
+      <div class="sentence-text">${s1hl}</div>
+      <div class="sentence-trans">${c.t1||''}</div>
+    </div>`:''}
+    ${c.s2?`<div class="sentence-block">
+      <div class="sentence-label">Câu ghép</div>
+      <div class="sentence-text">${s2hl}</div>
+      <div class="sentence-trans">${c.t2||''}</div>
+    </div>`:''}
+    ${grammarHTML?`<button class="grammar-toggle" onclick="event.stopPropagation();toggleGrammar(this)">📖 Ngữ pháp ▾</button>
+    <div class="grammar-box" style="display:none">
+      <div class="grammar-box-title">Phân tích ngữ pháp</div>
+      ${grammarHTML}
+    </div>`:''}
+  </div>`;
+}
+
+function toggleGrammar(btn){
+  const box=btn.nextElementSibling;
+  const open=box.style.display==='none';
+  box.style.display=open?'block':'none';
+  btn.textContent=open?'📖 Ngữ pháp ▴':'📖 Ngữ pháp ▾';
+}
+
+function render(){
+  if(qIdx>=queue.length){showResult();return;}
+  const ac=allCards();const ci=queue[qIdx];const c=ac[ci];
+  flipped=false;typeChecked=false;
+  const scene=document.getElementById('scene');scene.classList.remove('flipped','shake','pop');
+  const id=cardId(ci);const s=srsScore[id]||0;
+  const badgeCls=s>=3?'srs-known':s>0?'srs-review':'srs-new';
+  const badgeText=s>=3?'✓ Đã thuộc':s>0?'↻ Ôn lại':'★ Mới';
+  const wf=(c.article+' '+c.word).trim();
+
+  document.getElementById('front').innerHTML=`
+    <span class="srs-badge ${badgeCls}">${badgeText}</span>
+    <div class="card-tag">${c.type||''}</div>
+    <div class="card-article">${c.article||''}</div>
+    <div class="card-word">${c.word}</div>
+    <div class="speak-row">
+      <button class="speak-btn" onclick="event.stopPropagation();speak('${wf}',this)">${spkI} Nghe từ</button>
+    </div>
+    ${typeMode?'':'<div class="card-hint">👆 Nhấn thẻ để xem nghĩa</div>'}`;
+  document.getElementById('back').innerHTML=renderBack(c);
+  document.getElementById('prog').style.width=`${(qIdx/queue.length)*100}%`;
+  document.getElementById('counter').textContent=`${qIdx+1} / ${queue.length} thẻ`;
+
+  if(typeMode){
+    document.getElementById('typeArea').style.display='block';
+    const inp=document.getElementById('typeInput');inp.value='';inp.className='type-input';inp.disabled=false;
+    document.getElementById('typeHint').textContent='Nhấn Enter để kiểm tra';
+    setTimeout(()=>inp.focus(),120);
+    document.getElementById('btns').innerHTML=`<button class="btn btn-flip" onclick="checkType()">Kiểm tra →</button>`;
+  } else {
+    document.getElementById('typeArea').style.display='none';
+    document.getElementById('btns').innerHTML=`<button class="btn btn-flip" onclick="handleCardClick()">Lật thẻ</button>`;
+  }
+  startTimer();
+}
+
+function handleCardClick(){if(typeMode&&!typeChecked)return;if(!flipped)flipCard();}
+function flipCard(){
+  flipped=true;stopTimer();
+  const scene=document.getElementById('scene');
+  scene.classList.add('flipped');
+  // smooth scroll to show answer
+  setTimeout(()=>scene.scrollIntoView({behavior:'smooth',block:'nearest'}),50);
+  if(!typeMode){
+    document.getElementById('btns').innerHTML=`
+      <button class="btn btn-correct" onclick="next(true)">✓ Đúng rồi</button>
+      <button class="btn btn-wrong" onclick="next(false)">✗ Chưa nhớ</button>`;
+  }
+}
+function handleTypeKey(e){if(e.key==='Enter'){if(!typeChecked)checkType();else next(typeChecked==='correct');}}
+function checkType(){
+  const ci=queue[qIdx];const c=allCards()[ci];
+  const inp=document.getElementById('typeInput');const val=inp.value.trim().toLowerCase();
+  const answers=c.meaning.toLowerCase().split('/').map(s=>s.trim());
+  const ok=answers.some(a=>val===a||a.includes(val)||val.includes(a));
+  typeChecked=ok?'correct':'wrong';inp.classList.add(ok?'correct':'wrong');inp.disabled=true;
+  document.getElementById('typeHint').textContent=ok?'✓ Chính xác! Nhấn Enter để tiếp.':'✗ Đáp án: '+c.meaning+' — Nhấn Enter để tiếp.';
+  flipCard();
+  document.getElementById('btns').innerHTML=`
+    <button class="btn btn-correct" onclick="next(true)">✓ Đúng rồi</button>
+    <button class="btn btn-wrong" onclick="next(false)">✗ Chưa nhớ</button>`;
+}
+
+function next(ok){
+  const ci=queue[qIdx];const id=cardId(ci);const scene=document.getElementById('scene');
+  const s=srsScore[id]||0;
+  if(ok){
+    sessionCorrect++;streak++;if(streak>bestStreak)bestStreak=streak;
+    combo=streak>=10?4:streak>=5?3:streak>=3?2:1;
+    srsScore[id]=Math.min(s+1,SRS_INTERVALS.length-1);
+    srsDue[id]=Date.now()+SRS_INTERVALS[srsScore[id]]*24*60*60*1000;
+    const gained=addXP(10);
+    showFloat(OK_MSGS[Math.floor(Math.random()*OK_MSGS.length)]+` +${gained}XP${combo>1?` (x${combo}!)`:''}`);
+    scene.classList.add('pop');
+    if(streak>1&&STREAK_MSGS[streak])setTimeout(()=>showFloat(STREAK_MSGS[streak]),700);
+    if(streak===5||streak===10||streak===20)confetti();
+  } else {
+    sessionWrong++;streak=0;combo=1;
+    srsScore[id]=Math.max(s-1,0);srsDue[id]=Date.now();
+    showFloat(NO_MSGS[Math.floor(Math.random()*NO_MSGS.length)]);scene.classList.add('shake');
+  }
+  saveAll();qIdx++;updateStats();renderDots();updateStreakUI();
+  scene.classList.remove('flipped');setTimeout(render,100);
+}
+
+function showResult(){
+  stopTimer();
+  document.getElementById('scene').style.display='none';document.getElementById('typeArea').style.display='none';
+  document.getElementById('btns').innerHTML='';document.getElementById('counter').textContent='Vòng học hoàn thành! 🎉';
+  document.getElementById('prog').style.width='100%';
+  const total=sessionCorrect+sessionWrong;const pct=total?Math.round(sessionCorrect/total*100):0;
+  const fi=getFiltered();
+  const known=fi.filter(i=>(srsScore[cardId(i)]||0)>=3).length;
+  const rev=fi.filter(i=>{const s=srsScore[cardId(i)]||0;return s>0&&s<3;}).length;
+  const nw=fi.filter(i=>(srsScore[cardId(i)]||0)===0).length;
+  const mx=Math.max(known,rev,nw,1);
+  const tomorrow=Date.now()+24*60*60*1000;
+  const dueTmr=fi.filter(i=>{const d=srsDue[cardId(i)]||0;return d>Date.now()&&d<=tomorrow;}).length;
+  if(pct>=90)confetti();
+  document.getElementById('resultArea').innerHTML=`
+    <div class="result-box">
+      <div class="result-score">${pct}%</div>
+      <div class="result-label">chính xác · ${sessionCorrect}/${total} thẻ · 🔥 Best: ${bestStreak}</div>
+      <div class="bar-chart">
+        <div class="bar" style="height:${Math.max(5,known/mx*54)}px;background:var(--green-border);width:40px"></div>
+        <div class="bar" style="height:${Math.max(5,rev/mx*54)}px;background:var(--amber-border);width:40px"></div>
+        <div class="bar" style="height:${Math.max(5,nw/mx*54)}px;background:var(--accent);width:40px"></div>
+      </div>
+      <div class="chart-labels">
+        <div class="chart-label" style="color:var(--green-text)">✓ ${known}</div>
+        <div class="chart-label" style="color:var(--amber-text)">↻ ${rev}</div>
+        <div class="chart-label" style="color:var(--accent)">★ ${nw}</div>
+      </div>
+      <div style="font-size:11px;color:var(--text3);text-align:center;margin-top:3px">Thuộc · Ôn lại · Chưa học</div>
+      ${dueTmr>0?`<div style="margin-top:.75rem;font-size:12px;color:var(--amber-text);background:var(--amber-bg);padding:6px 12px;border-radius:8px;display:inline-block;">📅 Ngày mai ôn lại ${dueTmr} từ</div>`:''}
+      <div style="margin-top:1.1rem;display:flex;gap:7px;justify-content:center;flex-wrap:wrap;">
+        <button class="btn btn-flip" onclick="startSession()">Học tiếp ↻</button>
+        <button class="btn" style="font-size:12px" onclick="resetAll()">Đặt lại tất cả</button>
+      </div>
+    </div>`;
+}
+
+function resetAll(){
+  allCards().forEach((_,i)=>{const id=cardId(i);srsScore[id]=0;srsDue[id]=Date.now();});
+  xp=0;level=0;streak=0;bestStreak=0;combo=1;saveAll();updateXPBar();updateStreakUI();startSession();
+}
+
+function renderSchedule(){
+  const ac=allCards();const now=Date.now();const DAY=86400000;
+  const days=[
+    {label:'Hôm nay',from:0,to:DAY},{label:'Ngày mai',from:DAY,to:2*DAY},
+    {label:'3 ngày tới',from:2*DAY,to:4*DAY},{label:'Tuần tới',from:4*DAY,to:8*DAY},
+    {label:'2 tuần tới',from:8*DAY,to:16*DAY},{label:'Sau đó',from:16*DAY,to:Infinity},
+  ];
+  const overdue=ac.map((_,i)=>i).filter(i=>{const d=srsDue[cardId(i)]||0;return d<now&&(srsScore[cardId(i)]||0)>0;});
+  let html='';
+  if(overdue.length)html+=`<div class="schedule-day" style="border-color:var(--red-border)"><div class="schedule-day-header"><span class="day-label" style="color:var(--red-text)">⚠️ Quá hạn</span><span class="day-count">${overdue.length} từ</span></div><div class="day-words">${overdue.map(i=>`<span class="day-word-chip due-today">${ac[i].word}</span>`).join('')}</div></div>`;
+  days.forEach(d=>{
+    const words=ac.map((_,i)=>i).filter(i=>{const due=srsDue[cardId(i)]||0;const s=srsScore[cardId(i)]||0;if(d.label==='Hôm nay')return due>=now&&due<now+d.to&&s>0;return due>=now+d.from&&due<now+d.to;});
+    if(!words.length)return;
+    html+=`<div class="schedule-day"><div class="schedule-day-header"><span class="day-label">${d.label==='Hôm nay'?'📅':'🗓️'} ${d.label}</span><span class="day-count">${words.length} từ</span></div><div class="day-words">${words.map(i=>`<span class="day-word-chip${d.label==='Hôm nay'?' due-today':''}">${ac[i].word}</span>`).join('')}</div></div>`;
+  });
+  const nw=ac.map((_,i)=>i).filter(i=>(srsScore[cardId(i)]||0)===0);
+  if(nw.length)html+=`<div class="schedule-day"><div class="schedule-day-header"><span class="day-label">✨ Chưa học</span><span class="day-count">${nw.length} từ</span></div><div class="day-words">${nw.map(i=>`<span class="day-word-chip new-card">${ac[i].word}</span>`).join('')}</div></div>`;
+  if(!html)html=`<div class="schedule-empty">🎉 Không có gì cần ôn lúc này!</div>`;
+  document.getElementById('scheduleContent').innerHTML=`<div style="margin-bottom:1.25rem"><div style="font-size:13px;font-weight:500;color:var(--text);margin-bottom:.6rem">Lịch ôn tập SRS</div>${html}</div>`;
+}
+
+function addCard(){
+  const word=document.getElementById('inWord').value.trim();
+  const meaning=document.getElementById('inMeaning').value.trim();
+  if(!word||!meaning){document.getElementById('addMsg').textContent='⚠️ Cần điền Từ và Nghĩa.';return;}
+  const card={
+    article:document.getElementById('inArticle').value.trim(),
+    word,type:document.getElementById('inType').value.trim()||'Khác',meaning,
+    s1:document.getElementById('inSentence').value.trim(),t1:document.getElementById('inTrans').value.trim(),
+    s2:document.getElementById('inSentence2').value.trim(),t2:document.getElementById('inTrans2').value.trim(),
+    grammar:[]
+  };
+  customCards.push(card);saveAll();ensureAll();
+  ['inWord','inMeaning','inArticle','inType','inSentence','inTrans','inSentence2','inTrans2'].forEach(id=>document.getElementById(id).value='');
+  document.getElementById('addMsg').textContent=`✓ Đã thêm "${word}"!`;
+  setTimeout(()=>document.getElementById('addMsg').textContent='',2500);
+  buildFilters();renderCustomList();
+}
+
+function batchAdd(){
+  const raw=document.getElementById('batchInput').value.trim();
+  if(!raw){document.getElementById('batchMsg').textContent='⚠️ Chưa có nội dung.';return;}
+  let count=0;
+  raw.split('\n').map(l=>l.trim()).filter(Boolean).forEach(line=>{
+    const sep=line.includes('=')?'=':line.includes(':')?':':null;if(!sep)return;
+    const [left,right]=line.split(sep).map(s=>s.trim());if(!left||!right)return;
+    let article='',word=left;const m=left.match(/^(der|die|das)\s+(.+)$/i);if(m){article=m[1];word=m[2];}
+    customCards.push({article,word,type:'Khác',meaning:right,s1:'',t1:'',s2:'',t2:'',grammar:[]});count++;
+  });
+  saveAll();ensureAll();document.getElementById('batchInput').value='';
+  document.getElementById('batchMsg').textContent=`✓ Đã thêm ${count} từ!`;
+  setTimeout(()=>document.getElementById('batchMsg').textContent='',2500);
+  buildFilters();renderCustomList();
+}
+function deleteCustom(idx){customCards.splice(idx,1);saveAll();renderCustomList();buildFilters();}
+function renderCustomList(){
+  const el=document.getElementById('customCardList');
+  if(!customCards.length){el.innerHTML='';return;}
+  el.innerHTML=`<div class="card-list-title" style="margin-top:1rem">Từ bạn đã thêm (${customCards.length})</div>`+
+    customCards.map((c,i)=>`<span class="card-chip">${c.article?c.article+' ':''}${c.word} = ${c.meaning}<button class="card-chip-del" onclick="deleteCustom(${i})">×</button></span>`).join('');
+}
+
+function switchTab(name){
+  document.querySelectorAll('.tab').forEach((t,i)=>t.classList.toggle('active',['learn','schedule','add'][i]===name));
+  document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));
+  document.getElementById('tab-'+name).classList.add('active');
+  if(name==='schedule')renderSchedule();
+  if(name==='add')renderCustomList();
+}
+
+// PWA
+(function(){
+  const manifest={name:"Flashcard Tiếng Đức B1",short_name:"Deutsch B1",start_url:"./",display:"standalone",background_color:"#f5f5f0",theme_color:"#534AB7",icons:[{src:"data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%23534AB7'/><text y='.9em' font-size='75' x='12'>🇩🇪</text></svg>",sizes:"192x192",type:"image/svg+xml"}]};
+  const blob=new Blob([JSON.stringify(manifest)],{type:'application/json'});
+  document.getElementById('pwaManifest').href=URL.createObjectURL(blob);
+  if('serviceWorker' in navigator){
+    const sw=`const C='dB1-v2';self.addEventListener('install',e=>{e.waitUntil(caches.open(C).then(c=>c.addAll(['/'])));self.skipWaiting();});self.addEventListener('activate',e=>{e.waitUntil(caches.keys().then(ks=>Promise.all(ks.filter(k=>k!==C).map(k=>caches.delete(k)))));self.clients.claim();});self.addEventListener('fetch',e=>{e.respondWith(caches.match(e.request).then(r=>r||fetch(e.request).then(res=>{const cl=res.clone();caches.open(C).then(c=>c.put(e.request,cl));return res;}).catch(()=>caches.match('/'))));});`;
+    navigator.serviceWorker.register(URL.createObjectURL(new Blob([sw],{type:'application/javascript'}))).catch(()=>{});
+  }
+})();
+
+buildFilters();
+startSession();
+</script>
+</body>
+</html>
