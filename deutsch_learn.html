@@ -1,0 +1,977 @@
+<!DOCTYPE html>
+<html lang="vi" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
+<meta name="theme-color" content="#0a0a0f">
+<title>Deutsch Lernen — Lý thuyết A1–C2</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500;600&family=Geist:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg-0:#0a0a0f;--bg-1:#111118;--bg-2:#16161f;--bg-3:#1c1c28;--bg-4:#252535;
+  --border-0:rgba(255,255,255,.06);--border-1:rgba(255,255,255,.1);--border-2:rgba(255,255,255,.18);
+  --text-0:#ffffff;--text-1:rgba(255,255,255,.85);--text-2:rgba(255,255,255,.52);--text-3:rgba(255,255,255,.28);
+  --accent:#4F8EF7;--accent-dim:rgba(79,142,247,.12);--accent-glow:rgba(79,142,247,.28);
+  --green:#3ECF8E;--green-dim:rgba(62,207,142,.1);
+  --red:#F87171;--red-dim:rgba(248,113,113,.1);
+  --amber:#FBBF24;--amber-dim:rgba(251,191,36,.1);
+  --purple:#A78BFA;--purple-dim:rgba(167,139,250,.1);
+  --font-sans:'Geist',system-ui,sans-serif;--font-mono:'Geist Mono',monospace;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html,body{height:100%;overflow:hidden;}
+body{font-family:var(--font-sans);background:var(--bg-0);color:var(--text-1);font-size:15px;line-height:1.6;-webkit-font-smoothing:antialiased;}
+
+/* ── LAYOUT ── */
+.app{display:flex;height:100vh;overflow:hidden;}
+
+/* ── SIDEBAR ── */
+.sidebar{
+  width:260px;flex-shrink:0;background:var(--bg-1);border-right:1px solid var(--border-0);
+  display:flex;flex-direction:column;overflow:hidden;transition:width .25s cubic-bezier(.4,0,.2,1);
+}
+.sidebar.collapsed{width:52px;}
+.sb-top{padding:.85rem .9rem .6rem;border-bottom:1px solid var(--border-0);display:flex;align-items:center;gap:8px;flex-shrink:0;}
+.sb-logo{font-weight:700;font-size:13.5px;color:var(--text-0);white-space:nowrap;overflow:hidden;flex:1;letter-spacing:-.3px;}
+.sb-logo span{color:var(--accent);}
+.sb-collapse{background:none;border:1px solid var(--border-1);border-radius:6px;padding:4px 6px;cursor:pointer;color:var(--text-2);font-size:13px;flex-shrink:0;}
+.sb-collapse:hover{background:var(--bg-3);color:var(--text-0);}
+.sidebar.collapsed .sb-logo,.sidebar.collapsed .sb-search{display:none;}
+.sb-search-wrap{padding:.6rem .9rem;border-bottom:1px solid var(--border-0);flex-shrink:0;}
+.sb-search{width:100%;padding:6px 10px 6px 30px;border-radius:8px;border:1px solid var(--border-1);background:var(--bg-2);color:var(--text-0);font-size:12.5px;font-family:var(--font-sans);outline:none;transition:border-color .15s;position:relative;}
+.sb-search:focus{border-color:var(--accent);}
+.sb-search-icon{position:absolute;left:20px;top:50%;transform:translateY(-50%);font-size:13px;pointer-events:none;color:var(--text-3);}
+.sb-scroll{flex:1;overflow-y:auto;padding:.5rem 0 1rem;}
+.sb-scroll::-webkit-scrollbar{width:3px;}
+.sb-scroll::-webkit-scrollbar-track{background:transparent;}
+.sb-scroll::-webkit-scrollbar-thumb{background:var(--border-1);border-radius:2px;}
+
+/* sidebar level group */
+.sb-group{margin-bottom:.35rem;}
+.sb-group-hd{
+  display:flex;align-items:center;gap:6px;padding:.45rem .9rem;cursor:pointer;
+  font-size:10.5px;font-weight:700;color:var(--text-3);text-transform:uppercase;letter-spacing:.08em;
+  user-select:none;transition:color .15s;font-family:var(--font-mono);
+}
+.sb-group-hd:hover{color:var(--text-1);}
+.sb-group-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0;}
+.sb-group-arrow{font-size:10px;margin-left:auto;transition:transform .2s;}
+.sb-group.open .sb-group-arrow{transform:rotate(90deg);}
+.sb-group-items{display:none;}
+.sb-group.open .sb-group-items{display:block;}
+.sb-item{
+  display:flex;align-items:center;gap:8px;padding:.38rem .9rem .38rem 1.6rem;cursor:pointer;
+  font-size:12.5px;color:var(--text-2);border-radius:0;transition:all .12s;
+  position:relative;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+}
+.sb-item:hover{color:var(--text-1);background:var(--bg-2);}
+.sb-item.active{color:var(--accent);background:var(--accent-dim);}
+.sb-item.active::before{content:'';position:absolute;left:0;top:4px;bottom:4px;width:2px;background:var(--accent);border-radius:0 2px 2px 0;}
+.sb-item.read{color:var(--text-2);}
+.sb-item.read .sb-check{opacity:1;}
+.sb-check{font-size:10px;color:var(--green);margin-left:auto;opacity:0;flex-shrink:0;}
+.sidebar.collapsed .sb-group-hd span,.sidebar.collapsed .sb-group-items{display:none;}
+.sidebar.collapsed .sb-group-dot{margin:0 auto;}
+.sidebar.collapsed .sb-group-hd{padding:.6rem;justify-content:center;}
+
+/* ── MAIN ── */
+.main{flex:1;display:flex;flex-direction:column;overflow:hidden;}
+
+/* topbar */
+.topbar{display:flex;align-items:center;gap:10px;padding:.6rem 1.2rem;border-bottom:1px solid var(--border-0);background:var(--bg-1);flex-shrink:0;}
+.tb-title{font-size:14px;font-weight:600;color:var(--text-0);flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.tb-btns{display:flex;gap:6px;flex-shrink:0;}
+.tb-btn{background:var(--bg-2);border:1px solid var(--border-1);border-radius:7px;padding:5px 10px;font-size:12px;cursor:pointer;color:var(--text-2);font-family:var(--font-sans);transition:all .15s;white-space:nowrap;}
+.tb-btn:hover{background:var(--bg-3);color:var(--text-1);border-color:var(--border-2);}
+.tb-btn.primary{background:var(--accent);color:#fff;border-color:transparent;}
+.tb-btn.primary:hover{opacity:.88;}
+.tb-progress{flex-shrink:0;display:flex;align-items:center;gap:7px;font-size:11px;color:var(--text-3);font-family:var(--font-mono);}
+.tb-pbar{width:80px;height:4px;background:var(--bg-4);border-radius:2px;overflow:hidden;}
+.tb-pfill{height:4px;background:linear-gradient(90deg,var(--accent),#818CF8);border-radius:2px;transition:width .5s;}
+
+/* content */
+.content{flex:1;overflow-y:auto;padding:1.5rem 1.4rem 3rem;}
+.content::-webkit-scrollbar{width:4px;}
+.content::-webkit-scrollbar-thumb{background:var(--border-1);border-radius:2px;}
+
+/* ── WELCOME SCREEN ── */
+.welcome{max-width:520px;margin:0 auto;padding-top:2rem;}
+.welcome-hero{text-align:center;margin-bottom:2rem;}
+.welcome-title{font-size:30px;font-weight:700;color:var(--text-0);letter-spacing:-1px;line-height:1.2;margin-bottom:.5rem;}
+.welcome-title span{color:var(--accent);}
+.welcome-sub{font-size:14px;color:var(--text-2);line-height:1.7;}
+.level-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:1.5rem;}
+.lv-card{background:var(--bg-1);border:1px solid var(--border-0);border-radius:12px;padding:.85rem .75rem;cursor:pointer;transition:all .2s;text-align:center;}
+.lv-card:hover{border-color:var(--border-2);background:var(--bg-2);transform:translateY(-1px);}
+.lv-card-badge{font-size:12px;font-weight:700;padding:2px 8px;border-radius:6px;display:inline-block;margin-bottom:.4rem;font-family:var(--font-mono);}
+.lv-card-name{font-size:12px;color:var(--text-2);line-height:1.4;}
+.lv-card-count{font-size:11px;color:var(--text-3);margin-top:2px;font-family:var(--font-mono);}
+.lv-card-prog{height:3px;background:var(--bg-4);border-radius:2px;margin-top:.5rem;overflow:hidden;}
+.lv-card-prog-fill{height:3px;border-radius:2px;transition:width .5s;}
+
+/* ── LESSON CONTENT ── */
+.lesson{max-width:640px;margin:0 auto;}
+.lesson-header{margin-bottom:1.5rem;padding-bottom:1.2rem;border-bottom:1px solid var(--border-0);}
+.lesson-badge{font-size:11px;font-weight:700;padding:2px 8px;border-radius:6px;display:inline-block;margin-bottom:.5rem;font-family:var(--font-mono);}
+.lesson-title{font-size:26px;font-weight:700;color:var(--text-0);letter-spacing:-.6px;line-height:1.2;margin-bottom:.4rem;}
+.lesson-subtitle{font-size:14px;color:var(--text-2);}
+.lesson-meta{display:flex;gap:12px;margin-top:.75rem;font-size:11px;color:var(--text-3);font-family:var(--font-mono);}
+.lesson-meta span{display:flex;align-items:center;gap:4px;}
+
+/* section headings */
+.sec{margin-bottom:1.4rem;}
+.sec-title{font-size:11px;font-weight:700;color:var(--text-3);text-transform:uppercase;letter-spacing:.1em;margin-bottom:.6rem;font-family:var(--font-mono);display:flex;align-items:center;gap:6px;}
+.sec-title::after{content:'';flex:1;height:1px;background:var(--border-0);}
+.body-text{font-size:14px;color:var(--text-2);line-height:1.85;}
+
+/* formula */
+.formula-box{
+  background:var(--bg-0);border:1px solid var(--border-1);border-radius:10px;
+  padding:.85rem 1.1rem;font-family:var(--font-mono);font-size:13px;color:var(--accent);
+  margin:.5rem 0 .9rem;line-height:1.9;letter-spacing:.01em;
+}
+.f-row{display:flex;align-items:baseline;gap:.5rem;flex-wrap:wrap;}
+.f-key{color:var(--accent);font-weight:600;}
+.f-sep{color:var(--text-3);}
+.f-val{color:var(--text-1);}
+.f-note{font-size:11px;color:var(--text-3);display:block;margin-top:.2rem;font-family:var(--font-sans);}
+
+/* examples */
+.ex-grid{display:flex;flex-direction:column;gap:8px;margin:.4rem 0 .9rem;}
+.ex-item{background:var(--bg-2);border:1px solid var(--border-0);border-radius:10px;padding:.7rem .95rem;border-left:3px solid var(--border-2);}
+.ex-item.good{border-left-color:var(--green);}
+.ex-item.bad{border-left-color:var(--red);}
+.ex-item.accent{border-left-color:var(--accent);}
+.ex-de{font-size:14px;font-style:italic;color:var(--text-0);line-height:1.6;}
+.ex-de .hl{background:var(--accent-dim);color:var(--accent);border-radius:4px;padding:0 3px;font-style:normal;font-weight:600;font-size:13px;}
+.ex-de .hl-red{background:var(--red-dim);color:var(--red);border-radius:4px;padding:0 3px;font-style:normal;font-weight:600;font-size:13px;}
+.ex-vi{font-size:12px;color:var(--text-3);margin-top:4px;}
+.ex-note{font-size:11px;color:var(--text-2);margin-top:5px;padding-top:5px;border-top:1px solid var(--border-0);font-family:var(--font-mono);}
+.spk-mini{background:none;border:none;cursor:pointer;color:var(--text-3);font-size:11px;padding:2px 5px;border-radius:4px;margin-top:4px;font-family:var(--font-sans);transition:color .15s;display:inline-flex;align-items:center;gap:3px;}
+.spk-mini svg{width:10px;height:10px;fill:currentColor;}
+.spk-mini:hover{color:var(--accent);}
+.spk-mini.go{color:var(--accent);animation:pulse .7s infinite;}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.35}}
+
+/* tip / danger / good boxes */
+.tip-box,.danger-box,.good-box{border-radius:9px;padding:.6rem .9rem;font-size:13px;margin:.4rem 0 .7rem;line-height:1.65;}
+.tip-box{background:var(--amber-dim);border:1px solid rgba(251,191,36,.2);color:var(--amber);}
+.danger-box{background:var(--red-dim);border:1px solid rgba(248,113,113,.2);color:var(--red);}
+.good-box{background:var(--green-dim);border:1px solid rgba(62,207,142,.2);color:var(--green);}
+.tip-box strong,.danger-box strong,.good-box strong{display:block;font-size:10.5px;text-transform:uppercase;letter-spacing:.07em;margin-bottom:.25rem;font-family:var(--font-mono);}
+
+/* compare table */
+.compare-table{width:100%;border-collapse:collapse;margin:.4rem 0 .9rem;font-size:13px;}
+.compare-table th{background:var(--bg-2);padding:6px 10px;text-align:left;font-size:10.5px;font-weight:700;color:var(--text-3);text-transform:uppercase;letter-spacing:.07em;border-bottom:1px solid var(--border-1);font-family:var(--font-mono);}
+.compare-table td{padding:8px 10px;border-bottom:1px solid var(--border-0);vertical-align:top;line-height:1.5;}
+.compare-table tr:last-child td{border-bottom:none;}
+.compare-table .c-a{color:var(--accent);font-family:var(--font-mono);font-weight:600;}
+.compare-table .c-b{color:var(--purple);font-family:var(--font-mono);font-weight:600;}
+
+/* badge levels */
+.b-A1{color:#4ADE80;background:rgba(74,222,128,.1);border:1px solid rgba(74,222,128,.2);}
+.b-A2{color:#34D399;background:rgba(52,211,153,.1);border:1px solid rgba(52,211,153,.2);}
+.b-B1{color:#FBBF24;background:rgba(251,191,36,.1);border:1px solid rgba(251,191,36,.2);}
+.b-B2{color:#F97316;background:rgba(249,115,22,.1);border:1px solid rgba(249,115,22,.2);}
+.b-C1{color:#A78BFA;background:rgba(167,139,250,.1);border:1px solid rgba(167,139,250,.2);}
+.b-C2{color:#F472B6;background:rgba(244,114,182,.1);border:1px solid rgba(244,114,182,.2);}
+.badge{display:inline-flex;align-items:center;font-size:11px;font-weight:700;padding:2px 7px;border-radius:6px;font-family:var(--font-mono);}
+
+/* mini quiz */
+.quiz-wrap{background:var(--bg-1);border:1px solid var(--border-1);border-radius:12px;overflow:hidden;margin-top:1.5rem;}
+.quiz-hd{padding:.75rem 1rem;background:var(--accent-dim);border-bottom:1px solid var(--accent-glow);display:flex;align-items:center;gap:8px;}
+.quiz-hd-title{font-size:13px;font-weight:600;color:var(--accent);}
+.quiz-hd-sub{font-size:11px;color:var(--text-3);margin-left:auto;font-family:var(--font-mono);}
+.quiz-body{padding:.9rem 1rem;}
+.quiz-q{font-size:14px;font-weight:500;color:var(--text-0);margin-bottom:.7rem;line-height:1.5;}
+.quiz-opts{display:flex;flex-direction:column;gap:7px;}
+.quiz-opt{padding:9px 13px;border-radius:8px;border:1px solid var(--border-1);background:var(--bg-2);font-size:13.5px;cursor:pointer;text-align:left;font-family:var(--font-sans);color:var(--text-1);transition:all .15s;}
+.quiz-opt:hover{border-color:var(--border-2);background:var(--bg-3);}
+.quiz-opt.ok{background:var(--green-dim);border-color:rgba(62,207,142,.3);color:var(--green);pointer-events:none;}
+.quiz-opt.no{background:var(--red-dim);border-color:rgba(248,113,113,.3);color:var(--red);pointer-events:none;}
+.quiz-opt.show{background:var(--green-dim);border-color:rgba(62,207,142,.3);color:var(--green);pointer-events:none;}
+.quiz-explain{font-size:12px;color:var(--text-2);margin-top:.5rem;padding:.5rem .7rem;background:var(--bg-2);border-radius:7px;border-left:2px solid var(--accent);display:none;line-height:1.6;}
+.quiz-explain.show{display:block;}
+.quiz-nav{display:flex;justify-content:space-between;align-items:center;padding:.6rem 1rem;border-top:1px solid var(--border-0);}
+.quiz-ctr{font-size:11px;color:var(--text-3);font-family:var(--font-mono);}
+.quiz-next{background:var(--accent);color:#fff;border:none;border-radius:7px;padding:6px 14px;font-size:12px;cursor:pointer;font-family:var(--font-sans);font-weight:500;}
+.quiz-next:hover{opacity:.88;}
+.quiz-result{text-align:center;padding:1.2rem;}
+.qr-score{font-size:36px;font-weight:700;font-family:var(--font-mono);letter-spacing:-1px;}
+.qr-sub{font-size:12px;color:var(--text-3);margin-top:3px;font-family:var(--font-mono);}
+
+/* lesson nav */
+.lesson-nav{display:flex;justify-content:space-between;align-items:center;margin-top:2rem;padding-top:1.2rem;border-top:1px solid var(--border-0);}
+.ln-btn{background:var(--bg-2);border:1px solid var(--border-1);border-radius:9px;padding:.6rem 1rem;font-size:13px;cursor:pointer;color:var(--text-2);font-family:var(--font-sans);transition:all .15s;display:flex;align-items:center;gap:6px;max-width:45%;}
+.ln-btn:hover{border-color:var(--border-2);color:var(--text-1);}
+.ln-btn.primary{background:var(--accent);color:#fff;border-color:transparent;}
+.ln-btn.primary:hover{opacity:.88;}
+.ln-btn-label{font-size:10px;color:var(--text-3);display:block;margin-bottom:1px;font-family:var(--font-mono);text-transform:uppercase;letter-spacing:.07em;}
+.ln-btn .primary .ln-btn-label{color:rgba(255,255,255,.6);}
+.ln-btn-title{font-size:12.5px;font-weight:500;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.mark-done-wrap{text-align:center;}
+.mark-done{background:var(--green-dim);border:1px solid rgba(62,207,142,.25);border-radius:9px;padding:.55rem 1.2rem;font-size:12.5px;color:var(--green);cursor:pointer;font-family:var(--font-sans);font-weight:500;transition:all .15s;}
+.mark-done:hover{background:rgba(62,207,142,.2);}
+.mark-done.done{background:var(--green);color:#000;border-color:var(--green);}
+
+/* mobile sidebar overlay */
+.sb-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:99;}
+.sb-hamburger{display:none;background:none;border:1px solid var(--border-1);border-radius:7px;padding:5px 8px;cursor:pointer;color:var(--text-2);font-size:14px;}
+@media(max-width:640px){
+  .sidebar{position:fixed;left:0;top:0;bottom:0;z-index:100;transform:translateX(-100%);transition:transform .25s cubic-bezier(.4,0,.2,1);}
+  .sidebar.mobile-open{transform:translateX(0);}
+  .sb-overlay.show{display:block;}
+  .sb-hamburger{display:block;}
+  .tb-progress{display:none;}
+}
+
+/* floating toast */
+.toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--bg-3);border:1px solid var(--border-2);border-radius:10px;padding:.55rem 1.1rem;font-size:13px;font-weight:500;color:var(--text-0);opacity:0;transition:all .3s;pointer-events:none;z-index:200;white-space:nowrap;}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+
+/* scrollbar for content */
+.content::-webkit-scrollbar{width:5px;}
+</style>
+</head>
+<body>
+<div class="toast" id="toast"></div>
+<div class="sb-overlay" id="sbOverlay" onclick="toggleSidebar()"></div>
+
+<div class="app">
+  <!-- SIDEBAR -->
+  <nav class="sidebar" id="sidebar">
+    <div class="sb-top">
+      <div class="sb-logo">Deutsch <span>Lernen</span></div>
+      <button class="sb-collapse" onclick="toggleSidebar()" title="Thu/mở sidebar">⇄</button>
+    </div>
+    <div class="sb-search-wrap">
+      <div style="position:relative">
+        <span class="sb-search-icon">🔍</span>
+        <input class="sb-search" id="sbSearch" placeholder="Tìm chủ đề..." oninput="filterSidebar(this.value)">
+      </div>
+    </div>
+    <div class="sb-scroll" id="sbScroll"></div>
+  </nav>
+
+  <!-- MAIN -->
+  <div class="main">
+    <div class="topbar">
+      <button class="sb-hamburger" onclick="toggleMobile()">☰</button>
+      <div class="tb-title" id="tbTitle">Deutsch Lernen A1–C2</div>
+      <div class="tb-progress">
+        <div class="tb-pbar"><div class="tb-pfill" id="tbPfill" style="width:0%"></div></div>
+        <span id="tbPct">0%</span>
+      </div>
+      <div class="tb-btns">
+        <button class="tb-btn" onclick="window.location.href='index.html'" title="App học bài">📱 App</button>
+        <button class="tb-btn" onclick="window.location.href='reference.html'" title="Sổ tay">📖 Ref</button>
+      </div>
+    </div>
+    <div class="content" id="content"></div>
+  </div>
+</div>
+<script src="grammar_data.js"></script>
+<script>
+
+// ═══════════════════════════════════════════════════
+// CURRICULUM DATA A1 → C2
+// ═══════════════════════════════════════════════════
+const SPK=`<svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>`;
+
+const CURRICULUM = [
+// ══════════════════════════════════
+// A1
+// ══════════════════════════════════
+{id:"a1_sein",lv:"A1",title:"sein — là / ở",subtitle:"Động từ bất quy tắc quan trọng nhất tiếng Đức",mins:8,
+ intro:`<strong>sein</strong> là động từ bất quy tắc dùng để mô tả <em>danh tính</em> (là ai), <em>nghề nghiệp</em>, <em>tính cách</em> và <em>vị trí</em> (ở đâu). Đây là động từ đầu tiên và quan trọng nhất bạn cần thuộc lòng — không có quy tắc nào giúp bạn đoán được các dạng chia của nó.`,
+ formula:[
+   ["ich","bin"],["du","bist"],["er/sie/es","ist"],
+   ["wir","sind"],["ihr","seid"],["sie/Sie","sind"],
+ ],
+ formulaNote:"BẤT QUY TẮC hoàn toàn. Präteritum: war/warst/war/waren/wart/waren. Konjunktiv II: wäre.",
+ examples:[
+   {de:"Ich <hl>bin</hl> Student.",vi:"Tôi là sinh viên.",note:"Nghề nghiệp/danh hiệu → sein",good:true},
+   {de:"Du <hl>bist</hl> sehr nett.",vi:"Bạn rất tốt bụng.",note:"Tính cách → sein",good:true},
+   {de:"Das Wetter <hl>ist</hl> schön.",vi:"Thời tiết đẹp.",note:"Mô tả trạng thái → sein",good:true},
+   {de:"Wir <hl>sind</hl> in Berlin.",vi:"Chúng tôi đang ở Berlin.",note:"Vị trí (ở đâu?) → sein",good:true},
+   {de:"<hl-red>Ich ist</hl-red> müde.",vi:"Tôi đã mệt.",note:"SAI — ich → BIN",good:false},
+ ],
+ tips:[
+   {type:"tip",title:"Mẹo ghi nhớ",text:"Học: BIN - BIST - IST - SIND - SEID - SIND. Đọc to 10 lần liên tiếp. Sau 3 ngày bạn sẽ không cần nghĩ nữa."},
+   {type:"tip",title:"Dùng sein hay haben?",text:"sein = TRẠNG THÁI / LÀ AI / Ở ĐÂU. haben = CÓ GÌ. → 'Ich bin krank' (tôi ốm — trạng thái) | 'Ich habe Hunger' (tôi đói — có cảm giác đói)"},
+   {type:"danger",title:"Lỗi phổ biến nhất",text:"FALSCH: 'Du bin Student' → RICHTIG: 'Du BIST Student'. Mỗi đại từ có dạng chia riêng!"},
+ ],
+ compare:[
+   {a:"sein (là/ở)",b:"haben (có)",c:"Ich BIN krank (trạng thái) vs Ich HABE eine Erkältung (sở hữu)"},
+ ],
+ quiz:[
+   {q:"___ du müde? (sein, du)",opts:["Bin","Bist","Ist","Sind"],c:1,ex:"sein + du = BIST. Quy tắc: bin/bist/ist/sind/seid/sind"},
+   {q:"Das ___ mein Buch. (sein, das)",opts:["bin","bist","ist","sind"],c:2,ex:"sein + das/er/sie/es = IST"},
+   {q:"Wir ___ in der Schule. (sein, wir)",opts:["bin","bist","ist","sind"],c:3,ex:"sein + wir = SIND"},
+ ]},
+
+{id:"a1_haben",lv:"A1",title:"haben — có",subtitle:"Động từ bất quy tắc thứ hai",mins:8,
+ intro:`<strong>haben</strong> = có. Dùng để diễn đạt sở hữu, cảm giác thể chất, và tạo thì Perfekt. Bất quy tắc ở ngôi 2 và 3 số ít (du → hast, er/sie/es → hat).`,
+ formula:[
+   ["ich","habe"],["du","hast"],["er/sie/es","hat"],
+   ["wir","haben"],["ihr","habt"],["sie/Sie","haben"],
+ ],
+ formulaNote:"Lưu ý: er/sie/es HAT (không phải 'habt'). Präteritum: hatte/hattest/hatte/hatten/hattet/hatten.",
+ examples:[
+   {de:"Ich <hl>habe</hl> einen Bruder.",vi:"Tôi có một người anh.",note:"Sở hữu: haben + Akkusativ",good:true},
+   {de:"Er <hl>hat</hl> keine Zeit.",vi:"Anh ấy không có thời gian.",note:"Phủ định: haben + kein/keine/kein",good:true},
+   {de:"<hl>Hast</hl> du Hunger?",vi:"Bạn có đói không?",note:"Cảm giác thể chất = haben, không dùng sein!",good:true},
+   {de:"Ich <hl>habe</hl> Kopfschmerzen.",vi:"Tôi bị đau đầu.",note:"Triệu chứng → haben",good:true},
+   {de:"<hl-red>Ich habe kein Hunger</hl-red>",vi:"Tôi không đói.",note:"SAI — Hunger = maskulin → keinen Hunger",good:false},
+ ],
+ tips:[
+   {type:"tip",title:"haben + kein = không có",text:"kein chia theo Genus: kein Mann (mask.), keine Frau (fem.), kein Kind (neut.). Akkusativ mask.: keinen!"},
+   {type:"tip",title:"Cảm giác = haben, không sein",text:"Hunger/Durst/Angst/Lust haben — KHÔNG sein. Tiếng Việt dùng 'là' (tôi ĐÓI) nhưng tiếng Đức: Ich HABE Hunger"},
+   {type:"danger",title:"haben vs. sein cho cảm giác",text:"FALSCH: 'Ich bin Hunger' → RICHTIG: 'Ich HABE Hunger'. NHƯNG: 'Ich bin krank' (ốm = trạng thái → sein)"},
+ ],
+ compare:[
+   {a:"haben + Nomen",b:"sein + Adjektiv",c:"Ich habe Hunger (có cảm giác đói) | Ich bin hungrig (ĐAng đói — tính từ)"},
+ ],
+ quiz:[
+   {q:"Er ___ keine Geschwister. (haben, er)",opts:["habe","hast","hat","haben"],c:2,ex:"haben + er = HAT. Lưu ý: er HAT (không phải habt)"},
+   {q:"___ du Zeit? (haben, du)",opts:["Habe","Hast","Hat","Haben"],c:1,ex:"haben + du = HAST"},
+   {q:"Ich ___ Kopfschmerzen.",opts:["bin","habe","hat","haben"],c:1,ex:"Triệu chứng/cảm giác = haben: ich HABE Kopfschmerzen"},
+ ]},
+
+{id:"a1_artikel",lv:"A1",title:"Artikel — Mạo từ",subtitle:"der/die/das — học KÈM với danh từ!",mins:12,
+ intro:`Tiếng Đức có 3 giống (Genus): <strong>maskulin</strong> (der), <strong>feminin</strong> (die), <strong>neutrum</strong> (das). Mạo từ thay đổi theo giống VÀ cách (Kasus). Đây là điểm khó nhất với người Việt vì tiếng Việt không có hệ thống này.<br><br><strong>Quy tắc vàng:</strong> KHÔNG bao giờ học danh từ đơn lẻ. Luôn học: <em>der</em> Tisch, <em>die</em> Lampe, <em>das</em> Fenster.`,
+ formulaRaw:`
+<table class="compare-table">
+<tr><th>Kasus</th><th class="c-a">Mask. (m)</th><th style="color:var(--green)">Fem. (f)</th><th style="color:var(--amber)">Neut. (n)</th><th style="color:var(--text-2)">Plural</th></tr>
+<tr><td><strong>Nom.</strong> (là ai/cái gì)</td><td class="c-a">der / ein</td><td style="color:var(--green)">die / eine</td><td style="color:var(--amber)">das / ein</td><td>die / —</td></tr>
+<tr><td><strong>Akk.</strong> (ai/cái gì)</td><td class="c-a">den / einen ⚠</td><td style="color:var(--green)">die / eine</td><td style="color:var(--amber)">das / ein</td><td>die / —</td></tr>
+<tr><td><strong>Dat.</strong> (cho ai)</td><td class="c-a">dem / einem</td><td style="color:var(--green)">der / einer</td><td style="color:var(--amber)">dem / einem</td><td>den+n / —</td></tr>
+</table>`,
+ examples:[
+   {de:"<hl>Der</hl> Mann ist nett.",vi:"Người đàn ông tốt bụng.",note:"der = mask. Nominativ (chủ ngữ)",good:true},
+   {de:"Ich sehe <hl>den</hl> Mann.",vi:"Tôi thấy người đàn ông.",note:"den = mask. Akkusativ — CHỈ maskulin thay đổi!",good:true},
+   {de:"<hl>Die</hl> Frau arbeitet hier.",vi:"Người phụ nữ làm việc ở đây.",note:"die = fem. Nom. (và Akk.!)",good:true},
+   {de:"<hl>Das</hl> Kind spielt.",vi:"Đứa trẻ chơi.",note:"das = neut. Nom.",good:true},
+ ],
+ tips:[
+   {type:"tip",title:"Quy tắc đuôi giúp đoán Genus",text:"-ung/-heit/-keit/-schaft/-tion → luôn feminin (DIE Zeitung, DIE Gesundheit)\n-chen/-lein → luôn neutrum (DAS Mädchen, DAS Fräulein)\nNam giới, mùa, tháng, ngày → thường maskulin (DER Mann, DER Sommer)"},
+   {type:"tip",title:"Chỉ Maskulin Akkusativ thay đổi!",text:"der → den, ein → einen. Feminin/Neutrum/Plural Akkusativ = Nominativ. Đây là điểm nhiều người quên nhất!"},
+   {type:"danger",title:"Lỗi #1 của người Việt",text:"Bỏ mạo từ: 'Ich kaufe Brot und Milch' (đúng — quen thuộc, không đếm được) NHƯNG: 'Ich kaufe EINEN Apfel' (phải có!). Quy tắc: danh từ đếm được số ít → LUÔN có mạo từ!"},
+ ],
+ compare:[
+   {a:"Nominativ (chủ ngữ — ai làm gì)",b:"Akkusativ (tân ngữ — làm gì với ai/cái gì)",c:"DER Hund beißt DEN Mann (Chủ ngữ: der Hund | Tân ngữ: den Mann)"},
+ ],
+ quiz:[
+   {q:"Ich kaufe ___ Buch. (das Buch, Akkusativ)",opts:["der","die","das","den"],c:2,ex:"das Buch = neutrum. Akkusativ neutrum = Nominativ: DAS. Chỉ maskulin thay đổi!"},
+   {q:"___ Frau ist Ärztin. (die Frau, Nominativ)",opts:["Der","Die","Das","Den"],c:1,ex:"Frau = feminin → DIE. Nominativ feminin = die"},
+   {q:"Er sieht ___ Mann. (der Mann, Akkusativ)",opts:["der","die","das","den"],c:3,ex:"Mann = maskulin. Akkusativ maskulin: der → DEN. Chỉ maskulin thay đổi trong Akkusativ!"},
+ ]},
+
+{id:"a1_verneinung",lv:"A1",title:"Verneinung — Phủ định",subtitle:"nicht vs. kein — hai cách phủ định",mins:8,
+ intro:`Tiếng Đức có 2 cách phủ định chính:<br>• <strong>nicht</strong>: phủ định động từ, tính từ, trạng từ, cụm giới từ<br>• <strong>kein/keine/kein</strong>: phủ định danh từ (thay thế ein/eine/ein)`,
+ formulaRaw:`<div class="formula-box">
+  <div class="f-row"><span class="f-key">nicht</span><span class="f-sep">→</span><span class="f-val">phủ định Verb / Adj. / Adv. / Präp. + Nomen</span></div>
+  <div class="f-row"><span class="f-key">kein</span><span class="f-sep">→</span><span class="f-val">mask.: kein | fem.: keine | neut.: kein | Pl.: keine</span></div>
+  <span class="f-note">kein thay thế ein/eine/ein. Akkusativ mask.: keinen!</span>
+</div>`,
+ examples:[
+   {de:"Ich arbeite <hl>nicht</hl>.",vi:"Tôi không làm việc.",note:"phủ định Verb → nicht thường ở cuối",good:true},
+   {de:"Das ist <hl>nicht</hl> richtig.",vi:"Điều đó không đúng.",note:"phủ định Adj. → nicht đứng trước Adj.",good:true},
+   {de:"Ich habe <hl>kein</hl> Auto.",vi:"Tôi không có xe hơi.",note:"Auto = neutrum → kein",good:true},
+   {de:"Sie hat <hl>keine</hl> Zeit.",vi:"Cô ấy không có thời gian.",note:"Zeit = feminin → keine",good:true},
+   {de:"Er trinkt <hl>keinen</hl> Kaffee.",vi:"Anh ấy không uống cà phê.",note:"Kaffee = mask. Akk. → keinen",good:true},
+ ],
+ tips:[
+   {type:"tip",title:"Vị trí của 'nicht'",text:"nicht thường đứng CUỐI câu khi phủ định toàn bộ: 'Ich komme nicht.' Nhưng đứng TRƯỚC khi phủ định cụ thể: 'Das ist nicht GUT' (mà là xấu)"},
+   {type:"tip",title:"kein = nicht + ein",text:"Ich habe KEIN Buch = Ich habe NICHT EIN Buch. Nếu trước danh từ là 'ein/eine/ein' → dùng kein. Nếu là 'der/die/das' definit → dùng nicht: 'Ich kenne DEN Mann nicht.'"},
+   {type:"danger",title:"Lỗi không/kein",text:"FALSCH: 'Ich habe nicht Auto' → RICHTIG: 'Ich habe KEIN Auto' (danh từ không xác định). NHƯNG: 'Ich habe das Auto NICHT' (danh từ xác định)"},
+ ],
+ quiz:[
+   {q:"Ich habe ___ Geschwister. (phủ định danh từ số nhiều)",opts:["nicht","kein","keine","keinen"],c:2,ex:"Plural → keine: ich habe KEINE Geschwister"},
+   {q:"Das stimmt ___.  (phủ định toàn câu)",opts:["nicht","kein","keine","keinen"],c:0,ex:"phủ định Verb/câu → nicht. Đứng cuối: Das stimmt NICHT."},
+   {q:"Er hat ___ Hunger. (Hunger = maskulin, Akkusativ)",opts:["nicht","kein","keine","keinen"],c:3,ex:"Hunger = mask. Akkusativ → keinen: er hat KEINEN Hunger"},
+ ]},
+
+{id:"a1_wfragen",lv:"A1",title:"W-Fragen — Câu hỏi từ để hỏi",subtitle:"Wer? Was? Wo? Wann? Wie? Warum? Woher? Wohin?",mins:8,
+ intro:`W-Fragen dùng từ để hỏi bắt đầu bằng W để hỏi thông tin cụ thể. Cấu trúc: <strong>W-Wort + Verb + Subjekt + ...</strong> — luôn đảo ngữ sau từ để hỏi.`,
+ formulaRaw:`<div class="formula-box">
+  <div class="f-row"><span class="f-key">W-Wort</span><span class="f-sep">+</span><span class="f-val">Verb (vị trí 2)</span><span class="f-sep">+</span><span class="f-val">Subjekt</span><span class="f-sep">+</span><span class="f-val">Rest...</span></div>
+  <span class="f-note">Wer=ai | Was=gì | Wo=đâu | Woher=từ đâu | Wohin=đi đâu | Wann=khi nào | Wie=như thế nào | Warum=tại sao | Wie viel=bao nhiêu | Wie lange=bao lâu</span>
+</div>`,
+ examples:[
+   {de:"<hl>Wo</hl> wohnst du?",vi:"Bạn sống ở đâu?",note:"Wo=đâu. Đảo ngữ: wohnst DU (verb trước subjekt)",good:true},
+   {de:"<hl>Wie</hl> heißen Sie?",vi:"Bạn tên gì?",note:"Wie=như thế nào. Lịch sự: Sie",good:true},
+   {de:"<hl>Woher</hl> kommst du?",vi:"Bạn đến từ đâu?",note:"Woher=từ đâu (không phải 'Wo kommst du von')"},
+   {de:"<hl>Warum</hl> lernst du Deutsch?",vi:"Tại sao bạn học tiếng Đức?",note:"Warum=tại sao, W-Wort ở đầu",good:true},
+ ],
+ tips:[
+   {type:"tip",title:"Wo vs. Woher vs. Wohin",text:"Wo = ở đâu (vị trí đứng yên) | Woher = từ đâu (xuất phát) | Wohin = đi đâu (đích đến). FALSCH: 'Wo kommst du?' → RICHTIG: 'Woher kommst du?'"},
+   {type:"tip",title:"Wer chia theo Kasus",text:"Wer? (Nom.) = Ai? | Wen? (Akk.) = Ai (tân ngữ)? | Wem? (Dat.) = Cho ai? → 'WER kommt?' vs 'WEN siehst du?'"},
+ ],
+ quiz:[
+   {q:"___ ist das? — Das ist mein Bruder.",opts:["Was","Wo","Wer","Wie"],c:2,ex:"Hỏi về người → WER. 'Was' hỏi về đồ vật."},
+   {q:"___ kommst du? — Aus Vietnam.",opts:["Wo","Woher","Wohin","Wann"],c:1,ex:"Hỏi xuất xứ → WOHER. Trả lời: 'aus Vietnam'"},
+   {q:"___ kostet das? — 5 Euro.",opts:["Wie viel","Wie lange","Wann","Warum"],c:0,ex:"Hỏi giá → WIE VIEL. 'Wie viel kostet das?'"},
+ ]},
+
+// ══════════════════════════════════
+// A2
+// ══════════════════════════════════
+{id:"a2_perfekt",lv:"A2",title:"Perfekt — Thì quá khứ",subtitle:"Thì quá khứ dùng trong văn NÓI hàng ngày",mins:15,
+ intro:`Perfekt là thì quá khứ <strong>dùng trong hội thoại</strong> tiếng Đức hàng ngày. Người Đức nói "Ich habe gegessen" (Perfekt) chứ không nói "Ich aß" (Präteritum) trong giao tiếp bình thường.<br><br>Cấu trúc: <strong>Hilfsverb</strong> (haben/sein, vị trí 2) + <strong>Partizip II</strong> (cuối câu).`,
+ formulaRaw:`<div class="formula-box">
+  <div class="f-row"><span class="f-key">haben/sein</span><span class="f-sep">+</span><span class="f-val">[Objekte]</span><span class="f-sep">+</span><span class="f-key">Partizip II</span></div>
+  <span class="f-note">Partizip II quy tắc: ge + Stamm + t &nbsp;→&nbsp; spielen → ge|spiel|t</span>
+  <span class="f-note">Partizip II bất quy tắc: ge + neuer Stamm + en &nbsp;→&nbsp; fahren → ge|fahr|en</span>
+  <span class="f-note">Vorsilbe be-/er-/ver-/ent-: KEIN ge- &nbsp;→&nbsp; besuchen → besucht (không phải gebesucht!)</span>
+</div>
+<table class="compare-table" style="margin:.5rem 0">
+<tr><th>Nhóm SEIN</th><th>Ví dụ</th><th>Nhóm HABEN</th></tr>
+<tr><td>Bewegungsverben</td><td>gehen→gegangen<br>fahren→gefahren<br>fliegen→geflogen</td><td>Hầu hết động từ khác</td></tr>
+<tr><td>Zustandsänderung</td><td>werden→geworden<br>wachsen→gewachsen</td><td>spielen→gespielt<br>essen→gegessen</td></tr>
+<tr><td>sein, bleiben</td><td>sein→gewesen<br>bleiben→geblieben</td><td>arbeiten→gearbeitet</td></tr>
+</table>`,
+ examples:[
+   {de:"Ich <hl>habe</hl> Fußball ge<hl>spielt</hl>.",vi:"Tôi đã chơi bóng đá.",note:"spielen → gespielt (quy tắc). haben vì không chuyển động",good:true},
+   {de:"Er <hl>ist</hl> nach Berlin ge<hl>fahren</hl>.",vi:"Anh ấy đã đến Berlin.",note:"fahren → gefahren (BQT). sein vì Bewegungsverb",good:true},
+   {de:"Sie <hl>ist</hl> ge<hl>blieben</hl>.",vi:"Cô ấy đã ở lại.",note:"bleiben → geblieben. sein! (dù không chuyển động)",good:true},
+   {de:"Wir <hl>haben</hl> das Museum be<hl>sucht</hl>.",vi:"Chúng tôi đã thăm bảo tàng.",note:"besuchen: be- Vorsilbe → kein ge-: besucht",good:true},
+   {de:"<hl-red>Ich habe gegangen</hl-red>",vi:"Tôi đã đi.",note:"SAI — gehen = Bewegungsverb → bin gegangen",good:false},
+ ],
+ tips:[
+   {type:"tip",title:"Nhớ nhóm SEIN",text:"SEIN dùng cho: (1) Bewegungsverben: gehen, kommen, fahren, fliegen, laufen, schwimmen, reisen, wandern (2) Zustandsänderung: werden, wachsen, einschlafen (3) sein, bleiben"},
+   {type:"tip",title:"Nicht Präteritum in Gesprächen!",text:"Người Đức KHÔNG dùng 'Ich ging' (Präteritum) trong nói chuyện. Chỉ sein/haben/Modal dùng Präteritum trong văn nói: 'Ich WAR', 'Ich HATTE', 'Ich KONNTE'"},
+   {type:"danger",title:"3 lỗi phổ biến nhất về Perfekt",text:"1. FALSCH: Ich habe gegangen → bin gegangen (Bewegungsverb!)\n2. FALSCH: Er ist gespielt → hat gespielt (spielen không chuyển động)\n3. FALSCH: Ich habe gebesucht → habe besucht (be- Vorsilbe → kein ge-)"},
+ ],
+ compare:[
+   {a:"Perfekt (văn nói)",b:"Präteritum (văn viết/kể)",c:"Ich BIN gegangen (nói) | Ich GING (viết/kể). sein/haben/Modal dùng Prät. trong cả văn nói."},
+ ],
+ quiz:[
+   {q:"Er ___ nach Hause gegangen. (sein/haben?)",opts:["hat","ist","hatte","war"],c:1,ex:"gehen = Bewegungsverb → Perfekt mit SEIN: er IST gegangen"},
+   {q:"Wir ___ das Essen bestellt.",opts:["sind","haben","ist","hat"],c:1,ex:"bestellen: be- Vorsilbe, không chuyển động → haben: wir HABEN bestellt"},
+   {q:"Partizip II của 'schreiben'?",opts:["geschrieben","geschreibt","geschreiben","geSchrieben"],c:0,ex:"schreiben = stark (BQT): ge + schrIEb + en → geschrIEBen"},
+ ]},
+
+{id:"a2_modalverben",lv:"A2",title:"Modalverben — 6 động từ tình thái",subtitle:"können, müssen, dürfen, wollen, sollen, mögen",mins:14,
+ intro:`Modalverben diễn đạt thái độ, khả năng, nghĩa vụ với hành động. Cấu trúc: <strong>Modal (vị trí 2) + Infinitiv (cuối câu)</strong>. Tất cả 6 động từ đều bất quy tắc ở ngôi số ít.`,
+ formulaRaw:`<table class="compare-table">
+<tr><th>Verb</th><th>Nghĩa chính</th><th>ich/er</th><th>du</th></tr>
+<tr><td class="c-a">können</td><td>có thể (khả năng)</td><td>kann</td><td>kannst</td></tr>
+<tr><td class="c-a">müssen</td><td>phải (bắt buộc)</td><td>muss</td><td>musst</td></tr>
+<tr><td class="c-a">dürfen</td><td>được phép</td><td>darf</td><td>darfst</td></tr>
+<tr><td class="c-a">wollen</td><td>muốn</td><td>will</td><td>willst</td></tr>
+<tr><td class="c-a">sollen</td><td>được yêu cầu/nên</td><td>soll</td><td>sollst</td></tr>
+<tr><td class="c-a">mögen/möchten</td><td>thích/muốn (lịch sự)</td><td>mag/möchte</td><td>magst/möchtest</td></tr>
+</table>`,
+ examples:[
+   {de:"Ich <hl>kann</hl> Deutsch sprechen.",vi:"Tôi có thể nói tiếng Đức.",note:"können = khả năng có thật",good:true},
+   {de:"Du <hl>musst</hl> das nicht machen.",vi:"Bạn không cần làm điều đó.",note:"müssen NICHT = không cần (KHÔNG phải không được phép!)",good:true},
+   {de:"Er <hl>darf</hl> hier nicht rauchen.",vi:"Anh ấy không được phép hút thuốc ở đây.",note:"darf nicht = không được phép (cấm)",good:true},
+   {de:"Sie <hl>möchte</hl> einen Kaffee.",vi:"Cô ấy muốn một tách cà phê.",note:"möchten = muốn (lịch sự hơn wollen)",good:true},
+   {de:"<hl-red>Ich muss nicht rauchen hier</hl-red> (= không được phép)",vi:"Sai! müssen nicht = không cần, KHÔNG phải cấm",note:"FALSCH: müssen nicht ≠ darf nicht!",good:false},
+ ],
+ tips:[
+   {type:"danger",title:"müssen NICHT vs. DARF NICHT — lỗi nghiêm trọng nhất!",text:"müssen NICHT = không cần thiết, không bắt buộc (bạn có thể làm nếu muốn)\ndarf NICHT = bị cấm, không được phép (luật cấm hoặc ai đó cấm)\n→ 'Du musst nicht kommen' = Bạn không cần đến (tùy bạn)\n→ 'Du darfst nicht kommen' = Bạn không được phép đến (cấm!)"},
+   {type:"tip",title:"möchten vs. wollen",text:"möchten lịch sự hơn wollen. Trong nhà hàng/cửa hàng: 'Ich möchte...' (tôi muốn...) nghe lịch sự. 'Ich will...' có thể nghe thô lỗ trong một số ngữ cảnh."},
+   {type:"tip",title:"Infinitiv am Ende!",text:"Modal chiếm vị trí 2, Infinitiv đẩy về cuối: 'Ich KANN heute nicht KOMMEN.' Nếu có nhiều thành phần: tất cả vào cuối, Modal ở số 2."},
+ ],
+ compare:[
+   {a:"müssen nicht (không cần)",b:"darf nicht (không được phép)",c:"Du musst nicht essen (không cần ăn) | Du darfst nicht essen (bị cấm ăn)"},
+ ],
+ quiz:[
+   {q:"Du ___ hier nicht rauchen. (= bị cấm hút thuốc)",opts:["musst","kannst","darfst","sollst"],c:2,ex:"Bị cấm = DARF NICHT: Du DARFST hier nicht rauchen."},
+   {q:"Er ___ Englisch sprechen. (= có khả năng nói)",opts:["muss","kann","darf","will"],c:1,ex:"Khả năng = KÖNNEN: er KANN Englisch sprechen."},
+   {q:"Ich ___ heute nicht kommen. (= không bắt buộc)",opts:["darf","kann","muss","will"],c:2,ex:"Không cần/bắt buộc = müssen nicht: Ich MUSS heute nicht kommen."},
+ ]},
+
+// ══════════════════════════════════
+// B1
+// ══════════════════════════════════
+{id:"b1_nebensaetze",lv:"B1",title:"Nebensätze — Mệnh đề phụ",subtitle:"weil, obwohl, dass, wenn, als — Verb ans Ende!",mins:18,
+ intro:`Nebensätze (mệnh đề phụ) được nối với câu chính bằng <strong>Subjunktionen</strong>. Quy tắc số 1: <strong>Verb luôn đứng CUỐI</strong> trong mệnh đề phụ. Đây là điểm phân biệt cơ bản nhất của ngữ pháp tiếng Đức.`,
+ formulaRaw:`<div class="formula-box">
+  <div class="f-row"><span class="f-val">Hauptsatz</span><span class="f-sep">,</span><span class="f-key">Konj.</span><span class="f-sep">+</span><span class="f-val">[S]</span><span class="f-sep">+</span><span class="f-val">[O]</span><span class="f-sep">+</span><span class="f-key">[VERB am Ende]</span></div>
+  <span class="f-note">Perfekt im NS: hat/ist ans Ende → Partizip II davor: weil er gegessen hat</span>
+  <span class="f-note">Modal im NS: Modal ans allerletztes Ende: weil er kommen KANN</span>
+  <span class="f-note">Trennbares Verb im NS: zusammen ans Ende: weil er aufsteht (NICHT: weil er auf steht)</span>
+</div>
+<table class="compare-table" style="margin:.5rem 0">
+<tr><th>Subjunktion</th><th>Nghĩa</th><th>Ví dụ</th></tr>
+<tr><td class="c-a">weil</td><td>vì (nguyên nhân)</td><td>..., weil es regnet</td></tr>
+<tr><td class="c-a">obwohl</td><td>mặc dù (tương phản)</td><td>..., obwohl er müde ist</td></tr>
+<tr><td class="c-a">dass</td><td>rằng (tường thuật)</td><td>..., dass er kommt</td></tr>
+<tr><td class="c-a">wenn</td><td>khi/nếu (lặp lại, hiện tại)</td><td>..., wenn ich Zeit habe</td></tr>
+<tr><td class="c-a">als</td><td>khi (1 lần, quá khứ)</td><td>..., als ich jung war</td></tr>
+<tr><td class="c-a">damit</td><td>để (chủ ngữ khác)</td><td>..., damit du es verstehst</td></tr>
+</table>`,
+ examples:[
+   {de:"Ich bleibe zuhause, <hl>weil</hl> es re<hl>gnet</hl>.",vi:"Tôi ở nhà vì trời mưa.",note:"weil → regnet ANS ENDE",good:true},
+   {de:"Er kommt, <hl>obwohl</hl> er müde <hl>ist</hl>.",vi:"Anh ấy đến mặc dù mệt.",note:"obwohl → ist ANS ENDE",good:true},
+   {de:"Ich weiß, <hl>dass</hl> du Deutsch <hl>lernst</hl>.",vi:"Tôi biết rằng bạn đang học tiếng Đức.",note:"dass → lernst ANS ENDE",good:true},
+   {de:"<hl>Als</hl> ich jung <hl>war</hl>, spielte ich Fußball.",vi:"Khi còn trẻ tôi chơi bóng đá.",note:"als = 1 lần trong quá khứ. NS đứng đầu → đảo ngữ câu chính!",good:true},
+   {de:"<hl-red>weil es regnet ist</hl-red>",vi:"vì trời mưa",note:"SAI: thêm 'ist' thừa. regnet đã là V cuối rồi!",good:false},
+ ],
+ tips:[
+   {type:"tip",title:"NS đứng đầu → đảo ngữ câu chính",text:"Weil es regnet, BLEIBE ich zuhause. (NS đầu → câu chính bắt đầu bằng Verb → đảo ngữ). Đây là lỗi rất hay gặp!"},
+   {type:"danger",title:"weil vs. denn",text:"weil = Nebensatz (Verb cuối). denn = Koordination (giữ nguyên SVO).\nWEIL: Ich bleibe zuhause, WEIL es regnet.\nDENN: Ich bleibe zuhause, DENN es regnet.\nChỉ denn không đổi trật tự; weil BẮT BUỘC đổi."},
+   {type:"danger",title:"wenn vs. als",text:"WENN: hiện tại, tương lai, hoặc sự kiện lặp lại: 'Wenn ich Zeit HABE...' (bất cứ khi nào có thời gian)\nALS: một lần duy nhất trong QUÁ KHỨ: 'Als ich jung WAR...' (khi còn trẻ — chỉ một giai đoạn)\nFALSCH: Als ich Deutsch lerne → RICHTIG: WENN ich Deutsch lerne"},
+ ],
+ compare:[
+   {a:"weil (NS, V cuối)",b:"denn (HS, V giữa)",c:"Ich lerne, WEIL es wichtig IST | Ich lerne, DENN es IST wichtig"},
+   {a:"wenn (lặp lại/hiện tại)",b:"als (1 lần quá khứ)",c:"WENN ich Hunger habe, esse ich | ALS ich 5 war, spielte ich"},
+ ],
+ quiz:[
+   {q:"Ich lerne Deutsch, ___ ich in DE arbeiten will.",opts:["denn","weil","deshalb","obwohl"],c:1,ex:"Nguyên nhân + Nebensatz → WEIL. Verb cuối: arbeiten WILL"},
+   {q:"___ ich jung war, wohnte ich in Hanoi.",opts:["Wenn","Als","Weil","Obwohl"],c:1,ex:"1 lần trong quá khứ → ALS. 'Wenn ich jung war' = sai (lặp lại)"},
+   {q:"Er kommt, ___ er sehr müde ist.",opts:["weil","damit","obwohl","dass"],c:2,ex:"Tương phản (mệt nhưng vẫn đến) → OBWOHL"},
+ ]},
+
+{id:"b1_passiv",lv:"B1",title:"Passiv — được/bị làm",subtitle:"Nhấn mạnh hành động, không phải chủ thể",mins:14,
+ intro:`Passiv (thể bị động) dùng khi muốn nhấn mạnh <em>hành động xảy ra</em> mà không cần nói ai làm. Rất phổ biến trong văn hành chính, khoa học, báo chí. Tiếng Việt tương đương: "được/bị làm".`,
+ formulaRaw:`<div class="formula-box">
+  <div class="f-row"><span class="f-key">Präsens:</span><span class="f-val">[S] + werden + [O] + Partizip II</span></div>
+  <div class="f-row"><span class="f-key">Präteritum:</span><span class="f-val">[S] + wurde + Partizip II</span></div>
+  <div class="f-row"><span class="f-key">Perfekt:</span><span class="f-val">[S] + ist/sind + Partizip II + worden ⚠</span></div>
+  <div class="f-row"><span class="f-key">Modal+Passiv:</span><span class="f-val">[S] + Modal + Partizip II + werden</span></div>
+  <div class="f-row"><span class="f-key">Tác nhân:</span><span class="f-val">von + Dativ</span></div>
+  <span class="f-note">Zustandspassiv (kết quả): sein + Partizip II → Die Tür IST geöffnet (= đã mở rồi, là trạng thái)</span>
+</div>`,
+ examples:[
+   {de:"Das Haus <hl>wird</hl> gerade ge<hl>baut</hl>.",vi:"Nhà đang được xây.",note:"Passiv Präsens: wird + Partizip II",good:true},
+   {de:"Das Auto <hl>wurde</hl> repa<hl>riert</hl>.",vi:"Xe đã được sửa.",note:"Passiv Präteritum: wurde + Partizip II",good:true},
+   {de:"Das Fenster <hl>ist</hl> ge<hl>öffnet worden</hl>.",vi:"Cửa sổ đã được mở.",note:"Passiv Perfekt: ist + P.II + WORDEN (KHÔNG phải geworden!)",good:true},
+   {de:"Das <hl>muss</hl> sofort ge<hl>macht werden</hl>.",vi:"Cái đó phải được làm ngay.",note:"Passiv + Modal: muss + P.II + werden",good:true},
+   {de:"<hl-red>Das Haus ist gebaut geworden</hl-red>",vi:"Nhà đã được xây.",note:"SAI: phải là 'worden' (không phải 'geworden'!)",good:false},
+ ],
+ tips:[
+   {type:"danger",title:"worden vs. geworden — lỗi kinh điển",text:"Passiv Perfekt: IST GEBAUT WORDEN (không có ge- trong worden!)\nAktiv Perfekt von werden: IST ARZT GEWORDEN (có ge- trong geworden)\n→ 'Das Haus ist gebaut WORDEN' (Passiv)\n→ 'Er ist Arzt GEWORDEN' (er wurde Arzt → aktiv)"},
+   {type:"tip",title:"Zustandspassiv vs. Vorgangspassiv",text:"Vorgangspassiv (quá trình): Das Fenster WIRD geöffnet (đang được mở — ai đó đang mở)\nZustandspassiv (kết quả): Das Fenster IST geöffnet (đã mở rồi — trạng thái)\n→ Khi nói về kết quả: dùng sein + Partizip II"},
+   {type:"tip",title:"Khi nào dùng Passiv?",text:"Không biết/không muốn nói ai làm: 'Das Museum wurde 1850 gegründet.'\nVăn hành chính/khoa học: 'Die Ergebnisse wurden analysiert.'\nNhấn mạnh hành động quan trọng hơn người làm."},
+ ],
+ compare:[
+   {a:"Aktiv (ai làm)",b:"Passiv (được/bị làm)",c:"Der Arzt UNTERSUCHT den Patienten | Der Patient WIRD untersucht"},
+ ],
+ quiz:[
+   {q:"Das Problem ___ gelöst. (Passiv Präsens)",opts:["hat","ist","wird","wurde"],c:2,ex:"Passiv Präsens: WIRD + Partizip II → Das Problem WIRD gelöst."},
+   {q:"Das Haus ist gebaut ___.",opts:["geworden","worden","werden","wird"],c:1,ex:"Passiv Perfekt: ist + Partizip II + WORDEN. NICHT 'geworden'!"},
+   {q:"Das ___ von einem Arzt gemacht werden. (müssen)",opts:["muss","wird","ist","wurde"],c:0,ex:"Passiv + Modal: MUSS + Partizip II + werden"},
+ ]},
+
+{id:"b1_konjunktiv2",lv:"B1",title:"Konjunktiv II — Điều kiện giả định",subtitle:"würde + Inf | hätte | wäre | könnte",mins:14,
+ intro:`Konjunktiv II diễn đạt <strong>điều kiện không có thật</strong>, <strong>mong muốn</strong>, hoặc <strong>yêu cầu lịch sự</strong>. Trong văn nói, hầu hết dùng <em>würde + Infinitiv</em>. Các dạng quan trọng phải thuộc lòng: <em>hätte, wäre, könnte, sollte, müsste</em>.`,
+ formulaRaw:`<div class="formula-box">
+  <div class="f-row"><span class="f-key">Wunsch/Lịch sự:</span><span class="f-val">würde + Infinitiv</span></div>
+  <div class="f-row"><span class="f-key">Bedingung:</span><span class="f-val">Wenn + [Konj.II] , [würde / hätte / wäre]</span></div>
+  <div class="f-row"><span class="f-key">KII direkt:</span><span class="f-val">hätte (haben) | wäre (sein) | könnte (können) | sollte | müsste</span></div>
+  <span class="f-note">KII Perfekt (quá khứ không có thật): hätte/wäre + Partizip II</span>
+</div>`,
+ examples:[
+   {de:"Ich <hl>würde</hl> gerne reisen.",vi:"Tôi rất muốn đi du lịch.",note:"Wunsch: würde + Infinitiv",good:true},
+   {de:"Wenn ich Zeit <hl>hätte</hl>, <hl>würde</hl> ich mehr lesen.",vi:"Nếu có thời gian tôi sẽ đọc nhiều hơn.",note:"Bedingung phi thực tế: wenn + hätte → würde",good:true},
+   {de:"<hl>Könntest</hl> du mir helfen?",vi:"Bạn có thể giúp tôi không?",note:"Höfliche Bitte: Konj.II von können",good:true},
+   {de:"Das <hl>wäre</hl> wunderbar!",vi:"Điều đó thật tuyệt!",note:"wäre = Konj.II von sein",good:true},
+   {de:"<hl-red>Ich würde haben Zeit</hl-red>",vi:"Tôi có thời gian.",note:"SAI: có → hätte trực tiếp, không qua würde",good:false},
+ ],
+ tips:[
+   {type:"danger",title:"KHÔNG dùng würde với sein/haben và Modal",text:"FALSCH: 'Ich würde haben Zeit' → RICHTIG: 'Ich HÄTTE Zeit'\nFALSCH: 'Ich würde sein müde' → RICHTIG: 'Ich WÄRE müde'\nFALSCH: 'Ich würde können' → RICHTIG: 'Ich KÖNNTE'\nwürde chỉ đi với động từ thường: würde LERNEN, würde GEHEN"},
+   {type:"tip",title:"Konj.II cho sự lịch sự",text:"könnte/sollte/müsste/würde/hätte đều lịch sự hơn Indikativ:\n'Kannst du helfen?' (bình thường) → 'Könntest du helfen?' (lịch sự hơn)\n'Haben Sie Zeit?' → 'Hätten Sie Zeit?' (rất lịch sự)"},
+   {type:"tip",title:"Wenn-Satz Konj.II: trật tự",text:"Wenn + [S] + [O] + [Konj.II] , würde/hätte/wäre + [S] + ...\n→ 'Wenn ich HÄTTE Zeit, würde ich KOMMEN' ❌\n→ 'Wenn ich Zeit HÄTTE, würde ich kommen' ✓ (Verb cuối trong wenn-Satz)"},
+ ],
+ quiz:[
+   {q:"Wenn ich Zeit ___, würde ich mehr lernen.",opts:["habe","hätte","hatte","wäre"],c:1,ex:"Bedingung phi thực tế: Konj.II von haben = HÄTTE"},
+   {q:"___ du mir bitte helfen? (lịch sự)",opts:["Kannst","Könntest","Kann","Könnte"],c:1,ex:"Lịch sự = Konj.II: KÖNNTEST du (du + Konj.II: könntest)"},
+   {q:"Ich ___ gerne nach Japan reisen.",opts:["würde","werde","wäre","hätte"],c:0,ex:"Wunsch mit normalem Verb → WÜRDE + Infinitiv: würde reisen"},
+ ]},
+
+// ══════════════════════════════════
+// B2
+// ══════════════════════════════════
+{id:"b2_relativsatz",lv:"B2",title:"Relativsatz — Mệnh đề quan hệ",subtitle:"Relativpronomen: Genus × Kasus",mins:16,
+ intro:`Relativsatz mô tả chi tiết hơn về một danh từ trong câu chính. <strong>Relativpronomen</strong> thay đổi theo 2 yếu tố: (1) <strong>Genus</strong> của danh từ được mô tả và (2) <strong>Kasus</strong> mà Relativpronomen đóng vai trò trong mệnh đề phụ.`,
+ formulaRaw:`<table class="compare-table">
+<tr><th>Kasus trong NS</th><th class="c-a">Mask.</th><th style="color:var(--green)">Fem.</th><th style="color:var(--amber)">Neut.</th><th>Plural</th></tr>
+<tr><td>Nominativ</td><td class="c-a">der</td><td style="color:var(--green)">die</td><td style="color:var(--amber)">das</td><td>die</td></tr>
+<tr><td>Akkusativ</td><td class="c-a">den</td><td style="color:var(--green)">die</td><td style="color:var(--amber)">das</td><td>die</td></tr>
+<tr><td>Dativ</td><td class="c-a">dem</td><td style="color:var(--green)">der</td><td style="color:var(--amber)">dem</td><td>denen</td></tr>
+<tr><td>Genitiv</td><td class="c-a">dessen</td><td style="color:var(--green)">deren</td><td style="color:var(--amber)">dessen</td><td>deren</td></tr>
+</table>
+<div class="formula-box" style="margin-top:.5rem">
+  <span class="f-note">Cách xác định: 1. Genus của danh từ được mô tả → chọn cột | 2. Vai trò trong NS → chọn hàng</span>
+  <span class="f-note">Relativsatz: dấu phẩy CẢ HAI ĐẦU, Verb am Ende!</span>
+</div>`,
+ examples:[
+   {de:"Das Buch, <hl>das</hl> ich lese, ist gut.",vi:"Cuốn sách tôi đọc rất tốt.",note:"das Buch = neut. + Akkusativ (ich lese WAS?) → das",good:true},
+   {de:"Der Mann, <hl>dem</hl> ich geholfen habe, ist nett.",vi:"Người đàn ông tôi giúp rất tốt bụng.",note:"der Mann = mask. + Dativ (helfen + Dativ) → dem",good:true},
+   {de:"Die Frau, <hl>deren</hl> Kind krank ist, arbeitet nicht.",vi:"Người phụ nữ có con bị ốm không đi làm.",note:"die Frau = fem. + Genitiv → deren",good:true},
+   {de:"Die Leute, <hl>denen</hl> ich geholfen habe, danken mir.",vi:"Những người tôi giúp cảm ơn tôi.",note:"die Leute = Plural + Dativ → denen",good:true},
+   {de:"<hl-red>Das Buch, der ich lese</hl-red>",vi:"Cuốn sách tôi đọc.",note:"SAI: das Buch = neut. → DAS (không phải der)",good:false},
+ ],
+ tips:[
+   {type:"tip",title:"3 bước xác định Relativpronomen",text:"Bước 1: Genus của danh từ TRƯỚC dấu phẩy → chọn cột (mask/fem/neut/Pl)\nBước 2: Vai trò trong NS → hỏi: Subjekt? (Nom) | Objekt? (Akk) | Wem? (Dat) | Wessen? (Gen)\nBước 3: Tra bảng → kết quả"},
+   {type:"tip",title:"Genitiv Relativpronomen",text:"dessen/deren rất đặc biệt: KHÔNG giống Definitartikel!\n'Der Mann, DESSEN Auto kaputt ist...' (mask.Gen.)\n'Die Frau, DEREN Kind krank ist...' (fem.Gen.)\nSau dessen/deren: danh từ KHÔNG có mạo từ!"},
+   {type:"danger",title:"Dấu phẩy bắt buộc!",text:"Relativsatz LUÔN phải có dấu phẩy trước và sau: 'Das Buch, das ich lese, ist...' Thiếu dấu phẩy = lỗi văn phạm nghiêm trọng trong bài thi viết!"},
+ ],
+ quiz:[
+   {q:"Das Buch, ___ ich kaufe, ist teuer. (das Buch, Akkusativ)",opts:["der","die","das","den"],c:2,ex:"das Buch = neutrum. Akkusativ neutrum = das (giống Nominativ)"},
+   {q:"Der Mann, ___ ich geholfen habe, ist nett. (der Mann, Dativ)",opts:["der","dem","den","dessen"],c:1,ex:"der Mann = mask. Dativ → DEM. (helfen + Dativ!)"},
+   {q:"Die Frau, ___ Tochter Ärztin ist, wohnt hier. (die Frau, Genitiv)",opts:["die","der","deren","dessen"],c:2,ex:"die Frau = fem. Genitiv → DEREN (khác với Definitartikel Genitiv 'der'!)"},
+ ]},
+
+// ══════════════════════════════════
+// C1
+// ══════════════════════════════════
+{id:"c1_partizip",lv:"C1",title:"Partizipialkonstruktion",subtitle:"Rút gọn Relativsatz — văn viết trang trọng",mins:16,
+ intro:`Partizipialkonstruktion thay thế Relativsatz trong văn học thuật và báo chí, giúp văn phong ngắn gọn và trang trọng hơn. Hai loại:<br>• <strong>Partizip I</strong> (-end): hành động đồng thời, chủ động<br>• <strong>Partizip II</strong>: hành động trước đó, bị động`,
+ formulaRaw:`<div class="formula-box">
+  <div class="f-row"><span class="f-key">Partizip I</span><span class="f-sep">:</span><span class="f-val">Infinitiv + d + Adjektivendung</span></div>
+  <div class="f-row"><span class="f-sep" style="margin-left:1rem">schlafen → schlafend → der schlafende Hund</span></div>
+  <div class="f-row"><span class="f-key">Partizip II</span><span class="f-sep">:</span><span class="f-val">ge-...-t/en + Adjektivendung</span></div>
+  <div class="f-row"><span class="f-sep" style="margin-left:1rem">finden → gefunden → der gefundene Schlüssel</span></div>
+  <span class="f-note">Adjektivendung: GIỐNG tính từ thường — phụ thuộc Genus/Kasus/Artikel!</span>
+  <span class="f-note">Erweiterte Partizipialkonstruktion: [PP + Adv/Obj] + Partizip + Nomen → der seit Jahren verlorene Schlüssel</span>
+</div>`,
+ examples:[
+   {de:"Der <hl>schlafende</hl> Hund liegt auf dem Boden.",vi:"Con chó đang ngủ nằm trên sàn.",note:"Partizip I: schlafen→schlafend. mask.Nom.def.→ -e (= der Hund, der schläft)",good:true},
+   {de:"Der <hl>gefundene</hl> Schlüssel gehört mir.",vi:"Chiếc chìa khóa được tìm thấy là của tôi.",note:"Partizip II: finden→gefunden. mask.Nom.def.→ -e (= der Schlüssel, der gefunden wurde)",good:true},
+   {de:"Die <hl>steigende</hl> Inflation besorgt alle.",vi:"Lạm phát đang tăng làm mọi người lo.",note:"Partizip I: steigen→steigend. fem.Nom.def.→ -e",good:true},
+   {de:"Das <hl>seit Jahren verlassene</hl> Haus steht noch.",vi:"Ngôi nhà bị bỏ hoang nhiều năm vẫn còn đó.",note:"Erweiterte Partizipialkonstruktion: Adv + Partizip II",good:true},
+   {de:"<hl-red>Die schlafende Hund</hl-red>",vi:"Con chó đang ngủ.",note:"SAI: Hund = maskulin → DER schlafende Hund",good:false},
+ ],
+ tips:[
+   {type:"tip",title:"Partizip I vs. II — cách phân biệt",text:"Partizip I (-end): đồng thời + chủ động. 'Der SPIELENDE Hund' = con chó đang chơi (đồng thời với hành động chính)\nPartizip II: trước đó + bị động. 'Der GEBISSENE Mann' = người đàn ông đã bị cắn (trước đó đã xảy ra)"},
+   {type:"tip",title:"Adjektivendung bắt buộc",text:"Partizip dùng như tính từ → phải có đuôi theo Genus/Kasus/Artikel!\n• definit (der/die/das): -e hoặc -en\n• indefinit (ein/eine): -er/-e/-es/-en\n• ohne Artikel: -er/-e/-es/-en (stark)"},
+   {type:"danger",title:"Erweiterte Partizipialkonstruktion",text:"Toàn bộ cụm (PP + Adj. + ...) đứng giữa Artikel và Partizip:\n'der [vor einem Jahr in Berlin] gefundene Schlüssel'\nKhó nhất của C1! Verb cuối trong cụm tham chiếu, tất cả còn lại trước Partizip."},
+ ],
+ quiz:[
+   {q:"Die ___ Preise schrecken Käufer ab. (steigen, Partizip I, Pl.Nom.)",opts:["steigend","steigenden","steigende","steigender"],c:1,ex:"Partizip I: steigend. Plural Nominativ definit (die Preise) → -en: die steigendEN Preise"},
+   {q:"Der ___ Brief liegt auf dem Tisch. (schreiben, Partizip II, mask.Nom.)",opts:["geschrieben","geschriebene","geschriebener","geschriebenem"],c:1,ex:"Partizip II: geschrieben. mask.Nom.definit (der Brief) → -e: der geschriebenE Brief"},
+   {q:"Das ist ___ Projekt. (abschließen, Partizip II, neut.Nom.indef.)",opts:["ein abgeschlossenes","ein abgeschlossene","ein abgeschlossen","das abgeschlossene"],c:0,ex:"Partizip II: abgeschlossen. neut.Nom.indefinit (ein Projekt) → -es: ein abgeschlossenES Projekt"},
+ ]},
+
+// ══════════════════════════════════
+// C2
+// ══════════════════════════════════
+{id:"c2_modalpartikeln",lv:"C2",title:"Modalpartikeln — Tiểu từ tình thái",subtitle:"Linh hồn ngữ dụng học của tiếng Đức",mins:18,
+ intro:`Modalpartikeln là những từ nhỏ không có nghĩa từ vựng cố định nhưng thêm <strong>sắc thái cảm xúc và thái độ</strong> của người nói vào câu. Không thể dịch trực tiếp sang tiếng Việt — chỉ có thể cảm nhận qua ngữ cảnh. Đây là một trong những điểm phân biệt người học thành thạo với người bản ngữ.`,
+ formulaRaw:`<table class="compare-table">
+<tr><th>Partikel</th><th>Sắc thái chính</th><th>Ví dụ điển hình</th></tr>
+<tr><td class="c-a">doch</td><td>nhấn mạnh hiển nhiên, phản bác nhẹ</td><td>"Das ist doch klar!"</td></tr>
+<tr><td class="c-a">mal</td><td>làm mềm yêu cầu, thân thiện</td><td>"Komm mal her!"</td></tr>
+<tr><td class="c-a">ja</td><td>ngạc nhiên dễ chịu, nhấn mạnh</td><td>"Das ist ja interessant!"</td></tr>
+<tr><td class="c-a">eben/halt</td><td>chấp nhận thực tế không đổi được</td><td>"Es ist eben so."</td></tr>
+<tr><td class="c-a">denn</td><td>tò mò trong câu hỏi</td><td>"Wer kommt denn da?"</td></tr>
+<tr><td class="c-a">wohl</td><td>phỏng đoán không chắc chắn</td><td>"Er ist wohl krank."</td></tr>
+<tr><td class="c-a">eigentlich</td><td>"thực ra", hỏi điều thực sự</td><td>"Was willst du eigentlich?"</td></tr>
+<tr><td class="c-a">schon</td><td>nhấn mạnh điều đúng, xác nhận</td><td>"Das stimmt schon."</td></tr>
+</table>`,
+ examples:[
+   {de:"Das ist <hl>doch</hl> klar!",vi:"Điều đó rõ ràng MÀ!",note:"doch = nhấn mạnh điều hiển nhiên, hơi có ý trách",good:true},
+   {de:"Komm <hl>mal</hl> her!",vi:"Lại đây một chút!",note:"mal = câu lệnh nhẹ nhàng, không có mal nghe hơi thô",good:true},
+   {de:"Das ist <hl>ja</hl> interessant!",vi:"Thú vị thật nhỉ!",note:"ja = ngạc nhiên dễ chịu. KHÔNG phải 'vâng'!",good:true},
+   {de:"Er ist <hl>wohl</hl> krank.",vi:"Chắc anh ấy bị ốm.",note:"wohl = phỏng đoán, không chắc chắn",good:true},
+   {de:"Es ist <hl>eben</hl> so.",vi:"Vậy thì là vậy thôi.",note:"eben = chấp nhận thực tế không thay đổi được",good:true},
+ ],
+ tips:[
+   {type:"danger",title:"ja trong Aussagesatz ≠ ja trong Antwort",text:"'Kommst du?' — 'JA, ich komme.' (vâng, trả lời)\nABER: 'Das ist JA interessant!' (ngạc nhiên, JA = Modalpartikel)\nHai từ này nhìn giống nhau nhưng chức năng và ngữ điệu hoàn toàn khác!"},
+   {type:"tip",title:"Vị trí của Modalpartikeln",text:"Modalpartikeln không thể đứng đầu câu (ngoại lệ hiếm). Thường đứng sau Verb chia và các thành phần bắt buộc:\n'Ich bin JA (Modal) müde.' KHÔNG phải 'JA ich bin müde.'"},
+   {type:"tip",title:"Cảm nhận qua ngữ điệu",text:"Khi đọc/nghe tiếng Đức: chú ý Modalpartikeln → chúng tiết lộ cảm xúc người nói. Trong văn viết trang trọng (báo, hành chính) ít dùng; văn nói hàng ngày rất phổ biến."},
+ ],
+ quiz:[
+   {q:"Komm ___ her! (yêu cầu nhẹ nhàng, thân thiện)",opts:["doch","ja","mal","eben"],c:2,ex:"MAL = làm mềm câu mệnh lệnh, lịch sự thân thiện hơn"},
+   {q:"Das ist ___ interessant! (ngạc nhiên dễ chịu)",opts:["ja","doch","mal","wohl"],c:0,ex:"JA = ngạc nhiên thú vị trong Aussagesatz (KHÔNG phải 'vâng'!)"},
+   {q:"Er kommt ___ nicht. (phỏng đoán)",opts:["doch","wohl","mal","eben"],c:1,ex:"WOHL = phỏng đoán không chắc chắn: 'Er kommt wohl nicht' = chắc anh ấy không đến"},
+ ]},
+];
+
+// ════════════════ APP STATE ════════════════
+const gg=(k,d=null)=>{try{return JSON.parse(localStorage.getItem(k)||'null')??d;}catch{return d;}};
+const ss=(k,v)=>{try{localStorage.setItem(k,JSON.stringify(v));}catch{}};
+let readTopics=gg('learnRead',{});
+let currentId=null;
+let quizState={idx:0,correct:0,answered:false};
+const LCOLORS={A1:'#4ADE80',A2:'#34D399',B1:'#FBBF24',B2:'#F97316',C1:'#A78BFA',C2:'#F472B6'};
+
+// ════════════════ SPEAK ════════════════
+function speak(txt,btn=null){
+  if(!window.speechSynthesis)return;
+  window.speechSynthesis.cancel();
+  if(btn&&btn.classList.contains('go')){btn.classList.remove('go');return;}
+  document.querySelectorAll('.spk-mini').forEach(b=>b.classList.remove('go'));
+  const u=new SpeechSynthesisUtterance(txt);u.lang='de-DE';u.rate=0.87;
+  const v=speechSynthesis.getVoices().find(v=>v.lang.startsWith('de'));if(v)u.voice=v;
+  if(btn){btn.classList.add('go');u.onend=u.onerror=()=>btn.classList.remove('go');}
+  speechSynthesis.speak(u);
+}
+
+// ════════════════ TOAST ════════════════
+function toast(msg){
+  const el=document.getElementById('toast');el.textContent=msg;el.classList.add('show');
+  setTimeout(()=>el.classList.remove('show'),2200);
+}
+
+// ════════════════ SIDEBAR ════════════════
+function buildSidebar(filter=''){
+  const scroll=document.getElementById('sbScroll');
+  const levels=['A1','A2','B1','B2','C1','C2'];
+  const lvNames={A1:'Cơ bản sơ cấp',A2:'Cơ bản',B1:'Trung cấp thấp',B2:'Trung cấp',C1:'Cao cấp',C2:'Thành thạo'};
+  let html='';
+  levels.forEach(lv=>{
+    const items=CURRICULUM.filter(c=>c.lv===lv&&(!filter||c.title.toLowerCase().includes(filter.toLowerCase())||c.subtitle.toLowerCase().includes(filter.toLowerCase())));
+    if(!items.length)return;
+    const doneCount=items.filter(c=>readTopics[c.id]).length;
+    const isOpen=filter||items.some(c=>c.id===currentId)?'open':'';
+    html+=`<div class="sb-group ${isOpen}" id="sbg_${lv}">
+      <div class="sb-group-hd" onclick="toggleGroup('${lv}')">
+        <div class="sb-group-dot" style="background:${LCOLORS[lv]}"></div>
+        <span>${lv} — ${lvNames[lv]}</span>
+        <span style="font-size:10px;color:var(--text-3);margin-left:4px;font-family:var(--font-mono)">${doneCount}/${items.length}</span>
+        <span class="sb-group-arrow">›</span>
+      </div>
+      <div class="sb-group-items">
+        ${items.map(c=>`<div class="sb-item${c.id===currentId?' active':''}${readTopics[c.id]?' read':''}" onclick="loadLesson('${c.id}')" id="sbi_${c.id}">
+          ${c.title}
+          <span class="sb-check">✓</span>
+        </div>`).join('')}
+      </div>
+    </div>`;
+  });
+  scroll.innerHTML=html;
+}
+
+function toggleGroup(lv){
+  const g=document.getElementById('sbg_'+lv);if(g)g.classList.toggle('open');
+}
+function filterSidebar(q){buildSidebar(q);}
+function toggleSidebar(){
+  const sb=document.getElementById('sidebar');sb.classList.toggle('collapsed');
+}
+function toggleMobile(){
+  const sb=document.getElementById('sidebar');const ov=document.getElementById('sbOverlay');
+  sb.classList.toggle('mobile-open');ov.classList.toggle('show');
+}
+
+// ════════════════ PROGRESS ════════════════
+function updateProgress(){
+  const total=CURRICULUM.length;
+  const done=CURRICULUM.filter(c=>readTopics[c.id]).length;
+  const pct=Math.round(done/total*100);
+  document.getElementById('tbPfill').style.width=pct+'%';
+  document.getElementById('tbPct').textContent=pct+'%';
+}
+
+// ════════════════ WELCOME SCREEN ════════════════
+function renderWelcome(){
+  document.getElementById('tbTitle').textContent='Deutsch Lernen A1–C2';
+  const levels=['A1','A2','B1','B2','C1','C2'];
+  const lvDescs={A1:'Căn bản: sein, haben, Artikel, Kasus',A2:'Perfekt, Modalverben, Präpositionen',B1:'Nebensätze, Passiv, Konjunktiv II',B2:'Relativsatz, Konzessiv, Stilistik',C1:'Partizip, Nominalisierung, Komplex',C2:'Modalpartikeln, Wissenschaftssprache'};
+  const totalLv=(l)=>CURRICULUM.filter(c=>c.lv===l).length;
+  const doneLv=(l)=>CURRICULUM.filter(c=>c.lv===l&&readTopics[c.id]).length;
+  const total=CURRICULUM.length,done=CURRICULUM.filter(c=>readTopics[c.id]).length;
+  document.getElementById('content').innerHTML=`<div class="welcome">
+    <div class="welcome-hero">
+      <div class="welcome-title">Giáo trình<br><span>Deutsch A1–C2</span></div>
+      <div class="welcome-sub">${CURRICULUM.length} chủ đề ngữ pháp chi tiết · Lý thuyết + Ví dụ + Quiz · Từ A1 đến C2</div>
+      <div style="margin-top:1rem;display:flex;gap:10px;justify-content:center;flex-wrap:wrap">
+        <div style="background:var(--bg-2);border:1px solid var(--border-0);border-radius:8px;padding:.5rem 1rem;text-align:center">
+          <div style="font-size:20px;font-weight:700;color:var(--text-0);font-family:var(--font-mono)">${done}/${total}</div>
+          <div style="font-size:11px;color:var(--text-3)">Đã học</div>
+        </div>
+        <div style="background:var(--bg-2);border:1px solid var(--border-0);border-radius:8px;padding:.5rem 1rem;text-align:center">
+          <div style="font-size:20px;font-weight:700;color:var(--accent);font-family:var(--font-mono)">${Math.round(done/total*100)}%</div>
+          <div style="font-size:11px;color:var(--text-3)">Hoàn thành</div>
+        </div>
+      </div>
+    </div>
+    <div class="level-grid">
+      ${levels.map(l=>{
+        const d=doneLv(l),t=totalLv(l),pct=t?Math.round(d/t*100):0;
+        return`<div class="lv-card" onclick="loadLesson(CURRICULUM.find(c=>c.lv==='${l}').id)">
+          <div class="lv-card-badge badge b-${l}">${l}</div>
+          <div class="lv-card-name">${lvDescs[l]}</div>
+          <div class="lv-card-count">${d}/${t} chủ đề</div>
+          <div class="lv-card-prog"><div class="lv-card-prog-fill" style="width:${pct}%;background:${LCOLORS[l]}"></div></div>
+        </div>`;
+      }).join('')}
+    </div>
+    ${done===0?`<div style="background:var(--accent-dim);border:1px solid var(--accent-glow);border-radius:12px;padding:1rem;text-align:center">
+      <div style="font-size:14px;font-weight:600;color:var(--accent);margin-bottom:.3rem">Bắt đầu từ đâu?</div>
+      <div style="font-size:13px;color:var(--text-2)">Chọn một cấp độ bên trên hoặc nhấn vào chủ đề trong sidebar bên trái</div>
+    </div>`:''}
+  </div>`;
+}
+
+// ════════════════ LESSON LOADER ════════════════
+function loadLesson(id){
+  const lesson=CURRICULUM.find(c=>c.id===id);if(!lesson)return;
+  currentId=id;
+  quizState={idx:0,correct:0,answered:false};
+  // Update sidebar
+  document.querySelectorAll('.sb-item').forEach(el=>el.classList.remove('active'));
+  const sbi=document.getElementById('sbi_'+id);if(sbi)sbi.classList.add('active');
+  // Open parent group
+  document.querySelectorAll('.sb-group').forEach(g=>{
+    const items=g.querySelectorAll('.sb-item');
+    if(Array.from(items).some(i=>i.id==='sbi_'+id))g.classList.add('open');
+  });
+  document.getElementById('tbTitle').textContent=lesson.title;
+  // Close mobile sidebar
+  document.getElementById('sidebar').classList.remove('mobile-open');
+  document.getElementById('sbOverlay').classList.remove('show');
+  // Render
+  renderLesson(lesson);
+  document.getElementById('content').scrollTop=0;
+}
+
+function renderLesson(lesson){
+  const idx=CURRICULUM.findIndex(c=>c.id===lesson.id);
+  const prev=CURRICULUM[idx-1];const next=CURRICULUM[idx+1];
+  const isDone=readTopics[lesson.id];
+  let html=`<div class="lesson">
+    <div class="lesson-header">
+      <div class="lesson-badge badge b-${lesson.lv}">${lesson.lv}</div>
+      <div class="lesson-title">${lesson.title}</div>
+      <div class="lesson-subtitle">${lesson.subtitle}</div>
+      <div class="lesson-meta">
+        <span>📖 ~${lesson.mins} phút</span>
+        <span>❓ ${lesson.quiz.length} câu quiz</span>
+        ${isDone?'<span style="color:var(--green)">✓ Đã học</span>':''}
+      </div>
+    </div>`;
+  // Intro
+  html+=`<div class="sec"><div class="sec-title">Tổng quan</div><div class="body-text">${lesson.intro}</div></div>`;
+  // Formula
+  if(lesson.formula){
+    html+=`<div class="sec"><div class="sec-title">Bảng chia / Công thức</div>
+    <div class="formula-box">
+      <table style="width:100%;border-collapse:collapse;font-size:13px">
+        ${lesson.formula.map(([pron,form])=>`<tr><td style="color:var(--text-3);padding:2px 16px 2px 0;font-family:var(--font-mono)">${pron}</td><td style="color:var(--accent);font-weight:700;font-family:var(--font-mono)">${form}</td></tr>`).join('')}
+      </table>
+      ${lesson.formulaNote?`<div style="font-size:11px;color:var(--text-3);margin-top:.5rem;border-top:1px solid var(--border-0);padding-top:.4rem;font-family:var(--font-sans)">${lesson.formulaNote}</div>`:''}
+    </div></div>`;
+  }
+  if(lesson.formulaRaw){
+    html+=`<div class="sec"><div class="sec-title">Công thức</div>${lesson.formulaRaw}</div>`;
+  }
+  // Examples
+  if(lesson.examples&&lesson.examples.length){
+    html+=`<div class="sec"><div class="sec-title">Ví dụ chi tiết</div><div class="ex-grid">`;
+    lesson.examples.forEach(e=>{
+      const de=e.de.replace(/<hl>(.*?)<\/hl>/g,'<span class="hl">$1</span>').replace(/<hl-red>(.*?)<\/hl-red>/g,'<span class="hl-red">$1</span>');
+      const de_plain=e.de.replace(/<[^>]+>/g,'');
+      html+=`<div class="ex-item ${e.good?'good':'bad'}">
+        <div class="ex-de">${de}</div>
+        <div class="ex-vi">${e.vi}</div>
+        ${e.note?`<div class="ex-note">↳ ${e.note}</div>`:''}
+        <button class="spk-mini" onclick="speak('${de_plain.replace(/'/g,"\\'")}',this)">${SPK} Nghe</button>
+      </div>`;
+    });
+    html+=`</div></div>`;
+  }
+  // Tips/Dangers
+  if(lesson.tips&&lesson.tips.length){
+    html+=`<div class="sec"><div class="sec-title">Mẹo & Lưu ý</div>`;
+    lesson.tips.forEach(t=>{
+      html+=`<div class="${t.type==='danger'?'danger-box':'tip-box'}"><strong>${t.type==='danger'?'⚠️':'💡'} ${t.title}</strong>${t.text.replace(/\n/g,'<br>')}</div>`;
+    });
+    html+=`</div>`;
+  }
+  // Compare
+  if(lesson.compare&&lesson.compare.length){
+    html+=`<div class="sec"><div class="sec-title">So sánh</div>
+    <table class="compare-table">${lesson.compare.map(cp=>`
+      <tr><td class="c-a">${cp.a}</td><td style="color:var(--text-3);padding:0 8px">vs</td><td class="c-b">${cp.b}</td></tr>
+      <tr><td colspan="3" style="font-size:12px;color:var(--text-2);padding:2px 10px 10px;border-bottom:1px solid var(--border-0)">${cp.c}</td></tr>
+    `).join('')}</table></div>`;
+  }
+  // Quiz
+  html+=`<div class="quiz-wrap" id="quizWrap">
+    <div class="quiz-hd">
+      <span style="font-size:16px">❓</span>
+      <span class="quiz-hd-title">Quiz nhanh</span>
+      <span class="quiz-hd-sub">${lesson.quiz.length} câu</span>
+    </div>
+    <div id="quizBody"></div>
+    <div class="quiz-nav">
+      <span class="quiz-ctr" id="quizCtr">Câu 1/${lesson.quiz.length}</span>
+      <button class="quiz-next" id="quizNext" style="display:none" onclick="nextQuiz()">Tiếp →</button>
+    </div>
+  </div>`;
+  // Navigation
+  html+=`<div class="lesson-nav">
+    ${prev?`<button class="ln-btn" onclick="loadLesson('${prev.id}')"><span>←</span><div><span class="ln-btn-label">Trước</span><span class="ln-btn-title">${prev.title}</span></div></button>`:'<div></div>'}
+    <div class="mark-done-wrap">
+      <button class="mark-done${isDone?' done':''}" id="markDoneBtn" onclick="markDone('${lesson.id}')">
+        ${isDone?'✓ Đã học':'Đánh dấu đã học ✓'}
+      </button>
+    </div>
+    ${next?`<button class="ln-btn" style="text-align:right;justify-content:flex-end" onclick="loadLesson('${next.id}')"><div><span class="ln-btn-label">Tiếp theo</span><span class="ln-btn-title">${next.title}</span></div><span>→</span></button>`:'<div></div>'}
+  </div>
+  </div>`;
+  document.getElementById('content').innerHTML=html;
+  renderQuiz(lesson);
+}
+
+// ════════════════ QUIZ ════════════════
+function renderQuiz(lesson){
+  const q=lesson.quiz[quizState.idx];
+  if(!q)return;
+  quizState.answered=false;
+  document.getElementById('quizCtr').textContent=`Câu ${quizState.idx+1}/${lesson.quiz.length}`;
+  document.getElementById('quizNext').style.display='none';
+  document.getElementById('quizBody').innerHTML=`<div class="quiz-body">
+    <div class="quiz-q">${quizState.idx+1}. ${q.q}</div>
+    <div class="quiz-opts">
+      ${q.opts.map((o,i)=>`<button class="quiz-opt" onclick="answerQuiz(${i},${q.c},'${q.ex.replace(/'/g,"\\'")}','${lesson.id}')">${o}</button>`).join('')}
+    </div>
+    <div class="quiz-explain" id="qExp"></div>
+  </div>`;
+}
+function answerQuiz(chosen,correct,explain,lessonId){
+  if(quizState.answered)return;quizState.answered=true;
+  const opts=document.querySelectorAll('.quiz-opt');
+  opts[chosen].classList.add(chosen===correct?'ok':'no');
+  if(chosen!==correct)opts[correct].classList.add('show');
+  const exp=document.getElementById('qExp');exp.classList.add('show');exp.innerHTML='💡 '+explain;
+  if(chosen===correct)quizState.correct++;
+  document.getElementById('quizNext').style.display='block';
+  document.getElementById('quizNext').onclick=()=>nextQuiz(lessonId);
+}
+function nextQuiz(lessonId){
+  const lesson=CURRICULUM.find(c=>c.id===lessonId)||CURRICULUM.find(c=>c.id===currentId);
+  if(!lesson)return;
+  quizState.idx++;
+  if(quizState.idx>=lesson.quiz.length){
+    // Show result
+    const pct=Math.round(quizState.correct/lesson.quiz.length*100);
+    const col=pct>=80?'var(--green)':pct>=50?'var(--accent)':'var(--amber)';
+    document.getElementById('quizBody').innerHTML=`<div class="quiz-result">
+      <div class="qr-score" style="color:${col}">${quizState.correct}/${lesson.quiz.length}</div>
+      <div class="qr-sub">${pct}% · ${pct>=80?'Xuất sắc! Tiếp tục →':pct>=50?'Khá ổn! Ôn lại nhé':'Ôn thêm lý thuyết!'}</div>
+      ${pct>=80?`<button class="quiz-next" style="margin-top:.75rem;width:100%;padding:9px" onclick="markDone('${lesson.id}');const n=CURRICULUM[CURRICULUM.findIndex(c=>c.id==='${lesson.id}')+1];if(n)loadLesson(n.id)">✓ Đã hiểu · Bài tiếp →</button>`:`<button class="quiz-next" style="margin-top:.75rem;background:var(--amber);width:100%;padding:9px" onclick="quizState={idx:0,correct:0,answered:false};renderQuiz(CURRICULUM.find(c=>c.id==='${lesson.id}'))">↻ Làm lại quiz</button>`}
+    </div>`;
+    document.getElementById('quizCtr').textContent='Hoàn thành!';
+    document.getElementById('quizNext').style.display='none';
+    if(pct>=80)markDone(lesson.id,true);
+  } else {
+    renderQuiz(lesson);
+  }
+}
+function markDone(id,silent=false){
+  readTopics[id]=true;ss('learnRead',readTopics);
+  const btn=document.getElementById('markDoneBtn');
+  if(btn){btn.textContent='✓ Đã học';btn.classList.add('done');}
+  const sbi=document.getElementById('sbi_'+id);
+  if(sbi){sbi.classList.add('read');const chk=sbi.querySelector('.sb-check');if(chk)chk.style.opacity='1';}
+  updateProgress();buildSidebar(document.getElementById('sbSearch').value);
+  if(!silent)toast('✓ Đánh dấu đã học!');
+}
+
+// ════════════════ INIT ════════════════
+speechSynthesis&&speechSynthesis.getVoices();
+buildSidebar();
+updateProgress();
+renderWelcome();
+
+</script>
+</body></html>

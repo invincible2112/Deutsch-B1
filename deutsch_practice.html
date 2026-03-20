@@ -1,0 +1,1117 @@
+<!DOCTYPE html>
+<html lang="vi" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
+<meta name="theme-color" content="#0a0a0f">
+<title>Deutsch Prüfung — Luyện thi Goethe/Telc</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500;600&family=Geist:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg-0:#0a0a0f;--bg-1:#111118;--bg-2:#16161f;--bg-3:#1c1c28;--bg-4:#252535;
+  --border-0:rgba(255,255,255,.06);--border-1:rgba(255,255,255,.1);--border-2:rgba(255,255,255,.18);
+  --text-0:#ffffff;--text-1:rgba(255,255,255,.85);--text-2:rgba(255,255,255,.52);--text-3:rgba(255,255,255,.28);
+  --accent:#4F8EF7;--accent-dim:rgba(79,142,247,.12);--accent-glow:rgba(79,142,247,.28);
+  --green:#3ECF8E;--green-dim:rgba(62,207,142,.1);--green-md:rgba(62,207,142,.25);
+  --red:#F87171;--red-dim:rgba(248,113,113,.1);--red-md:rgba(248,113,113,.25);
+  --amber:#FBBF24;--amber-dim:rgba(251,191,36,.1);--amber-md:rgba(251,191,36,.25);
+  --purple:#A78BFA;--purple-dim:rgba(167,139,250,.1);
+  --font-sans:'Geist',system-ui,sans-serif;--font-mono:'Geist Mono',monospace;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{height:100%;}
+body{font-family:var(--font-sans);background:var(--bg-0);color:var(--text-1);min-height:100vh;padding-bottom:80px;overflow-x:hidden;-webkit-font-smoothing:antialiased;font-size:15px;}
+body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.025'/%3E%3C/svg%3E");pointer-events:none;z-index:0;}
+.wrap{max-width:580px;margin:0 auto;padding:.9rem 1rem 0;position:relative;z-index:1;}
+
+/* TOP */
+.topbar{display:flex;align-items:center;justify-content:space-between;padding:.55rem 0;margin-bottom:.75rem;border-bottom:1px solid var(--border-0);}
+.logo{display:flex;align-items:center;gap:8px;font-size:14px;font-weight:600;color:var(--text-0);letter-spacing:-.3px;}
+.logo-dot{width:8px;height:8px;border-radius:50%;background:var(--red);box-shadow:0 0 8px rgba(248,113,113,.4);animation:rdot 2s ease infinite;}
+@keyframes rdot{0%,100%{opacity:1}50%{opacity:.4}}
+.logo-sub{font-size:11px;color:var(--text-3);font-family:var(--font-mono);}
+.nav-btns{display:flex;gap:5px;}
+.nav-btn{background:var(--bg-2);border:1px solid var(--border-1);border-radius:8px;padding:5px 9px;font-size:12px;cursor:pointer;color:var(--text-2);font-family:var(--font-sans);transition:all .15s;}
+.nav-btn:hover{background:var(--bg-3);color:var(--text-1);}
+
+/* BOTTOM NAV */
+.bnav{position:fixed;bottom:0;left:0;right:0;background:rgba(10,10,15,.92);backdrop-filter:blur(20px);border-top:1px solid var(--border-0);display:flex;z-index:100;}
+.nb{flex:1;padding:9px 0 7px;border:none;background:transparent;cursor:pointer;font-family:var(--font-sans);display:flex;flex-direction:column;align-items:center;gap:2px;color:var(--text-3);font-size:9px;font-weight:500;transition:color .15s;}
+.nb.on{color:var(--accent);}
+.nb-i{font-size:18px;line-height:1;}
+
+/* PANELS */
+.panel{display:none;}.panel.show{display:block;animation:fadeIn .2s ease;}
+@keyframes fadeIn{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:translateY(0)}}
+
+/* CARDS */
+.card{background:var(--bg-1);border:1px solid var(--border-0);border-radius:14px;padding:1rem 1.1rem;margin-bottom:.75rem;transition:border-color .2s;}
+.card-accent{background:linear-gradient(135deg,var(--accent-dim),transparent);border:1px solid var(--accent-glow);border-radius:14px;padding:1rem 1.1rem;margin-bottom:.75rem;}
+.card-sm{background:var(--bg-2);border:1px solid var(--border-0);border-radius:10px;padding:.65rem .85rem;margin-bottom:.5rem;}
+
+/* BADGE */
+.badge{display:inline-flex;align-items:center;font-size:11px;font-weight:700;padding:2px 7px;border-radius:6px;font-family:var(--font-mono);}
+.b-A1{color:#4ADE80;background:rgba(74,222,128,.1);border:1px solid rgba(74,222,128,.2);}
+.b-A2{color:#34D399;background:rgba(52,211,153,.1);border:1px solid rgba(52,211,153,.2);}
+.b-B1{color:#FBBF24;background:rgba(251,191,36,.1);border:1px solid rgba(251,191,36,.2);}
+.b-B2{color:#F97316;background:rgba(249,115,22,.1);border:1px solid rgba(249,115,22,.2);}
+.b-C1{color:#A78BFA;background:rgba(167,139,250,.1);border:1px solid rgba(167,139,250,.2);}
+.b-C2{color:#F472B6;background:rgba(244,114,182,.1);border:1px solid rgba(244,114,182,.2);}
+
+/* TIMER */
+.timer-bar{background:var(--bg-2);border:1px solid var(--border-1);border-radius:12px;padding:.55rem .85rem;display:flex;align-items:center;gap:10px;margin-bottom:.75rem;}
+.timer-display{font-family:var(--font-mono);font-size:18px;font-weight:700;color:var(--text-0);letter-spacing:1px;min-width:60px;}
+.timer-display.warn{color:var(--amber);animation:twarn .5s ease infinite;}
+.timer-display.crit{color:var(--red);animation:tcrit .3s ease infinite;}
+@keyframes twarn{0%,100%{opacity:1}50%{opacity:.5}}
+@keyframes tcrit{0%,100%{opacity:1}50%{opacity:.2}}
+.timer-label{font-size:11px;color:var(--text-3);font-family:var(--font-mono);flex:1;}
+.timer-track{flex:1;height:4px;background:var(--bg-4);border-radius:2px;overflow:hidden;}
+.timer-fill{height:4px;border-radius:2px;transition:width 1s linear,background .5s;}
+.timer-btns{display:flex;gap:5px;}
+.tbtn{background:var(--bg-3);border:1px solid var(--border-1);border-radius:7px;padding:4px 9px;font-size:11px;cursor:pointer;color:var(--text-2);font-family:var(--font-sans);transition:all .15s;}
+.tbtn:hover{color:var(--text-1);border-color:var(--border-2);}
+.tbtn.start{background:var(--accent);color:#fff;border-color:transparent;}
+
+/* PROGRESS STEPS */
+.steps{display:flex;gap:3px;margin-bottom:.75rem;align-items:center;}
+.step{flex:1;height:3px;border-radius:2px;background:var(--bg-4);transition:background .3s;}
+.step.done{background:var(--green);}
+.step.active{background:var(--accent);}
+.step-label{font-size:10px;color:var(--text-3);font-family:var(--font-mono);white-space:nowrap;margin-left:6px;}
+
+/* SECTION HEADER */
+.sec-hd{display:flex;align-items:center;gap:8px;margin-bottom:.65rem;}
+.sec-icon{font-size:20px;}
+.sec-title{font-size:14px;font-weight:700;color:var(--text-0);letter-spacing:-.3px;}
+.sec-sub{font-size:11px;color:var(--text-3);font-family:var(--font-mono);}
+.label{font-size:10px;font-weight:700;color:var(--text-3);text-transform:uppercase;letter-spacing:.08em;font-family:var(--font-mono);}
+
+/* INSTRUCTION BOX */
+.instr-box{background:var(--accent-dim);border:1px solid var(--accent-glow);border-radius:10px;padding:.65rem .9rem;font-size:12.5px;color:var(--text-2);line-height:1.7;margin-bottom:.65rem;}
+.instr-box strong{color:var(--accent);display:block;font-size:10px;text-transform:uppercase;letter-spacing:.07em;margin-bottom:.25rem;font-family:var(--font-mono);}
+
+/* MCQ */
+.mcq{display:flex;flex-direction:column;gap:7px;margin:.5rem 0;}
+.mopt{padding:10px 14px;border-radius:10px;border:1px solid var(--border-1);background:var(--bg-2);font-size:13.5px;cursor:pointer;text-align:left;font-family:var(--font-sans);color:var(--text-1);transition:all .15s;line-height:1.4;}
+.mopt:hover:not(:disabled){border-color:var(--border-2);background:var(--bg-3);}
+.mopt.ok{background:var(--green-dim);border-color:var(--green-md);color:var(--green);pointer-events:none;}
+.mopt.no{background:var(--red-dim);border-color:var(--red-md);color:var(--red);pointer-events:none;}
+.mopt.show{background:var(--green-dim);border-color:var(--green-md);color:var(--green);pointer-events:none;}
+
+/* EXPLAIN BOX */
+.explain-box{background:var(--bg-2);border:1px solid var(--border-0);border-left:2px solid var(--accent);border-radius:10px;padding:.6rem .85rem;font-size:12px;color:var(--text-2);line-height:1.65;display:none;margin-top:.4rem;}
+.explain-box.show{display:block;animation:fadeIn .2s ease;}
+
+/* LÜCKENTEXT */
+.luecken-text{font-size:14px;color:var(--text-1);line-height:2.6;background:var(--bg-2);border:1px solid var(--border-0);border-radius:12px;padding:.9rem 1rem;margin:.5rem 0;}
+.luecke{display:inline-block;position:relative;}
+.luecke-input{border:none;border-bottom:2px solid var(--accent);background:transparent;color:var(--accent);font-size:14px;font-family:var(--font-sans);text-align:center;width:90px;outline:none;padding:0 3px;}
+.luecke-input.ok{border-bottom-color:var(--green);color:var(--green);}
+.luecke-input.no{border-bottom-color:var(--red);color:var(--red);}
+.luecke-num{font-size:9px;color:var(--text-3);position:absolute;top:-12px;left:50%;transform:translateX(-50%);font-family:var(--font-mono);}
+
+/* ZUORDNUNG */
+.match-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:.5rem 0;}
+.match-item{background:var(--bg-2);border:1px solid var(--border-1);border-radius:10px;padding:.6rem .75rem;font-size:13px;color:var(--text-1);cursor:pointer;transition:all .15s;line-height:1.4;}
+.match-item:hover{border-color:var(--border-2);}
+.match-item.selected{border-color:var(--accent-glow);background:var(--accent-dim);color:var(--accent);}
+.match-item.matched{border-color:var(--green-md);background:var(--green-dim);color:var(--green);pointer-events:none;}
+.match-item.wrong{border-color:var(--red-md);background:var(--red-dim);color:var(--red);pointer-events:none;}
+.match-num{font-size:10px;font-family:var(--font-mono);color:var(--text-3);display:block;margin-bottom:2px;}
+
+/* READING TEXT */
+.read-passage{background:var(--bg-2);border:1px solid var(--border-0);border-radius:12px;padding:.85rem 1rem;font-size:14px;color:var(--text-1);line-height:1.85;margin-bottom:.65rem;max-height:240px;overflow-y:auto;}
+.read-passage::-webkit-scrollbar{width:3px;}
+.read-passage::-webkit-scrollbar-thumb{background:var(--border-1);border-radius:2px;}
+
+/* WRITING */
+.write-prompt{background:linear-gradient(135deg,var(--purple-dim),transparent);border:1px solid rgba(167,139,250,.2);border-radius:12px;padding:.85rem 1rem;margin-bottom:.65rem;}
+.wp-tag{font-size:10px;font-weight:700;color:var(--purple);text-transform:uppercase;letter-spacing:.07em;margin-bottom:.35rem;font-family:var(--font-mono);}
+.wp-text{font-size:14px;font-weight:600;color:var(--text-0);line-height:1.5;}
+.wp-vi{font-size:12px;color:var(--text-3);margin-top:.3rem;font-style:italic;}
+.write-area{width:100%;min-height:120px;padding:.75rem;border-radius:10px;border:1px solid var(--border-1);background:var(--bg-2);color:var(--text-0);font-size:14px;font-family:var(--font-sans);outline:none;resize:vertical;line-height:1.6;transition:border-color .2s;}
+.write-area:focus{border-color:var(--accent);}
+.word-count{font-size:11px;color:var(--text-3);text-align:right;margin-top:3px;font-family:var(--font-mono);}
+.word-count.ok{color:var(--green);}
+.word-count.low{color:var(--amber);}
+.rubric-item{display:flex;align-items:center;gap:9px;padding:.45rem .6rem;border-radius:8px;margin-bottom:3px;background:var(--bg-2);border:1px solid var(--border-0);cursor:pointer;transition:all .15s;}
+.rubric-item:hover{border-color:var(--border-1);}
+.rubric-item.done{background:var(--green-dim);border-color:var(--green-md);}
+.rc-box{width:18px;height:18px;border-radius:5px;border:1.5px solid var(--border-2);flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:11px;transition:all .15s;}
+.rubric-item.done .rc-box{background:var(--green);border-color:var(--green);color:#000;}
+.rc-text{font-size:12.5px;color:var(--text-2);}
+.rubric-item.done .rc-text{color:var(--green);}
+
+/* SPEAKING */
+.speak-card{background:var(--bg-1);border:1px solid var(--border-1);border-radius:14px;padding:1.1rem;text-align:center;margin-bottom:.65rem;}
+.speak-role{font-size:10px;color:var(--text-3);font-family:var(--font-mono);text-transform:uppercase;letter-spacing:.07em;margin-bottom:.5rem;}
+.speak-q{font-size:18px;font-weight:600;color:var(--text-0);line-height:1.5;margin:.35rem 0;letter-spacing:-.3px;}
+.speak-hint{font-size:12px;color:var(--amber);background:var(--amber-dim);border:1px solid var(--amber-md);border-radius:8px;padding:.4rem .7rem;margin:.6rem 0;text-align:left;line-height:1.6;}
+.mic-wrap{display:flex;flex-direction:column;align-items:center;gap:.4rem;margin:.75rem 0;}
+.mic-btn{width:64px;height:64px;border-radius:50%;border:2px solid var(--border-2);background:var(--bg-2);color:var(--text-2);font-size:26px;cursor:pointer;transition:all .2s;}
+.mic-btn:hover{border-color:var(--accent-glow);color:var(--accent);background:var(--accent-dim);}
+.mic-btn.rec{background:var(--red-dim);border-color:var(--red-md);color:var(--red);animation:mPulse 1s infinite;}
+@keyframes mPulse{0%,100%{box-shadow:0 0 0 0 rgba(248,113,113,.4)}50%{box-shadow:0 0 0 10px rgba(248,113,113,0)}}
+.transcript-box{background:var(--bg-2);border:1px solid var(--border-0);border-radius:10px;padding:.6rem .85rem;font-size:13px;color:var(--text-2);min-height:44px;margin-top:.4rem;text-align:left;font-style:italic;}
+.spk-btn{background:var(--bg-3);border:1px solid var(--border-1);border-radius:20px;padding:4px 10px;font-size:11px;cursor:pointer;color:var(--text-2);font-family:var(--font-sans);display:inline-flex;align-items:center;gap:3px;transition:all .15s;margin:.3rem 0;}
+.spk-btn svg{width:11px;height:11px;fill:currentColor;}
+.spk-btn:hover{color:var(--accent);border-color:var(--accent-glow);}
+.spk-btn.go{color:var(--accent);background:var(--accent-dim);animation:pulse .7s infinite;}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.35}}
+
+/* BUTTONS */
+.btn-row{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:.85rem;}
+.btn{padding:9px 18px;border-radius:10px;border:1px solid var(--border-1);background:var(--bg-2);color:var(--text-1);font-size:13px;font-weight:500;cursor:pointer;font-family:var(--font-sans);transition:all .15s;letter-spacing:-.1px;}
+.btn:hover{background:var(--bg-3);border-color:var(--border-2);color:var(--text-0);}
+.btn:active{transform:scale(.97);}
+.btn-primary{background:var(--accent);color:#fff;border-color:transparent;box-shadow:0 0 0 1px var(--accent-glow),0 4px 16px rgba(79,142,247,.25);}
+.btn-primary:hover{opacity:.88;background:var(--accent);}
+.btn-sm{padding:5px 12px;font-size:12px;border-radius:8px;}
+.btn-ghost{background:transparent;border-color:var(--border-1);}
+.btn-ok{background:var(--green-dim);color:var(--green);border-color:var(--green-md);}
+.btn-bad{background:var(--red-dim);color:var(--red);border-color:var(--red-md);}
+
+/* HOME CARDS */
+.exam-card{background:var(--bg-1);border:1px solid var(--border-0);border-radius:14px;padding:1rem 1.05rem;margin-bottom:.65rem;cursor:pointer;transition:all .2s;position:relative;overflow:hidden;}
+.exam-card::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;border-radius:0 2px 2px 0;background:transparent;transition:background .2s;}
+.exam-card:hover{border-color:var(--border-1);background:var(--bg-2);}
+.exam-card:hover::before{background:var(--accent);}
+.ec-top{display:flex;align-items:center;gap:10px;margin-bottom:.4rem;}
+.ec-icon{font-size:22px;}
+.ec-title{font-size:14px;font-weight:600;color:var(--text-0);}
+.ec-meta{font-size:11px;color:var(--text-3);font-family:var(--font-mono);display:flex;gap:8px;flex-wrap:wrap;margin-top:.2rem;}
+.ec-desc{font-size:12.5px;color:var(--text-2);line-height:1.55;}
+.ec-score{position:absolute;top:.9rem;right:.9rem;font-size:13px;font-weight:700;font-family:var(--font-mono);}
+
+/* SCORE DISPLAY */
+.score-section{background:var(--bg-2);border:1px solid var(--border-0);border-radius:12px;padding:.7rem .9rem;margin-bottom:.5rem;}
+.ss-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:.3rem;}
+.ss-name{font-size:12px;font-weight:600;color:var(--text-1);}
+.ss-score{font-size:13px;font-weight:700;font-family:var(--font-mono);}
+.ss-bar{height:5px;background:var(--bg-4);border-radius:3px;overflow:hidden;}
+.ss-fill{height:5px;border-radius:3px;transition:width .6s cubic-bezier(.4,0,.2,1);}
+
+/* RESULT */
+.result-wrap{text-align:center;padding:1.5rem 0;}
+.result-ring{width:110px;height:110px;border-radius:50%;margin:0 auto .85rem;display:flex;align-items:center;justify-content:center;flex-direction:column;position:relative;border:3px solid var(--border-1);}
+.result-pct{font-size:28px;font-weight:700;font-family:var(--font-mono);color:var(--text-0);}
+.result-pts{font-size:11px;color:var(--text-3);font-family:var(--font-mono);}
+.result-verdict{font-size:18px;font-weight:700;color:var(--text-0);letter-spacing:-.4px;margin-bottom:.3rem;}
+.result-sub{font-size:13px;color:var(--text-2);}
+.cert-badge{display:inline-flex;align-items:center;gap:8px;background:var(--amber-dim);border:1px solid var(--amber-md);border-radius:10px;padding:.6rem 1.1rem;margin:1rem 0;font-size:13px;font-weight:600;color:var(--amber);}
+
+/* MISC */
+.divider{height:1px;background:var(--border-0);margin:.75rem 0;}
+.float-fb{position:fixed;top:38%;left:50%;transform:translate(-50%,-50%);font-size:18px;font-weight:700;pointer-events:none;z-index:999;opacity:0;white-space:nowrap;font-family:var(--font-mono);}
+.float-fb.show{animation:fup .9s ease forwards;}
+@keyframes fup{0%{opacity:0;transform:translate(-50%,-50%) scale(.6)}15%{opacity:1;transform:translate(-50%,-65%) scale(1.08)}70%{opacity:1;transform:translate(-50%,-85%)}100%{opacity:0;transform:translate(-50%,-120%) scale(.9)}}
+.cp{position:fixed;pointer-events:none;z-index:998;animation:cfall linear forwards;border-radius:2px;}
+@keyframes cfall{0%{opacity:1;transform:translateY(-10px) rotate(0)}100%{opacity:0;transform:translateY(100vh) rotate(720deg)}}
+.note-area{width:100%;min-height:42px;padding:.5rem .7rem;border-radius:8px;border:1px solid var(--border-0);background:var(--bg-0);color:var(--text-1);font-size:12px;font-family:var(--font-sans);outline:none;resize:none;transition:border-color .2s;margin-top:.4rem;}
+.note-area:focus{border-color:var(--accent);}
+.tag{display:inline-flex;align-items:center;gap:4px;font-size:11px;font-weight:500;font-family:var(--font-mono);padding:3px 9px;border-radius:20px;border:1px solid var(--border-1);color:var(--text-2);background:var(--bg-1);}
+.tag.live{color:var(--red);background:var(--red-dim);border-color:var(--red-md);animation:pulse .8s infinite;}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="topbar">
+    <div>
+      <div class="logo"><div class="logo-dot"></div>Prüfung A1–C2</div>
+      <div class="logo-sub">Goethe / Telc — Format thật</div>
+    </div>
+    <div class="nav-btns">
+      <button class="nav-btn" onclick="location.href='index.html'">📱 App</button>
+      <button class="nav-btn" onclick="location.href='learn.html'">📖 Lý thuyết</button>
+      <button class="nav-btn" onclick="location.href='reference.html'">📋 Ref</button>
+    </div>
+  </div>
+
+  <div class="panel show" id="p-home"></div>
+  <div class="panel" id="p-exam"></div>
+  <div class="panel" id="p-result"></div>
+</div>
+
+<div class="bnav">
+  <button class="nb on" id="nb-home" onclick="goPanel('home')"><span class="nb-i">🏠</span>Đề thi</button>
+  <button class="nb" id="nb-history" onclick="goPanel('history')"><span class="nb-i">📊</span>Lịch sử</button>
+</div>
+
+<div class="float-fb" id="floatFb"></div>
+
+
+<script>
+// ═══════════════════════════════════════
+// EXAM DATA — Goethe/Telc A1–B2
+// ═══════════════════════════════════════
+const SPK=`<svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>`;
+
+const EXAMS = [
+{
+  id:'goethe_a2', level:'A2', title:'Goethe-Zertifikat A2', icon:'🇩🇪',
+  desc:'Đề thi thử chuẩn Goethe A2 — Đủ 4 kỹ năng · 60 phút tổng',
+  totalMins:60, passScore:60,
+  sections:[
+    {
+      id:'lesen', skill:'Lesen', icon:'📖', label:'Đọc hiểu', mins:30,
+      instructions:'Lies die Texte und beantworte die Fragen. Du hast 30 Minuten Zeit.',
+      parts:[
+        {
+          id:'l1', type:'zuordnung', label:'Teil 1 — Anzeigen zuordnen',
+          instructions:'Lies die Anzeigen A–E. Welche Anzeige passt zu welcher Person? Schreibe den richtigen Buchstaben. Eine Anzeige passt zu keiner Person (X).',
+          items:[
+            {id:'A',text:'SPRACHKURS ENGLISCH\nMontag + Mittwoch 18–20 Uhr\nFür Anfänger und Fortgeschrittene\nVolkshochschule Berlin · 80€/Monat\nInfo: vhs-berlin.de'},
+            {id:'B',text:'FAHRRADVERLEIH\nTagesmiete: 12€\nWochenmiete: 55€\nHelmverleih kostenlos\nStadtmitte, Bahnhofstr. 14\nMo–So 8–20 Uhr'},
+            {id:'C',text:'BABYSITTER GESUCHT\nWir suchen zuverlässige Person\nfür 2 Kinder (3+5 Jahre)\nDi + Do nachmittags, ca. 3h\n15€/Stunde · Tel: 0176-445566'},
+            {id:'D',text:'YOGA-KURS\nEvery Sunday 9:00–10:30\nFür alle Niveaus\nMitbringen: Matte und Wasser\nAnmeldung: yoga-berlin.de · 25€/Monat'},
+            {id:'E',text:'WOHNUNG ZU VERMIETEN\n2-Zimmer, 65m², 4. OG\nKüche, Bad, Keller\n950€ kalt + NK\nab sofort frei · Tel: 030-887766'},
+          ],
+          persons:[
+            {id:'P1',text:'Lena möchte ihre Englischkenntnisse verbessern. Sie arbeitet von 9 bis 17 Uhr.',ans:'A',explain:'Anzeige A: Englischkurs an Montag+Mittwoch 18-20 Uhr — passt zu Lena (arbeitet bis 17h, Abendkurs möglich)'},
+            {id:'P2',text:'Marco sucht eine Wohnung für sich allein. Er hat maximal 1000€ Budget.',ans:'E',explain:'Anzeige E: 2-Zimmer-Wohnung, 950€ kalt — innerhalb Marcos Budget'},
+            {id:'P3',text:'Sofia braucht einmal pro Woche Entspannung am Wochenende.',ans:'D',explain:'Anzeige D: Yoga jeden Sonntag 9-10:30 — perfekt für Wochenendentspannung'},
+            {id:'P4',text:'Tim möchte die Stadt erkunden ohne eigenes Fahrrad.',ans:'B',explain:'Anzeige B: Fahrradverleih Tagesmiete 12€ — ideal zum Stadterkunden'},
+          ]
+        },
+        {
+          id:'l2', type:'mcq_multi', label:'Teil 2 — Artikel und SMS verstehen',
+          instructions:'Lies die Texte. Kreuze an: richtig (r), falsch (f), oder steht nicht im Text (n).',
+          passage:`E-Mail von Lisa an Anna:
+
+Hallo Anna!
+Wie geht's? Ich wollte dir kurz schreiben — nächste Woche ist mein Geburtstag! Ich mache am Samstag eine kleine Party bei mir zuhause. Wir fangen um 19 Uhr an. Es kommen ungefähr 15 Leute. Ich koche selbst — vietnamesisches Essen, weil ich gerade einen Kochkurs mache 😊
+
+Bitte bring nichts mit — ich habe schon alles. Aber wenn du möchtest, kannst du Getränke mitbringen. Antworte mir bitte bis Donnerstag!
+
+Liebe Grüße,
+Lisa`,
+          questions:[
+            {q:'Lisas Geburtstag ist am Samstag.',opts:['richtig','falsch','steht nicht im Text'],c:0,explain:'"am Samstag eine kleine Party" — der Geburtstag ist nächste Woche, die Party am Samstag'},
+            {q:'Lisa hat keine Zeit zum Kochen.',opts:['richtig','falsch','steht nicht im Text'],c:1,explain:'"Ich koche selbst" = Lisa kocht SELBST → falsch'},
+            {q:'Anna soll Essen mitbringen.',opts:['richtig','falsch','steht nicht im Text'],c:1,explain:'"Bitte bring nichts mit" → Anna soll NICHTS mitbringen. Optional: Getränke'},
+            {q:'Lisa lernt gerade kochen.',opts:['richtig','falsch','steht nicht im Text'],c:0,explain:'"weil ich gerade einen Kochkurs mache" → richtig'},
+            {q:'Ungefähr 20 Personen kommen zur Party.',opts:['richtig','falsch','steht nicht im Text'],c:1,explain:'"ungefähr 15 Leute" → nicht 20 → falsch'},
+          ]
+        },
+        {
+          id:'l3', type:'lueckentext', label:'Teil 3 — Lückentext (Wortschatz)',
+          instructions:'Lies den Text. Welches Wort (A, B oder C) passt in die Lücke?',
+          text:'In Deutschland ist Recycling sehr [1]. Jeder Haushalt hat [2] verschiedene Mülltonnen: eine gelbe für Verpackungen, eine blaue für Papier und eine braune für Bioabfälle. Der Restmüll kommt in die schwarze Tonne. Viele Deutsche [3] auch leere Flaschen ins Geschäft zurück. Das [4] Pfandsystem — man zahlt beim Kauf einen kleinen Betrag mehr und [5] ihn zurück, wenn man die Flasche zurückgibt.',
+          blanks:[
+            {num:1,opts:['A. wichtig','B. schwierig','C. langweilig'],c:0,explain:'wichtig = quan trọng. "Recycling ist sehr wichtig in Deutschland" passt kontextuell am besten'},
+            {num:2,opts:['A. bereits','B. meistens','C. mindestens'],c:1,explain:'"meistens" = thường. Haushalte haben meistens verschiedene Tonnen — allgemeine Aussage'},
+            {num:3,opts:['A. kaufen','B. bringen','C. holen'],c:1,explain:'"bringen zurück" = trả lại. "Flaschen zurückbringen" ins Geschäft'},
+            {num:4,opts:['A. heißt','B. macht','C. gibt'],c:0,explain:'"Das heißt Pfandsystem" = Đó gọi là hệ thống đặt cọc'},
+            {num:5,opts:['A. bekommt','B. kauft','C. bezahlt'],c:0,explain:'"bekommt zurück" = nhận lại. Man bekommt den Betrag zurück'},
+          ]
+        }
+      ]
+    },
+    {
+      id:'hoeren', skill:'Hören', icon:'👂', label:'Nghe hiểu', mins:25,
+      instructions:'Du hörst verschiedene Texte. Beantworte die Fragen.',
+      parts:[
+        {
+          id:'h1', type:'hoeren_mcq', label:'Teil 1 — Kurze Gespräche',
+          instructions:'Du hörst 4 kurze Gespräche. Für jedes Gespräch gibt es eine Frage. Wähle die richtige Antwort A, B oder C. Du hörst jeden Text zweimal.',
+          items:[
+            {text:'— Entschuldigung, ich suche den Supermarkt. — Der ist nicht weit. Gehen Sie hier geradeaus, dann an der Ampel links. Nach etwa 200 Metern sehen Sie ihn auf der rechten Seite. — Danke! — Bitte sehr!',
+             q:'Wo ist der Supermarkt?',opts:['Links um die Ecke','Geradeaus, dann links, rechts','Geradeaus, dann rechts'],c:1,
+             explain:'"geradeaus, dann an der Ampel links... auf der rechten Seite" → geradeaus + links abbiegen + dann rechts. Option A falsch (nicht nur links). Option C falsch (kein "dann rechts" ohne links).'},
+            {text:'— Hallo, ich möchte mich für den Deutschkurs anmelden. — Gerne! Welches Niveau haben Sie? — Ich bin absolute Anfängerin. — Dann empfehle ich Ihnen den A1-Kurs. Er beginnt am Montag. — Wie viel kostet er? — 150 Euro pro Monat, inklusive Materialien.',
+             q:'Wie viel kostet der Kurs?',opts:['100 Euro','120 Euro','150 Euro'],c:2,
+             explain:'"150 Euro pro Monat, inklusive Materialien" — direkt genannt. Materialien sind eingeschlossen.'},
+            {text:'— Hier ist die Arztpraxis von Dr. Müller. Unser Praxisteam ist leider gerade nicht erreichbar. Unsere Öffnungszeiten sind Montag bis Freitag von 8 bis 12 Uhr und von 14 bis 18 Uhr. Samstags haben wir geschlossen. Für dringende Fälle wählen Sie bitte 116 117.',
+             q:'Wann ist die Praxis samstags geöffnet?',opts:['8-12 Uhr','Gar nicht','14-18 Uhr'],c:1,
+             explain:'"Samstags haben wir geschlossen" → samstags NICHT geöffnet → Antwort: gar nicht'},
+            {text:'— Schatz, hast du die Milch gekauft? — Hm, ich habe Brot, Käse und Joghurt mitgebracht. Milch... warte mal... nein, die habe ich vergessen! — Kein Problem, ich gehe noch kurz zum Laden. — Danke, und bring bitte auch Eier mit.',
+             q:'Was hat die Person vergessen?',opts:['Brot','Milch','Eier'],c:1,
+             explain:'"Milch... nein, die habe ich vergessen!" → Milch wurde vergessen. Brot wurde mitgebracht. Eier werden noch bestellt.'},
+          ]
+        },
+        {
+          id:'h2', type:'hoeren_rtf', label:'Teil 2 — Radiodurchsage',
+          instructions:'Du hörst eine Radiodurchsage. Kreuze an: richtig oder falsch.',
+          passage:'Guten Morgen! Hier ist Ihr Wetterbericht für heute und morgen. Heute ist es in Berlin bewölkt mit Temperaturen zwischen 12 und 16 Grad. Am Nachmittag kann es regnen, also nehmen Sie einen Schirm mit! Morgen wird es deutlich besser — die Sonne kommt raus und es wird bis zu 22 Grad warm. Für das Wochenende erwarten wir leider wieder Regen. Das war Ihr Wetterbericht. Schönen Tag!',
+          questions:[
+            {q:'Heute ist es sonnig in Berlin.',opts:['richtig','falsch'],c:1,explain:'"bewölkt" = nhiều mây → nicht sonnig → falsch'},
+            {q:'Man sollte heute einen Schirm mitnehmen.',opts:['richtig','falsch'],c:0,explain:'"nehmen Sie einen Schirm mit" — direkte Empfehlung → richtig'},
+            {q:'Morgen wird es wärmer als heute.',opts:['richtig','falsch'],c:0,explain:'Heute max. 16 Grad, morgen bis 22 Grad → morgen wärmer → richtig'},
+            {q:'Das Wochenende wird schön und sonnig.',opts:['richtig','falsch'],c:1,explain:'"Für das Wochenende erwarten wir leider wieder Regen" → nicht schön → falsch'},
+          ]
+        }
+      ]
+    },
+    {
+      id:'schreiben', skill:'Schreiben', icon:'✍️', label:'Viết', mins:25,
+      instructions:'Du schreibst eine E-Mail.',
+      parts:[
+        {
+          id:'s1', type:'schreiben', label:'Teil 1 — E-Mail schreiben',
+          instructions:'Du hast eine E-Mail von deinem Freund Jonas bekommen. Schreib ihm eine Antwort (~60 Wörter). Beantworte alle 3 Punkte.',
+          prompt:'Hallo!\nIch habe ein neues Café in der Innenstadt entdeckt. Wollen wir es zusammen ausprobieren?\n① Wann hast du Zeit?\n② Was ist dein Lieblingsgetränk?\n③ Wo sollen wir uns treffen?\nBis bald! Jonas',
+          promptVi:'Jonas hat ein neues Café gefunden und möchte dich treffen. Antworte auf seine 3 Fragen.',
+          minWords:50,
+          rubric:[
+            'Auf alle 3 Punkte eingegangen (①②③)',
+            'Richtiges E-Mail-Format (Anrede + Gruß)',
+            'Perfekt korrekt verwendet (habe/bin + Partizip II)',
+            'Mindestens 50 Wörter',
+            'Keine groben Grammatikfehler',
+          ],
+          sampleAnswer:'Lieber Jonas!\nSuper Idee! Am Samstag habe ich Zeit, das passt mir gut. Mein Lieblingsgetränk ist Cappuccino — ich trinke immer Kaffee 😊 Wir können uns am besten direkt vor dem Café treffen. Kennst du die genaue Adresse? Schreib mir bitte!\nBis Samstag! [Name]',
+          sampleTip:'Musterlösung zeigt: Anrede (Lieber Jonas), 3 Punkte beantwortet, Perfekt (habe Zeit), Grußformel'
+        }
+      ]
+    },
+    {
+      id:'sprechen', skill:'Sprechen', icon:'🗣️', label:'Nói', mins:15,
+      instructions:'Du sprichst mit dem Prüfer.',
+      parts:[
+        {
+          id:'sp1', type:'sprechen_dialog', label:'Teil 1 — Sich vorstellen',
+          instructions:'Der Prüfer stellt dir Fragen. Antworte vollständig.',
+          items:[
+            {role:'Prüfer',q:'Guten Tag! Wie heißen Sie?',hint:'Vollständiger Name: Ich heiße... / Mein Name ist...'},
+            {role:'Prüfer',q:'Woher kommen Sie?',hint:'Land + Stadt: Ich komme aus... Ich wohne in...'},
+            {role:'Prüfer',q:'Was machen Sie beruflich?',hint:'Beruf oder Studium: Ich bin... / Ich studiere... / Ich arbeite als...'},
+            {role:'Prüfer',q:'Warum lernen Sie Deutsch?',hint:'Grund nennen: Ich lerne Deutsch, weil... / für...'},
+          ]
+        },
+        {
+          id:'sp2', type:'sprechen_planung', label:'Teil 2 — Gemeinsam planen',
+          instructions:'Ihr plant zusammen etwas. Macht Vorschläge und reagiert auf die Vorschläge des Prüfers.',
+          scenario:'Ihr möchtet zusammen ein Wochenende in Hamburg verbringen. Plant: 1. Wann fahrt ihr? 2. Wo übernachtet ihr? 3. Was macht ihr dort?',
+          items:[
+            {role:'Prüfer',q:'Wann sollen wir fahren? Ich kann am Wochenende.',hint:'Vorschlag: "Wie wäre es mit...?" / "Wollen wir am Samstag...?"'},
+            {role:'Prüfer',q:'Wo schlafen wir? Hotel oder Hostel?',hint:'Meinung: "Ich finde... besser, weil..." / "Ein Hotel wäre schön, aber..."'},
+            {role:'Prüfer',q:'Was wollen wir in Hamburg unternehmen?',hint:'Vorschläge: "Wir könnten..." / "Wie findest du die Idee, ...?"'},
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  id:'goethe_b1', level:'B1', title:'Goethe-Zertifikat B1', icon:'🏅',
+  desc:'Đề thi thử chuẩn Goethe B1 — Đủ 4 kỹ năng · 90 phút tổng',
+  totalMins:90, passScore:60,
+  sections:[
+    {
+      id:'lesen', skill:'Lesen', icon:'📖', label:'Đọc hiểu', mins:40,
+      instructions:'Lies die Texte und beantworte die Fragen. Du hast 40 Minuten.',
+      parts:[
+        {
+          id:'l1', type:'mcq_multi', label:'Teil 1 — Artikel verstehen',
+          instructions:'Lies den Artikel. Kreuze an: richtig, falsch, oder steht nicht im Text.',
+          passage:`Homeoffice in Deutschland — Vor- und Nachteile
+
+Seit der Corona-Pandemie arbeiten Millionen Deutsche regelmäßig von zuhause. Laut einer aktuellen Studie des Instituts für Arbeitsmarkt- und Berufsforschung bevorzugen 67% der Befragten ein hybrides Modell: zwei bis drei Tage Homeoffice, den Rest im Büro.
+
+Der größte Vorteil ist die gesparte Pendelzeit. Im Durchschnitt sparen Arbeitnehmer täglich 52 Minuten. Das macht fast vier Stunden pro Woche. Diese Zeit nutzen viele für Sport, Familie oder Erholung.
+
+Allerdings gibt es auch Nachteile. 41% der Befragten berichten von Konzentrationsproblemen durch Lärm oder Ablenkungen. Ein weiteres Problem ist die soziale Isolation: 38% vermissen den persönlichen Kontakt zu Kollegen. Psychologen warnen zudem vor „Zoom-Fatigue" — dem Erschöpfungsgefühl nach vielen Videokonferenzen.
+
+Interessant ist auch, dass ältere Arbeitnehmer (über 50) Homeoffice deutlich weniger schätzen als jüngere. Sie schätzen die klare Trennung zwischen Beruf und Privatleben, die das Büro bietet.`,
+          questions:[
+            {q:'Mehr als die Hälfte der Befragten möchte ein Mischmodell aus Büro und Homeoffice.',opts:['richtig','falsch','steht nicht im Text'],c:0,explain:'"67% der Befragten bevorzugen ein hybrides Modell" — 67% > 50% → richtig'},
+            {q:'Die meisten Deutschen sparen durch Homeoffice täglich mehr als eine Stunde Pendelzeit.',opts:['richtig','falsch','steht nicht im Text'],c:1,explain:'"täglich 52 Minuten" — 52 Minuten < 1 Stunde (60 Min.) → falsch'},
+            {q:'Jüngere Arbeitnehmer mögen Homeoffice mehr als ältere.',opts:['richtig','falsch','steht nicht im Text'],c:0,explain:'"ältere Arbeitnehmer schätzen Homeoffice deutlich weniger als jüngere" → Umkehrung: Jüngere mögen es mehr → richtig'},
+            {q:'Alle Firmen in Deutschland müssen Homeoffice anbieten.',opts:['richtig','falsch','steht nicht im Text'],c:2,explain:'Rechtliche Pflicht wird nicht erwähnt → steht nicht im Text'},
+            {q:'"Zoom-Fatigue" beschreibt das Gefühl der Erschöpfung nach vielen Online-Meetings.',opts:['richtig','falsch','steht nicht im Text'],c:0,explain:'"das Erschöpfungsgefühl nach vielen Videokonferenzen" — direkte Definition → richtig'},
+          ]
+        },
+        {
+          id:'l2', type:'lueckentext', label:'Teil 2 — Lückentext (Grammatik)',
+          instructions:'Lies den Text. Welches Wort passt in die Lücke? Nur ein Wort pro Lücke.',
+          text:'Das Deutschlernen [1] viele Herausforderungen mit sich. Besonders schwierig [2] die Grammatik mit ihren vielen Regeln. Dennoch [3] es sich, Deutsch zu lernen — die Sprache [4] Tor zu einer der größten Volkswirtschaften der Welt. Wer [5] Zeit und Geduld mitbringt, [6] die Sprache sicher beherrschen.',
+          blanks:[
+            {num:1,opts:['A. bringt','B. macht','C. nimmt'],c:0,explain:'"bringt...mit sich" = mang theo. "mit sich bringen" ist eine feste Wendung für Konsequenzen'},
+            {num:2,opts:['A. ist','B. bleibt','C. scheint'],c:0,explain:'"Besonders schwierig IST die Grammatik" — Zustandsbeschreibung mit sein'},
+            {num:3,opts:['A. lohnt','B. macht','C. bringt'],c:0,explain:'"es lohnt sich" = đáng làm. Feste Wendung: "es lohnt sich, etw. zu tun"'},
+            {num:4,opts:['A. öffnet','B. bietet','C. gibt'],c:1,explain:'"bietet" = cung cấp. "Die Sprache bietet ein Tor zu..." — bieten für Möglichkeiten'},
+            {num:5,opts:['A. genug','B. ausreichend','C. viel'],c:0,explain:'"genug Zeit" = đủ thời gian. genug steht direkt vor dem Nomen ohne Endung'},
+            {num:6,opts:['A. kann','B. wird','C. muss'],c:1,explain:'"wird beherrschen" = Futur I (wird + Infinitiv). Konsequenz aus der Bedingung'},
+          ]
+        }
+      ]
+    },
+    {
+      id:'hoeren', skill:'Hören', icon:'👂', label:'Nghe hiểu', mins:30,
+      instructions:'Du hörst verschiedene Texte.',
+      parts:[
+        {
+          id:'h1', type:'hoeren_mcq', label:'Teil 1 — Radiogespräch',
+          instructions:'Du hörst ein Gespräch. Beantworte die Fragen. Du hörst den Text zweimal.',
+          items:[
+            {text:'— Frau Weber, Sie sind Umweltpsychologin. Was motiviert Menschen, umweltfreundlicher zu leben? — Das sind vor allem drei Faktoren: Erstens der finanzielle Aspekt — viele sehen, dass sie durch Energiesparen Geld sparen. Zweitens soziale Normen — wenn die Nachbarn recyceln, tut man es auch. Und drittens persönliche Werte. — Welcher Faktor ist am wichtigsten? — Überraschenderweise sind es die sozialen Normen. Menschen orientieren sich stark daran, was andere machen.',
+             q:'Was ist laut Frau Weber der wichtigste Motivationsfaktor?',
+             opts:['Geld sparen','Soziale Normen','Persönliche Werte'],c:1,
+             explain:'"Überraschenderweise sind es die sozialen Normen" — direkt als wichtigster Faktor genannt'},
+            {text:'— In unserem heutigen Interview sprechen wir über das Thema Mehrsprachigkeit. Herr Klein, ist es sinnvoll, Kinder früh mehrere Sprachen zu lehren? — Definitiv! Studien zeigen, dass Kinder, die früh mit mehreren Sprachen aufwachsen, nicht nur kommunikativer, sondern auch kognitiv flexibler sind. Sie wechseln leichter zwischen Aufgaben. — Gibt es auch Nachteile? — Manche Eltern befürchten Verwechslungen. Aber das ist kein dauerhaftes Problem. Kinder trennen Sprachen sehr schnell.',
+             q:'Was sagt Herr Klein über Nachteile der Mehrsprachigkeit?',
+             opts:['Sie führt dauerhaft zu Verwechslungen','Kinder haben kurzfristig Verwechslungen, aber das löst sich','Es gibt gar keine Nachteile'],c:1,
+             explain:'"kein dauerhaftes Problem" + "Kinder trennen Sprachen sehr schnell" → kurzfristig möglich, aber nicht dauerhaft'},
+            {text:'— Guten Tag, hier ist die Buchhandlung am Markt. Wir möchten Sie daran erinnern, dass Ihre Bestellung "Deutsche Grammatik A1-C2" abholbereit ist. Sie können das Buch bis Freitag 18 Uhr abholen. Danach schicken wir es Ihnen per Post zu, allerdings fallen dann Versandkosten von 3,90 Euro an. Bei Fragen rufen Sie uns an: 030-554433.',
+             q:'Was passiert, wenn man das Buch nicht bis Freitag abholt?',
+             opts:['Es wird zurückgeschickt','Es wird per Post zugeschickt (mit Kosten)','Man muss es neu bestellen'],c:1,
+             explain:'"schicken wir es Ihnen per Post zu, allerdings fallen dann Versandkosten an" → Option B'},
+          ]
+        },
+        {
+          id:'h2', type:'hoeren_rtf', label:'Teil 2 — Durchsage verstehen',
+          instructions:'Du hörst eine Durchsage. Kreuze an: richtig oder falsch.',
+          passage:'Sehr geehrte Fahrgäste, wir informieren Sie über eine Änderung im Fahrplan. Die S-Bahn-Linie S3 fährt heute wegen Bauarbeiten zwischen Ostbahnhof und Alexanderplatz nicht. Als Ersatz nutzen Sie bitte die U-Bahn-Linien U5 und U8. Zwischen Ostbahnhof und Lichtenberg fährt ein Schienenersatzverkehr mit Bussen. Die Arbeiten dauern voraussichtlich bis Sonntag 22 Uhr. Wir bitten um Ihr Verständnis.',
+          questions:[
+            {q:'Die S3 fährt heute auf der gesamten Strecke nicht.',opts:['richtig','falsch'],c:1,explain:'"zwischen Ostbahnhof und Alexanderplatz nicht" — nur DIESER Abschnitt betroffen → falsch'},
+            {q:'Fahrgäste können als Alternative die U-Bahn nehmen.',opts:['richtig','falsch'],c:0,explain:'"Als Ersatz nutzen Sie bitte die U-Bahn-Linien U5 und U8" → richtig'},
+            {q:'Die Bauarbeiten enden am Samstag.',opts:['richtig','falsch'],c:1,explain:'"bis Sonntag 22 Uhr" → Sonntag, nicht Samstag → falsch'},
+          ]
+        }
+      ]
+    },
+    {
+      id:'schreiben', skill:'Schreiben', icon:'✍️', label:'Viết', mins:30,
+      instructions:'Du schreibst einen formellen Brief.',
+      parts:[
+        {
+          id:'s1', type:'schreiben', label:'Teil 1 — Formeller Brief',
+          instructions:'Schreib einen Brief an das Hotel Grand Berlin (~100 Wörter). Beachte alle 3 Punkte.',
+          prompt:'Du warst 3 Nächte im Hotel Grand Berlin. Es gab Probleme:\n① Die Heizung in deinem Zimmer funktionierte nicht.\n② Nachts war es sehr laut (Baustelle nebenan).\n③ Du möchtest eine Entschädigung (Rabatt oder Rückerstattung).',
+          promptVi:'Viết thư khiếu nại khách sạn về: ① máy sưởi hỏng ② tiếng ồn công trình ③ xin bồi thường',
+          minWords:80,
+          rubric:[
+            'Formelles Format: Betreff + Sehr geehrte/r + Mit freundlichen Grüßen',
+            'Alle 3 Punkte erwähnt (Heizung + Lärm + Entschädigung)',
+            'Höfliche Sprache (würde, könnte, möchte)',
+            'Kein "Hallo" / "Tschüss" im formellen Brief',
+            'Mindestens 80 Wörter',
+            'Konjunktiv II für höfliche Bitte',
+          ],
+          sampleAnswer:'Betreff: Beschwerde über meinen Aufenthalt (15.-18. März)\n\nSehr geehrte Damen und Herren,\n\nich war vom 15. bis 18. März Gast in Ihrem Hotel (Zimmer 305). Leider musste ich während meines Aufenthalts einige Probleme feststellen. Erstens funktionierte die Heizung in meinem Zimmer nicht, weshalb es sehr kalt war. Außerdem war es nachts aufgrund einer Baustelle nebenan sehr laut, sodass ich kaum schlafen konnte.\n\nIch würde mich über eine angemessene Entschädigung freuen, beispielsweise einen Rabatt auf den Übernachtungspreis.\n\nMit freundlichen Grüßen\n[Name]',
+          sampleTip:'Musterlösung zeigt: Betreff, Sehr geehrte, 3 Punkte, würde/könnte, Mit freundlichen Grüßen'
+        }
+      ]
+    },
+    {
+      id:'sprechen', skill:'Sprechen', icon:'🗣️', label:'Nói', mins:15,
+      instructions:'Du sprichst mit dem Prüfer und deinem Gesprächspartner.',
+      parts:[
+        {
+          id:'sp1', type:'sprechen_bild', label:'Teil 1 — Bildbeschreibung',
+          instructions:'Beschreibe das Bild. Du hast ca. 2 Minuten Zeit.',
+          scenario:'📸 Stell dir vor: Du siehst ein Foto von Menschen in einem Park. Einige sitzen auf dem Gras, andere spielen Frisbee. Kinder laufen herum. Es ist ein sonniger Tag.',
+          hints:['Im Vordergrund sieht man...','Im Hintergrund...','Links/Rechts...','Die Atmosphäre wirkt...','Ich denke, dass diese Menschen...'],
+          timeSeconds:120
+        },
+        {
+          id:'sp2', type:'sprechen_dialog', label:'Teil 2 — Diskussion',
+          instructions:'Diskutiert das Thema. Gebt eure Meinung und begründet sie.',
+          items:[
+            {role:'Prüfer',q:'Das Thema ist: "Sollte Autofahren in Stadtzentren verboten werden?" Was denkst du?',
+             hint:'Meinung + Begründung: "Ich bin der Meinung, dass... weil..." / "Einerseits... andererseits..."'},
+            {role:'Prüfer',q:'Aber viele Menschen sind auf das Auto angewiesen, z.B. für die Arbeit.',
+             hint:'Gegenargument aufgreifen: "Das stimmt, aber..." / "Man könnte jedoch..." / "Trotzdem bin ich der Meinung..."'},
+            {role:'Prüfer',q:'Was wäre eine Alternative zum Auto in der Stadt?',
+             hint:'Alternativen vorschlagen: "Man könnte... ausbauen" / "ÖPNV..." / "Radwege..."'},
+          ]
+        }
+      ]
+    }
+  ]
+}
+];
+
+// ═══════════════════════════════════════
+// STORAGE & STATE
+// ═══════════════════════════════════════
+const gg=(k,d=null)=>{try{return JSON.parse(localStorage.getItem(k)||'null')??d;}catch{return d;}};
+const ss=(k,v)=>{try{localStorage.setItem(k,JSON.stringify(v));}catch{}};
+let history=gg('practiceHistory',[]);
+let examState={};
+let timerInterval=null, timerSec=0, timerRunning=false;
+let wChecked=new Set();
+let speechRec=null, recActive=false;
+
+function showFloat(msg){
+  const el=document.getElementById('floatFb');el.textContent=msg;
+  el.className='float-fb';void el.offsetWidth;el.classList.add('show');
+}
+function confetti(){
+  ['#4F8EF7','#3ECF8E','#FBBF24','#F87171','#A78BFA'].forEach((c,i)=>{
+    for(let j=0;j<6;j++){
+      const el=document.createElement('div');el.className='cp';
+      el.style.cssText=`left:${Math.random()*100}vw;top:-10px;background:${c};width:${4+Math.random()*6}px;height:${4+Math.random()*6}px;border-radius:${Math.random()>.5?'50%':'2px'};animation-duration:${.8+Math.random()*1.2}s;animation-delay:${i*.06+j*.1}s;`;
+      document.body.appendChild(el);setTimeout(()=>el.remove(),2500);
+    }
+  });
+}
+
+function speak(txt,btn=null){
+  if(!window.speechSynthesis)return;
+  window.speechSynthesis.cancel();
+  if(btn&&btn.classList.contains('go')){btn.classList.remove('go');return;}
+  document.querySelectorAll('.spk-btn').forEach(b=>b.classList.remove('go'));
+  const u=new SpeechSynthesisUtterance(txt);u.lang='de-DE';u.rate=0.87;
+  const v=speechSynthesis.getVoices().find(v=>v.lang.startsWith('de'));if(v)u.voice=v;
+  if(btn){btn.classList.add('go');u.onend=u.onerror=()=>btn.classList.remove('go');}
+  speechSynthesis.speak(u);
+}
+
+// ═══════════════════════════════════════
+// NAVIGATION
+// ═══════════════════════════════════════
+function goPanel(name){
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('show'));
+  document.querySelectorAll('.nb').forEach(b=>b.classList.remove('on'));
+  document.getElementById('nb-'+name)?.classList.add('on');
+  if(name==='home'){document.getElementById('p-home').classList.add('show');renderHome();}
+  else if(name==='history'){document.getElementById('p-home').classList.add('show');renderHistory();}
+  else{document.getElementById('p-'+name)?.classList.add('show');}
+}
+
+// ═══════════════════════════════════════
+// HOME — EXAM SELECTION
+// ═══════════════════════════════════════
+function renderHome(){
+  const el=document.getElementById('p-home');
+  const lvScores={};
+  history.forEach(h=>{if(!lvScores[h.level]||h.pct>lvScores[h.level])lvScores[h.level]=h.pct;});
+  el.innerHTML=`
+    <div style="margin-bottom:.85rem">
+      <div style="font-size:20px;font-weight:700;color:var(--text-0);letter-spacing:-.4px">Đề thi thử</div>
+      <div style="font-size:12px;color:var(--text-3);margin-top:2px;font-family:var(--font-mono)">Format chuẩn Goethe & Telc · 4 kỹ năng</div>
+    </div>
+    ${EXAMS.map(exam=>{
+      const best=lvScores[exam.level];
+      const col=best>=exam.passScore?'var(--green)':best?'var(--amber)':'var(--text-3)';
+      return`<div class="exam-card" onclick="startExam('${exam.id}')">
+        <div class="ec-top">
+          <span class="ec-icon">${exam.icon}</span>
+          <div>
+            <div class="ec-title">${exam.title}</div>
+            <div class="ec-meta">
+              <span class="badge b-${exam.level}">${exam.level}</span>
+              <span>⏱ ${exam.totalMins} phút</span>
+              <span>🎯 Pass: ${exam.passScore}%</span>
+              <span>📝 ${exam.sections.length} kỹ năng</span>
+            </div>
+          </div>
+        </div>
+        <div class="ec-desc">${exam.desc}</div>
+        ${best!==undefined?`<div class="ec-score" style="color:${col}">${best}%</div>`:''}
+      </div>`;
+    }).join('')}
+    <div style="background:var(--bg-1);border:1px solid var(--border-0);border-radius:12px;padding:.85rem 1rem;margin-top:.5rem">
+      <div style="font-size:12px;font-weight:600;color:var(--text-2);margin-bottom:.5rem">💡 Mẹo thi</div>
+      <div style="font-size:12px;color:var(--text-3);line-height:1.75">
+        • <strong style="color:var(--text-2)">Đọc/Nghe:</strong> Đọc câu hỏi TRƯỚC khi đọc/nghe bài<br>
+        • <strong style="color:var(--text-2)">Viết:</strong> Đặt hẹn giờ — Goethe B1 chỉ cho 30 phút<br>
+        • <strong style="color:var(--text-2)">Nói:</strong> Nói chậm, rõ — đừng im lặng quá 5 giây<br>
+        • <strong style="color:var(--text-2)">Lỗi bẫy:</strong> "steht nicht im Text" ≠ "falsch"
+      </div>
+    </div>`;
+}
+
+// ═══════════════════════════════════════
+// TIMER
+// ═══════════════════════════════════════
+function startTimer(totalSec){
+  stopTimer();timerSec=totalSec;timerRunning=true;
+  updateTimerUI(totalSec,totalSec);
+  timerInterval=setInterval(()=>{
+    timerSec--;updateTimerUI(timerSec,totalSec);
+    if(timerSec<=0){stopTimer();showFloat('⏰ Hết giờ!');}
+  },1000);
+}
+function stopTimer(){clearInterval(timerInterval);timerRunning=false;}
+function updateTimerUI(sec,total){
+  const el=document.getElementById('timerDisplay');if(!el)return;
+  const m=~~(sec/60),s=sec%60;
+  el.textContent=`${m}:${s<10?'0':''}${s}`;
+  const pct=sec/total*100;
+  const fill=document.getElementById('timerFill');
+  if(fill){fill.style.width=pct+'%';fill.style.background=pct>50?'var(--accent)':pct>20?'var(--amber)':'var(--red)';}
+  el.className='timer-display'+(sec<60?' crit':sec<180?' warn':'');
+}
+
+// ═══════════════════════════════════════
+// EXAM FLOW
+// ═══════════════════════════════════════
+function startExam(examId){
+  const exam=EXAMS.find(e=>e.id===examId);if(!exam)return;
+  stopTimer();
+  examState={
+    examId, exam,
+    sectionIdx:0,
+    partIdx:0,
+    scores:{},   // sectionId → {correct, total, answered}
+    writings:{}, // partId → text
+    rubrics:{},  // partId → Set
+    startTime:Date.now()
+  };
+  wChecked=new Set();
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('show'));
+  document.getElementById('p-exam').classList.add('show');
+  document.getElementById('nb-home').classList.remove('on');
+  renderSection();
+}
+
+function renderSection(){
+  const {exam,sectionIdx}=examState;
+  const section=exam.sections[sectionIdx];
+  if(!section){finishExam();return;}
+  examState.partIdx=0;
+  examState.scores[section.id]={correct:0,total:0,partScores:{}};
+  renderPart();
+}
+
+function renderPart(){
+  const {exam,sectionIdx,partIdx}=examState;
+  const section=exam.sections[sectionIdx];
+  const part=section.parts[partIdx];
+  if(!part){nextSection();return;}
+
+  const el=document.getElementById('p-exam');
+  const totalSections=exam.sections.length;
+  const sectionNames=exam.sections.map(s=>s.skill);
+
+  // Steps indicator
+  let stepsHtml=`<div class="steps">`;
+  exam.sections.forEach((s,i)=>{
+    stepsHtml+=`<div class="step${i<sectionIdx?' done':i===sectionIdx?' active':''}"></div>`;
+  });
+  stepsHtml+=`<span class="step-label">${section.skill} ${sectionIdx+1}/${totalSections}</span></div>`;
+
+  // Timer
+  const timerHtml=`<div class="timer-bar">
+    <span style="font-size:16px">${section.icon}</span>
+    <div>
+      <div id="timerDisplay" class="timer-display">--:--</div>
+      <div class="timer-label">${section.label} · ${section.mins} phút</div>
+    </div>
+    <div class="timer-track"><div id="timerFill" class="timer-fill" style="width:100%"></div></div>
+    <div class="timer-btns">
+      <button class="tbtn start" onclick="startTimer(${section.mins*60})">▶ Bắt đầu</button>
+      <button class="tbtn" onclick="stopTimer()">⏸</button>
+    </div>
+  </div>`;
+
+  let contentHtml='';
+
+  // Instructions
+  contentHtml+=`<div class="instr-box"><strong>📋 Hướng dẫn</strong>${part.instructions}</div>`;
+
+  // Render by type
+  if(part.type==='zuordnung') contentHtml+=renderZuordnung(part);
+  else if(part.type==='mcq_multi') contentHtml+=renderMcqMulti(part);
+  else if(part.type==='lueckentext') contentHtml+=renderLueckentext(part);
+  else if(part.type==='hoeren_mcq') contentHtml+=renderHoerenMcq(part);
+  else if(part.type==='hoeren_rtf') contentHtml+=renderHoerenRtf(part);
+  else if(part.type==='schreiben') contentHtml+=renderSchreiben(part);
+  else if(part.type==='sprechen_dialog') contentHtml+=renderSprechenDialog(part);
+  else if(part.type==='sprechen_planung') contentHtml+=renderSprechenPlanung(part);
+  else if(part.type==='sprechen_bild') contentHtml+=renderSprechenBild(part);
+
+  // Nav buttons
+  const isLastPart=partIdx>=section.parts.length-1;
+  const isLastSection=sectionIdx>=exam.sections.length-1;
+  contentHtml+=`<div class="btn-row" style="margin-top:1.2rem">
+    <button class="btn btn-ghost btn-sm" onclick="goPanel('home')">✕ Dừng lại</button>
+    <button class="btn btn-primary" onclick="${isLastPart?'nextSection':'nextPart'}()">${isLastPart&&isLastSection?'Nộp bài →':isLastPart?'Kỹ năng tiếp →':'Phần tiếp →'}</button>
+  </div>`;
+
+  el.innerHTML=stepsHtml+timerHtml+`<div class="card">
+    <div class="sec-hd">
+      <span class="sec-icon">${section.icon}</span>
+      <div><div class="sec-title">${part.label}</div><div class="sec-sub">${section.skill} · Teil ${partIdx+1}/${section.parts.length}</div></div>
+    </div>
+    ${contentHtml}
+  </div>`;
+  el.scrollTop=0;
+  document.getElementById('p-exam').parentElement.scrollTop=0;
+  document.querySelector('.content')||document.querySelector('.wrap')?.scrollTo(0,0);
+  window.scrollTo(0,0);
+}
+
+// ═══ PART RENDERERS ═══
+
+function renderZuordnung(part){
+  let html=`<div class="label" style="margin-bottom:.5rem">Anzeigen</div>`;
+  // Show ads
+  html+=`<div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:.75rem">`;
+  part.items.forEach(item=>{
+    html+=`<div class="card-sm" style="font-size:12px;line-height:1.5"><strong style="color:var(--accent);font-family:var(--font-mono)">${item.id}</strong><br>${item.text.replace(/\n/g,'<br>')}</div>`;
+  });
+  html+=`</div><div class="label" style="margin-bottom:.5rem">Personen → welche Anzeige?</div>`;
+  part.persons.forEach((p,i)=>{
+    const key=`zu_${part.id}_${i}`;
+    html+=`<div class="card-sm" style="margin-bottom:.5rem">
+      <div style="font-size:12px;color:var(--text-2);margin-bottom:.35rem">${p.text}</div>
+      <div style="display:flex;gap:6px;flex-wrap:wrap">
+        ${[...part.items.map(it=>it.id),'X'].map(opt=>`<button class="tbtn" id="${key}_${opt}" onclick="selectZuordnung('${key}','${opt}','${p.ans}','${p.explain.replace(/'/g,"\\'")}')">${opt}</button>`).join('')}
+      </div>
+      <div class="explain-box" id="exp_${key}"></div>
+    </div>`;
+  });
+  return html;
+}
+
+function selectZuordnung(key,chosen,correct,explain){
+  const buttons=document.querySelectorAll(`[id^="${key}_"]`);
+  buttons.forEach(b=>b.disabled=true);
+  const ok=chosen===correct;
+  document.getElementById(`${key}_${chosen}`).style.cssText=ok?'background:var(--green-dim);color:var(--green);border-color:var(--green-md)':'background:var(--red-dim);color:var(--red);border-color:var(--red-md)';
+  if(!ok)document.getElementById(`${key}_${correct}`).style.cssText='background:var(--green-dim);color:var(--green);border-color:var(--green-md)';
+  const exp=document.getElementById('exp_'+key);exp.classList.add('show');exp.innerHTML='💡 '+explain;
+  const sec=examState.exam.sections[examState.sectionIdx];
+  const sc=examState.scores[sec.id];sc.total++;if(ok)sc.correct++;
+}
+
+function renderMcqMulti(part){
+  let html='';
+  if(part.passage){
+    html+=`<div style="font-size:11px;color:var(--text-3);font-family:var(--font-mono);margin-bottom:.35rem">📄 Lies den Text</div>
+    <div class="read-passage">${part.passage.replace(/\n/g,'<br>')}</div>`;
+  }
+  part.questions.forEach((q,qi)=>{
+    html+=`<div class="card-sm" style="margin-bottom:.55rem">
+      <div style="font-size:13px;font-weight:500;color:var(--text-0);margin-bottom:.4rem">${qi+1}. ${q.q}</div>
+      <div class="mcq">${q.opts.map((o,oi)=>`<button class="mopt" onclick="checkMcq(this,${oi},${q.c},'${q.explain.replace(/'/g,"\\'")}','${part.id}_${qi}')">${o}</button>`).join('')}</div>
+      <div class="explain-box" id="exp_${part.id}_${qi}"></div>
+    </div>`;
+  });
+  return html;
+}
+
+function checkMcq(btn,chosen,correct,explain,key){
+  const parent=btn.closest('.card-sm');
+  parent.querySelectorAll('.mopt').forEach((b,i)=>{
+    b.disabled=true;
+    if(i===chosen)b.classList.add(chosen===correct?'ok':'no');
+    if(i===correct&&chosen!==correct)b.classList.add('show');
+  });
+  const exp=document.getElementById('exp_'+key);if(exp){exp.classList.add('show');exp.innerHTML='💡 '+explain;}
+  const sec=examState.exam.sections[examState.sectionIdx];
+  const sc=examState.scores[sec.id];sc.total++;if(chosen===correct)sc.correct++;
+}
+
+function renderLueckentext(part){
+  let filled=part.text;
+  part.blanks.forEach(b=>{
+    filled=filled.replace(`[${b.num}]`,`<span class="luecke"><span class="luecke-num">${b.num}</span><input class="luecke-input" id="lk_${part.id}_${b.num}" placeholder="${b.num}" autocomplete="off"></span>`);
+  });
+  let html=`<div class="luecken-text">${filled}</div>
+  <div class="label" style="margin:.6rem 0 .4rem">Wähle die richtige Antwort:</div>`;
+  part.blanks.forEach(b=>{
+    html+=`<div class="card-sm" style="margin-bottom:.45rem">
+      <div style="font-size:12px;color:var(--text-3);font-family:var(--font-mono);margin-bottom:.3rem">Lücke ${b.num}</div>
+      <div class="mcq">${b.opts.map((o,oi)=>`<button class="mopt" onclick="checkLuecke(this,${oi},${b.c},'${b.explain.replace(/'/g,"\\'")}','${part.id}_${b.num}','${o.replace(/'/g,"\\'")}',${b.num})">${o}</button>`).join('')}</div>
+      <div class="explain-box" id="exp_lk_${part.id}_${b.num}"></div>
+    </div>`;
+  });
+  return html;
+}
+
+function checkLuecke(btn,chosen,correct,explain,key,val,num){
+  const parent=btn.closest('.card-sm');
+  parent.querySelectorAll('.mopt').forEach((b,i)=>{
+    b.disabled=true;
+    if(i===chosen)b.classList.add(chosen===correct?'ok':'no');
+    if(i===correct&&chosen!==correct)b.classList.add('show');
+  });
+  const exp=document.getElementById('exp_lk_'+key);if(exp){exp.classList.add('show');exp.innerHTML='💡 '+explain;}
+  const inp=document.getElementById('lk_'+key);
+  if(inp){inp.value=val.replace(/^[A-C]\.\s*/,'');inp.className='luecke-input'+(chosen===correct?' ok':' no');}
+  const sec=examState.exam.sections[examState.sectionIdx];
+  const sc=examState.scores[sec.id];sc.total++;if(chosen===correct)sc.correct++;
+}
+
+function renderHoerenMcq(part){
+  let html='';
+  part.items.forEach((item,i)=>{
+    const te=item.text.replace(/'/g,"\\'");
+    html+=`<div class="card-sm" style="margin-bottom:.65rem">
+      <div style="font-size:11px;color:var(--text-3);font-family:var(--font-mono);margin-bottom:.35rem">Gespräch ${i+1}</div>
+      <button class="spk-btn" onclick="speak('${te}',this)">${SPK} Gespräch ${i+1} hören (×2 empfohlen)</button>
+      <div style="font-size:13px;font-weight:500;color:var(--text-0);margin:.4rem 0">${item.q}</div>
+      <div class="mcq">${item.opts.map((o,oi)=>`<button class="mopt" onclick="checkMcq(this,${oi},${item.c},'${item.explain.replace(/'/g,"\\'")}','h_${part.id}_${i}')">${String.fromCharCode(65+oi)}. ${o}</button>`).join('')}</div>
+      <div class="explain-box" id="exp_h_${part.id}_${i}"></div>
+    </div>`;
+  });
+  return html;
+}
+
+function renderHoerenRtf(part){
+  const te=part.passage.replace(/'/g,"\\'");
+  let html=`<button class="spk-btn" onclick="speak('${te}',this)" style="margin-bottom:.5rem">${SPK} Text hören (×2 empfohlen)</button>
+  <div class="instr-box" style="margin-bottom:.5rem"><strong>📝 Aufgabe</strong>Kreuze an: richtig (r) oder falsch (f)</div>`;
+  part.questions.forEach((q,qi)=>{
+    html+=`<div class="card-sm" style="margin-bottom:.45rem">
+      <div style="font-size:13px;color:var(--text-0);margin-bottom:.35rem">${qi+1}. ${q.q}</div>
+      <div class="mcq">${q.opts.map((o,oi)=>`<button class="mopt" onclick="checkMcq(this,${oi},${q.c},'${q.explain.replace(/'/g,"\\'")}','rtf_${part.id}_${qi}')">${o}</button>`).join('')}</div>
+      <div class="explain-box" id="exp_rtf_${part.id}_${qi}"></div>
+    </div>`;
+  });
+  return html;
+}
+
+function renderSchreiben(part){
+  const pid=part.id;
+  const saved=examState.writings[pid]||'';
+  wChecked=examState.rubrics[pid]||new Set();
+  let html=`<div class="write-prompt">
+    <div class="wp-tag">✍️ Aufgabe · ${examState.exam.level}</div>
+    <div class="wp-text">${part.prompt.replace(/\n/g,'<br>')}</div>
+    <div class="wp-vi">${part.promptVi}</div>
+  </div>
+  <textarea class="write-area" id="wTxt_${pid}" placeholder="Schreib deine Antwort auf Deutsch..." oninput="updateWordCount('${pid}',${part.minWords})">${saved}</textarea>
+  <div class="word-count" id="wc_${pid}">0 Wörter · Minimum: ${part.minWords}</div>
+  <div class="label" style="margin:.65rem 0 .4rem">✅ Selbstbewertung (Rubric Goethe):</div>
+  ${part.rubric.map((r,ri)=>`<div class="rubric-item${wChecked.has(ri)?' done':''}" id="rb_${pid}_${ri}" onclick="toggleRubric('${pid}',${ri})">
+    <div class="rc-box" id="rcb_${pid}_${ri}">${wChecked.has(ri)?'✓':''}</div>
+    <div class="rc-text">${r}</div>
+  </div>`).join('')}
+  <div style="margin-top:.75rem">
+    <button class="btn btn-sm" onclick="toggleSample('${pid}')">👁 Musterlösung anzeigen</button>
+  </div>
+  <div id="sample_${pid}" style="display:none;margin-top:.55rem">
+    <div class="label" style="margin-bottom:.3rem">Musterlösung</div>
+    <div class="card-sm" style="font-size:13px;line-height:1.75;white-space:pre-line;font-style:italic">${part.sampleAnswer}</div>
+    <div class="instr-box" style="margin-top:.4rem"><strong>💡 Hinweis</strong>${part.sampleTip}</div>
+  </div>`;
+  return html;
+}
+function updateWordCount(pid,min){
+  const ta=document.getElementById('wTxt_'+pid);if(!ta)return;
+  examState.writings[pid]=ta.value;
+  const wc=ta.value.trim().split(/\s+/).filter(w=>w.length>0).length;
+  const el=document.getElementById('wc_'+pid);if(!el)return;
+  el.textContent=`${wc} Wörter · Minimum: ${min}`;
+  el.className='word-count'+(wc>=min?' ok':' low');
+}
+function toggleRubric(pid,ri){
+  if(wChecked.has(ri))wChecked.delete(ri);else wChecked.add(ri);
+  examState.rubrics[pid]=new Set(wChecked);
+  const item=document.getElementById(`rb_${pid}_${ri}`);
+  const box=document.getElementById(`rcb_${pid}_${ri}`);
+  if(item)item.classList.toggle('done',wChecked.has(ri));
+  if(box)box.textContent=wChecked.has(ri)?'✓':'';
+}
+function toggleSample(pid){
+  const el=document.getElementById('sample_'+pid);
+  if(el)el.style.display=el.style.display==='none'?'block':'none';
+}
+
+function renderSprechenDialog(part){
+  let html=`<div class="tag live" style="margin-bottom:.65rem">🔴 Live · Roleplay mit Prüfer</div>`;
+  part.items.forEach((item,i)=>{
+    const qe=item.q.replace(/'/g,"\\'");
+    html+=`<div class="speak-card">
+      <div class="speak-role">👤 ${item.role}</div>
+      <div class="speak-q">"${item.q}"</div>
+      <div class="speak-hint">💡 ${item.hint}</div>
+      <button class="spk-btn" onclick="speak('${qe}',this)">${SPK} Nghe câu hỏi</button>
+      <div class="mic-wrap">
+        <button class="mic-btn" id="mic_${part.id}_${i}" onclick="toggleMic('${part.id}_${i}')">🎤</button>
+        <div style="font-size:11px;color:var(--text-3);font-family:var(--font-mono)">Nhấn mic → trả lời</div>
+      </div>
+      <div class="transcript-box" id="tr_${part.id}_${i}">—</div>
+    </div>`;
+  });
+  return html;
+}
+
+function renderSprechenPlanung(part){
+  let html=`<div class="instr-box"><strong>🗓️ Situation</strong>${part.scenario}</div>
+  <div class="tag live" style="margin-bottom:.65rem">🔴 Live · Gemeinsam planen</div>`;
+  part.items.forEach((item,i)=>{
+    const qe=item.q.replace(/'/g,"\\'");
+    html+=`<div class="speak-card">
+      <div class="speak-role">👤 ${item.role}</div>
+      <div class="speak-q">"${item.q}"</div>
+      <div class="speak-hint">💡 ${item.hint}</div>
+      <button class="spk-btn" onclick="speak('${qe}',this)">${SPK} Nghe</button>
+      <div class="mic-wrap">
+        <button class="mic-btn" id="mic_${part.id}_${i}" onclick="toggleMic('${part.id}_${i}')">🎤</button>
+        <div style="font-size:11px;color:var(--text-3);font-family:var(--font-mono)">Nhấn mic → trả lời</div>
+      </div>
+      <div class="transcript-box" id="tr_${part.id}_${i}">—</div>
+    </div>`;
+  });
+  return html;
+}
+
+function renderSprechenBild(part){
+  let timer=part.timeSeconds;
+  return`<div class="speak-card">
+    <div class="speak-role">📸 Bildbeschreibung</div>
+    <div class="speak-q" style="font-size:16px;text-align:left;font-style:italic">${part.scenario}</div>
+    <div style="margin:.6rem 0">
+      <div class="label" style="margin-bottom:.3rem">Nützliche Ausdrücke</div>
+      ${part.hints.map(h=>`<div class="card-sm" style="font-size:12px;color:var(--text-2);margin-bottom:3px">${h}</div>`).join('')}
+    </div>
+    <div id="bildTimer" style="font-size:20px;font-weight:700;font-family:var(--font-mono);color:var(--accent);text-align:center;margin:.5rem 0">${timer}s</div>
+    <div class="mic-wrap">
+      <button class="mic-btn" id="mic_bild" onclick="toggleMic('bild');startBildTimer(${timer})">🎤</button>
+      <div style="font-size:11px;color:var(--text-3);font-family:var(--font-mono)">Nhấn mic để bắt đầu (${timer}s)</div>
+    </div>
+    <div class="transcript-box" id="tr_bild">—</div>
+  </div>`;
+}
+function startBildTimer(sec){
+  let t=sec;
+  const interval=setInterval(()=>{
+    t--;const el=document.getElementById('bildTimer');if(el)el.textContent=t+'s';
+    else clearInterval(interval);
+    if(t<=0){clearInterval(interval);showFloat('⏰ Zeit!');}
+  },1000);
+}
+
+// ═══ MIC ═══
+function toggleMic(key){
+  if(!('webkitSpeechRecognition' in window||'SpeechRecognition' in window)){showFloat('Cần Chrome để dùng mic!');return;}
+  const btn=document.getElementById('mic_'+key);
+  if(!btn)return;
+  if(recActive){if(speechRec)speechRec.stop();return;}
+  const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
+  speechRec=new SR();speechRec.lang='de-DE';speechRec.continuous=false;speechRec.interimResults=true;
+  recActive=true;btn.classList.add('rec');
+  speechRec.onresult=e=>{
+    const t=Array.from(e.results).map(r=>r[0].transcript).join('');
+    const tr=document.getElementById('tr_'+key);if(tr)tr.textContent=t||'—';
+  };
+  speechRec.onerror=speechRec.onend=()=>{recActive=false;btn.classList.remove('rec');};
+  speechRec.start();
+}
+
+// ═══ NAVIGATION ═══
+function nextPart(){
+  // Save writing before navigating
+  const section=examState.exam.sections[examState.sectionIdx];
+  const part=section.parts[examState.partIdx];
+  if(part&&part.type==='schreiben'){
+    const ta=document.getElementById('wTxt_'+part.id);
+    if(ta)examState.writings[part.id]=ta.value;
+    // Score writing by rubric
+    const sc=examState.scores[section.id];
+    const rubSet=examState.rubrics[part.id]||new Set();
+    sc.correct=(sc.correct||0)+rubSet.size;
+    sc.total=(sc.total||0)+part.rubric.length;
+  }
+  examState.partIdx++;
+  renderPart();
+}
+function nextSection(){
+  // Save last writing
+  const section=examState.exam.sections[examState.sectionIdx];
+  const part=section.parts[examState.partIdx];
+  if(part&&part.type==='schreiben'){
+    const ta=document.getElementById('wTxt_'+part.id);
+    if(ta)examState.writings[part.id]=ta.value;
+    const sc=examState.scores[section.id];
+    const rubSet=examState.rubrics[part.id]||new Set();
+    sc.correct=(sc.correct||0)+rubSet.size;
+    sc.total=(sc.total||0)+part.rubric.length;
+  }
+  stopTimer();
+  examState.sectionIdx++;
+  renderSection();
+}
+
+// ═══════════════════════════════════════
+// RESULT
+// ═══════════════════════════════════════
+function finishExam(){
+  stopTimer();
+  const {exam,scores}=examState;
+  // Calc per-section scores
+  let totalCorrect=0,totalQuestions=0;
+  const sectionResults=exam.sections.map(sec=>{
+    const sc=scores[sec.id]||{correct:0,total:0};
+    if(sc.total>0){totalCorrect+=sc.correct;totalQuestions+=sc.total;}
+    const pct=sc.total>0?Math.round(sc.correct/sc.total*100):null;
+    return{...sec,correct:sc.correct,total:sc.total,pct};
+  });
+  const overallPct=totalQuestions>0?Math.round(totalCorrect/totalQuestions*100):0;
+  const passed=overallPct>=exam.passScore;
+
+  // Save to history
+  history.unshift({examId:exam.id,level:exam.level,title:exam.title,pct:overallPct,passed,date:new Date().toLocaleDateString('vi'),sectionResults});
+  history=history.slice(0,10);
+  ss('practiceHistory',history);
+  if(passed)confetti();
+
+  const col=overallPct>=80?'var(--green)':overallPct>=60?'var(--accent)':'var(--amber)';
+  const el=document.getElementById('p-result');
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('show'));
+  el.classList.add('show');
+  el.innerHTML=`<div class="result-wrap">
+    <div class="result-ring" style="border-color:${col};box-shadow:0 0 40px ${col}33">
+      <div class="result-pct" style="color:${col}">${overallPct}%</div>
+      <div class="result-pts">${totalCorrect}/${totalQuestions} đúng</div>
+    </div>
+    <div class="result-verdict">${passed?'🎉 Đạt!':'💪 Chưa đạt'}</div>
+    <div class="result-sub">${exam.title} · Pass: ${exam.passScore}%</div>
+    ${passed?`<div class="cert-badge">🏆 ${exam.level} Niveau erreicht!</div>`:''}
+    <div style="margin:1rem 0">
+      ${sectionResults.map(sr=>{
+        const p=sr.pct??0;const c=p>=80?'var(--green)':p>=60?'var(--accent)':'var(--amber)';
+        return`<div class="score-section">
+          <div class="ss-top"><span class="ss-name">${sr.icon} ${sr.skill}</span><span class="ss-score" style="color:${c}">${sr.pct!==null?sr.pct+'%':'—'}</span></div>
+          ${sr.pct!==null?`<div class="ss-bar"><div class="ss-fill" style="width:${sr.pct}%;background:${c}"></div></div>`:'<div style="font-size:11px;color:var(--text-3)">Sprechen — selbst bewertet</div>'}
+        </div>`;
+      }).join('')}
+    </div>
+    <div class="card-sm" style="text-align:left;margin-bottom:.75rem">
+      <div class="label" style="margin-bottom:.4rem">💡 Nhận xét & Khuyến nghị</div>
+      ${sectionResults.map(sr=>{
+        if(sr.pct===null)return`<div style="font-size:12px;color:var(--text-2);margin-bottom:.3rem">🗣️ <strong>${sr.skill}:</strong> Tiếp tục luyện phản xạ với roleplays.</div>`;
+        if(sr.pct>=80)return`<div style="font-size:12px;color:var(--green);margin-bottom:.3rem">✓ <strong>${sr.skill}:</strong> Xuất sắc! Giữ vững.</div>`;
+        if(sr.pct>=60)return`<div style="font-size:12px;color:var(--amber);margin-bottom:.3rem">⚠ <strong>${sr.skill}:</strong> Khá ổn nhưng cần luyện thêm.</div>`;
+        return`<div style="font-size:12px;color:var(--red);margin-bottom:.3rem">✗ <strong>${sr.skill}:</strong> Cần ôn tập thêm nhiều — ưu tiên kỹ năng này!</div>`;
+      }).join('')}
+    </div>
+    <div class="btn-row">
+      <button class="btn btn-primary" onclick="startExam('${exam.id}')">↻ Làm lại</button>
+      <button class="btn btn-ghost" onclick="goPanel('home');document.getElementById('nb-home').classList.add('on')">← Chọn đề khác</button>
+    </div>
+  </div>`;
+  document.querySelector('.wrap').scrollTop=0;
+  window.scrollTo(0,0);
+}
+
+// ═══════════════════════════════════════
+// HISTORY
+// ═══════════════════════════════════════
+function renderHistory(){
+  const el=document.getElementById('p-home');
+  if(!history.length){
+    el.innerHTML=`<div style="text-align:center;padding:3rem 1rem;color:var(--text-3)"><div style="font-size:36px;margin-bottom:.75rem">📊</div><div style="font-size:14px">Chưa có lịch sử<br>Làm thử đề thi để xem kết quả</div><div class="btn-row" style="margin-top:1rem"><button class="btn btn-primary" onclick="goPanel('home')">Chọn đề thi →</button></div></div>`;
+    return;
+  }
+  el.innerHTML=`<div style="font-size:16px;font-weight:700;color:var(--text-0);margin-bottom:.85rem">📊 Lịch sử thi</div>
+  ${history.map(h=>{
+    const col=h.pct>=80?'var(--green)':h.pct>=60?'var(--accent)':'var(--amber)';
+    return`<div class="exam-card">
+      <div class="ec-top">
+        <span class="ec-icon">${h.passed?'🏆':'📝'}</span>
+        <div><div class="ec-title">${h.title}</div><div class="ec-meta"><span class="badge b-${h.level}">${h.level}</span><span>${h.date}</span><span style="color:${h.passed?'var(--green)':'var(--red)'}">${h.passed?'✓ Đạt':'✗ Chưa đạt'}</span></div></div>
+      </div>
+      <div class="ec-score" style="color:${col}">${h.pct}%</div>
+    </div>`;
+  }).join('')}
+  <button class="btn btn-ghost btn-sm" style="width:100%;margin-top:.5rem;color:var(--red)" onclick="if(confirm('Xóa lịch sử?')){history=[];ss('practiceHistory',[]);renderHistory()}">Xóa lịch sử</button>`;
+}
+
+// ═══════════════════════════════════════
+// INIT
+// ═══════════════════════════════════════
+speechSynthesis&&speechSynthesis.getVoices();
+renderHome();
+document.getElementById('nb-home').classList.add('on');
+</script>
+</body>
+</html>
