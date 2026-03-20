@@ -1293,8 +1293,8 @@ function startTheory(){
   el.classList.add('show');document.getElementById('nb-grammar').classList.add('on');
   el.innerHTML=`<div style="display:flex;align-items:center;gap:8px;margin-bottom:.85rem"><button class="btn btn-ghost btn-sm" onclick="go('home')">← Về</button><div class="h2">📖 Lý thuyết ${lv2}</div><div style="margin-left:auto"><button class="btn btn-sm btn-ghost" onclick="startGrammar()">→ Bài tập</button></div></div>
   ${gs.map(c=>renderTheoryCard(c)).join('')}`;
-  if(!sessionProgress['theory'])sessionProgress['theory']={correct:0,total:0};
-  sessionProgress['theory'].total++;sessionProgress['theory'].correct++;saveAll();
+  // Theory is marked done only when user clicks "→ Bài tập" or "Đã đọc"
+  // Do NOT auto-mark as done here
 }
 function renderTheoryCard(c){
   const t=c.theory;if(!t)return'';
@@ -1310,6 +1310,13 @@ function renderTheoryCard(c){
 }
 
 // ═════ VOCAB (with explain always shown) ═════
+function markTheoryRead(){
+  if(!sessionProgress['theory'])sessionProgress['theory']={correct:0,total:0};
+  if(sessionProgress['theory'].total===0){
+    sessionProgress['theory'].total=1;sessionProgress['theory'].correct=1;saveAll();
+    showFloat('✓ Lý thuyết đã đọc!','var(--green)');
+  }
+}
 function startVocab(){
   const lv2=getStudyLv();
   const cards=shuf((VOCAB[lv2]||[]).map((_,i)=>i));
